@@ -20,7 +20,7 @@ python main.pyw
 
 ### How to build
 - Install PyCharm from here (https://www.jetbrains.com/pycharm/download/)
--> Select community version for free access.
+  - Select community version for free access.
 - Install Python from here (https://www.python.org/downloads/)
   - Make sure to tick the term "Add Python 3.9 to PATH" to run Python from console.
 - Install Pyqt6 GUI library for this application.
