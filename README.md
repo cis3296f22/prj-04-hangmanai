@@ -21,7 +21,7 @@ python main.pyw
 - You will see GUI screen
 
 
-### How to build
+## How to build
 - Install PyCharm from here (https://www.jetbrains.com/pycharm/download/)
   - Select community version for free access.
 - Install Python from here (https://www.python.org/downloads/)
