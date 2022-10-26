@@ -4,29 +4,31 @@ Our version of the Hangman game is built on the famous hangman game and with man
 <img width="528" alt="WeChat9f21cad5d25b57592ecfe30c07555a60" src="https://user-images.githubusercontent.com/112578002/198108865-287fcf74-ef5d-4874-bbaa-cc95b4c6ea9f.png">
 <img width="609" alt="WeChat73d635c8f48f08d1b4f506e7d7cfe586" src="https://user-images.githubusercontent.com/112578002/198108969-7fbb0767-9983-488f-bf0b-67fcb3c466c1.png">
 
+![image](https://user-images.githubusercontent.com/71058334/197948673-fb25bd03-1a80-47d8-9071-e70fc4568cf9.png)
 
+# How to run 
+- Download the latest release file from the release section in GitHub and unzip it.
+- Download the latest Python 3.9 from here (https://www.python.org/downloads/)
+- Install needed python libraries for this project
 
+```
+pip install pyqt6
+```
+- Move to the project folder and on the command line run with
+```
+python main.pyw
+```
+- You will see GUI screen
 
-# How to run
-Provide here instructions on how to use your application.   
-- Download the latest binary from the Release section on the right on GitHub.  
-- On the command line uncompress using
-```
-tar -xzf  
-```
-- On the command line run with
-```
-./hello
-```
-- You will see Hello World! on your terminal. 
-
-# How to contribute
-Follow this project board to know the latest status of the project: [http://...]([http://...])  
 
 ### How to build
-- Use this github repository: ... 
-- Specify what branch to use for a more stable release or for cutting edge development.  
-- Use InteliJ 11
-- Specify additional library to download if needed 
-- What file and target to compile and run. 
-- What is expected to happen when the app start. 
+- Install PyCharm from here (https://www.jetbrains.com/pycharm/download/)
+  - Select community version for free access.
+- Install Python from here (https://www.python.org/downloads/)
+  - Make sure to tick the term "Add Python 3.9 to PATH" to run Python from console.
+- Install Pyqt6 GUI library for this application.
+  - Go to Setting -> Project -> Project Interpreter -> Add mark -> search for pyqt6 -> Install
+  - Or you can use command line to install
+```
+pip install pyqt6
+```
