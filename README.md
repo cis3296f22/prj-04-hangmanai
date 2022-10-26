@@ -4,6 +4,7 @@ Adding an screenshot or a mockup of your application in action would be nice.
 
 ![image](https://user-images.githubusercontent.com/71058334/197948673-fb25bd03-1a80-47d8-9071-e70fc4568cf9.png)
 # How to run 
+- Download the latest release file from the release section in GitHub and unzip it.
 - Download the latest Python 3.9 from here (https://www.python.org/downloads/)
 - Install needed python libraries for this project
 
