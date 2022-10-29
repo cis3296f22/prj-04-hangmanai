@@ -15,10 +15,21 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class KeyTop(QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self, text="A"):
         super(KeyTop, self).__init__()
         uic.loadUi('keytop.ui', self)
+        self.text(text)
 
+    def text(self, text):
+        self.label.setText(text.upper())
+
+    def mousePressEvent(self, a0):
+        print("Mouse clicked")
+        # self.keyBackFrame.setStylesheet()
+
+
+    def mouseReleaseEvent(self, a0):
+        print()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

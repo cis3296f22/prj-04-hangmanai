@@ -12,14 +12,21 @@ class MyMainWindow(QtWidgets.QMainWindow):
         self.form_widget = Ui()
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
-        # self.setFixedHeight(500)
-        # self.setFixedWidth(500)
-        layout = QtWidgets.QHBoxLayout()
-        layout.addWidget(KeyTop())
-        layout.addWidget(KeyTop())
-        layout.addWidget(KeyTop())
-        self.form_widget.keyboardFirstRowView.setLayout(layout)
-        self.form_widget.keyboardFirstRowView.setStyleSheet("background-color: rgb(255,255,255);")
+
+        keyRowsMap = {self.form_widget.keyboardFirstRowView: "qwertyuiop",
+                      self.form_widget.keyboardSecondRowView: "asdfghjkl",
+                      self.form_widget.keyboardThirdRowView: "zxcvbnm"}
+
+        # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
+
+        for key in keyRowsMap:
+            key.setLayout(QtWidgets.QHBoxLayout())
+            for letter in keyRowsMap[key]:
+                key.layout().addWidget(KeyTop(letter))
+
+        # self.form_widget.keyboardFirstRowView.setLayout(layout)
+        # self.form_widget.keyboardFirstRowView.setLayout(layout)
+        # self.form_widget.keyboardFirstRowView.setStyleSheet("background-color: rgb(255,255,255);")
         self.show()
 
 
