@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets, uic
 import sys
 
 from Keyboard import Keyboard
-
+from WordBox import WordBox
 
 class MyMainWindow(QtWidgets.QMainWindow):
 
@@ -20,7 +20,9 @@ class MyMainWindow(QtWidgets.QMainWindow):
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
         self.form_widget.keyboardView.setLayout(QtWidgets.QHBoxLayout())
         self.form_widget.keyboardView.layout().addWidget(Keyboard())
-
+        self.form_widget.wordInputView.setLayout(QtWidgets.QHBoxLayout())
+        self.form_widget.wordInputView.layout().setContentsMargins(0, 0, 0, 0)
+        self.form_widget.wordInputView.layout().addWidget(WordBox())
         # for key in keyRowsMap:
         #     key.setLayout(QtWidgets.QHBoxLayout())
         #     for letter in keyRowsMap[key]:

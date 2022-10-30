@@ -6,7 +6,7 @@ class TestWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
 
         super(TestWindow, self).__init__(parent)
-        self.form_widget = KeyTop()
+        self.form_widget = KeyTop(toggle=False)
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
         # self.setFixedHeight(500)
@@ -15,12 +15,13 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class KeyTop(QtWidgets.QWidget):
-    def __init__(self, text="A"):
+    def __init__(self, text="A", toggle=True):
         super(KeyTop, self).__init__()
         uic.loadUi('keytop_modern.ui', self)
         self.setText(text)
         self.clicked = False
         self.disabled = False
+        self.toggle = toggle
         self.setKeyListner(lambda x: print("Default handler [" + x + "]"))
         # print(self.isEnabled())
         # self.button.setDisabled(True)
@@ -38,7 +39,8 @@ class KeyTop(QtWidgets.QWidget):
 
     def mouseReleaseEvent(self, a0):
         # print(self.text())
-        self.setDisabled(True)
+        if self.toggle:
+            self.setDisabled(True)
 
 
     def isEnabled(self):
