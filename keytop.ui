@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="background">
      <property name="styleSheet">
       <string notr="true">QFrame  {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(52, 52, 52, 255), stop:1 rgba(141, 141, 141, 255));
@@ -44,8 +44,12 @@
 
 
 
-QFrame :hover {
+QFrame:hover {
 	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(120, 120, 120, 255));
+}
+
+QFrame:disabled  {
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(110, 110, 110, 255), stop:1 rgba(220, 220, 220, 255));
 }
 
 
@@ -72,7 +76,10 @@ QFrame :hover {
        <number>12</number>
       </property>
       <item>
-       <widget class="QPushButton" name="label">
+       <widget class="QPushButton" name="button">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -81,20 +88,23 @@ QFrame :hover {
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton  {
-	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(77, 77, 77, 255), stop:1 rgba(120, 120, 120, 255));
+	background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(40, 40, 40, 255), stop:1 rgba(180, 180, 180, 255));
 	color: white;
 font-size: 20px;
 	border: none
 }
 
 QPushButton:hover  {
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(52, 52, 52, 255), stop:1 rgba(141, 141, 141, 255));
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(40, 40, 40, 255), stop:1 rgba(180, 180, 180, 255));
 }
 
 QPushButton:pressed  {
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(15, 15, 15, 255), stop:1 rgba(141, 141, 141, 255));
 }
 
+QPushButton:disabled  {
+	background-color: transparent
+}
 </string>
         </property>
         <property name="text">

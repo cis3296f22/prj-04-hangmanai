@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets, uic
 import sys
 
-from Keyboard import Keyboard
+from Keytop import KeyTop
 
 
 class MyMainWindow(QtWidgets.QMainWindow):
@@ -13,18 +13,16 @@ class MyMainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
 
-        # keyRowsMap = {self.form_widget.keyboardFirstRowView: "qwertyuiop",
-        #               self.form_widget.keyboardSecondRowView: "asdfghjkl",
-        #               self.form_widget.keyboardThirdRowView: "zxcvbnm"}
+        keyRowsMap = {self.form_widget.keyboardFirstRowView: "qwertyuiop",
+                      self.form_widget.keyboardSecondRowView: "asdfghjkl",
+                      self.form_widget.keyboardThirdRowView: "zxcvbnm"}
 
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
-        self.form_widget.keyboardView.setLayout(QtWidgets.QHBoxLayout())
-        self.form_widget.keyboardView.layout().addWidget(Keyboard())
 
-        # for key in keyRowsMap:
-        #     key.setLayout(QtWidgets.QHBoxLayout())
-        #     for letter in keyRowsMap[key]:
-        #         key.layout().addWidget(KeyTop(letter))
+        for key in keyRowsMap:
+            key.setLayout(QtWidgets.QHBoxLayout())
+            for letter in keyRowsMap[key]:
+                key.layout().addWidget(KeyTop(letter))
 
         # self.form_widget.keyboardFirstRowView.setLayout(layout)
         # self.form_widget.keyboardFirstRowView.setLayout(layout)
