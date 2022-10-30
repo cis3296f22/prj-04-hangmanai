@@ -19,6 +19,9 @@ class KeyTop(QtWidgets.QWidget):
         super(KeyTop, self).__init__()
         uic.loadUi('keytop.ui', self)
         self.text(text)
+        self.clicked = False
+        self.disabled = False
+
 
     def text(self, text):
         self.label.setText(text.upper())
@@ -27,9 +30,15 @@ class KeyTop(QtWidgets.QWidget):
         print("Mouse clicked")
         # self.keyBackFrame.setStylesheet()
 
-
     def mouseReleaseEvent(self, a0):
         print()
+
+    def isClicked(self):
+        return self.clicked
+
+    def reset(self):
+        self.clicked = False
+        self.disabled = False
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
