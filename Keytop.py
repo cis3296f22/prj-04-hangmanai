@@ -19,8 +19,7 @@ class KeyTop(QtWidgets.QWidget):
         super(KeyTop, self).__init__()
         uic.loadUi('keytop_modern.ui', self)
         self.setText(text)
-        self.clicked = False
-        self.disabled = False
+        self.text = text
         self.toggle = toggle
         self.setKeyListner(lambda x: print("Default handler [" + x + "]"))
         # print(self.isEnabled())
@@ -28,9 +27,10 @@ class KeyTop(QtWidgets.QWidget):
         # self.background.setDisabled(True)
 
     def text(self):
-        return self.button.text()
+        return self.text
 
     def setText(self, text):
+        self.text = text
         self.button.setText(text.upper())
 
     # def mousePressEvent(self, a0):
@@ -51,8 +51,7 @@ class KeyTop(QtWidgets.QWidget):
         # self.disabled = boolean
 
     def reset(self):
-        self.clicked = False
-        self.disabled = False
+        self.setEnabled(True)
 
     def setKeyListner(self, handler, append=False):
         if not append:

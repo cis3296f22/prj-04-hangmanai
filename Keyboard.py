@@ -20,8 +20,6 @@ class Keyboard(QtWidgets.QWidget):
         super(Keyboard, self).__init__()
         uic.loadUi('keyboard.ui', self)
         # self.text(text)
-        self.clicked = False
-        self.disabled = False
 
         keyRowsMap = {self.keyboardFirstRowView: "qwertyuiop",
                       self.keyboardSecondRowView: "asdfghjkl",
@@ -45,8 +43,16 @@ class Keyboard(QtWidgets.QWidget):
             self.keyMap[key].setKeyListner(handler, append)
 
     def reset(self):
-        self.clicked = False
-        self.disabled = False
+        for key in self.keyMap:
+            self.keyMap[key].reset()
+
+    def disableAll(self):
+        for key in self.keyMap:
+            self.keyMap[key].setDisabled(True)
+
+    def enableAll(self):
+        for key in self.keyMap:
+            self.keyMap[key].setEnabled(True)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
