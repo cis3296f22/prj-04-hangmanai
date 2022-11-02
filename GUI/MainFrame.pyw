@@ -13,28 +13,14 @@ from WordBox import WordBox
 # Global value for the windows status
 WINDOW_SIZE = 0
 
-class MyMainWindow(QtWidgets.QMainWindow):
 
+class MyMainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
 
         super(MyMainWindow, self).__init__(parent)
         self.ui = Ui()
         self.setCentralWidget(self.ui)
         self.setLayout(QtWidgets.QHBoxLayout())
-
-        # keyRowsMap = {self.form_widget.keyboardFirstRowView: "qwertyuiop",
-        #               self.form_widget.keyboardSecondRowView: "asdfghjkl",
-        #               self.form_widget.keyboardThirdRowView: "zxcvbnm"}
-
-
-        # for key in keyRowsMap:
-        #     key.setLayout(QtWidgets.QHBoxLayout())
-        #     for letter in keyRowsMap[key]:
-        #         key.layout().addWidget(KeyTop(letter))
-
-        # self.form_widget.keyboardFirstRowView.setLayout(layout)
-        # self.form_widget.keyboardFirstRowView.setLayout(layout)
-        # self.form_widget.keyboardFirstRowView.setStyleSheet("background-color: rgb(255,255,255);")
         self.show()
 
         # Button click events to our top bar buttons
@@ -72,8 +58,7 @@ class MyMainWindow(QtWidgets.QMainWindow):
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition()
 
-        # Restore or maximize your window
-
+    # Restore or maximize your window
     def restore_or_maximize_window(self):
 
         # Global windows state
@@ -99,11 +84,13 @@ class Ui(QtWidgets.QWidget):
         super(Ui, self).__init__()
         uic.loadUi('../assets/ui/main.ui', self)
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
+        self.keyboard = Keyboard()
+        self.wordBox = WordBox()
         self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
-        self.keyboardView.layout().addWidget(Keyboard())
+        self.keyboardView.layout().addWidget(self.keyboard)
         self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
         self.wordInputView.layout().setContentsMargins(0, 0, 0, 0)
-        self.wordInputView.layout().addWidget(WordBox())
+        self.wordInputView.layout().addWidget(self.wordBox)
 
 
 if __name__ == "__main__":

@@ -26,6 +26,7 @@ class WordBox(QtWidgets.QWidget):
         # self.blank()
         # self.setCharactorAt(0, "a")
         # self.setCharactorAt(len(self.word) - 1, "a")
+        self.blankAt(2)
 
     def setWord(self, word):
         self.word = word.upper()
@@ -46,7 +47,8 @@ class WordBox(QtWidgets.QWidget):
         self.word = self.word[:index] + char + self.word[index + 1:]
         self.setWord(self.word)
 
-
+    def blankAt(self, index):
+        self.setCharactorAt(index, " ")
 
     def blank(self):
         self.setWord(" " * len(self.word))
