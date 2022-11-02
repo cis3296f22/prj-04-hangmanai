@@ -17,9 +17,9 @@ class TestWindow(QtWidgets.QMainWindow):
 class KeyTop(QtWidgets.QWidget):
     def __init__(self, text="A", toggle=True):
         super(KeyTop, self).__init__()
-        uic.loadUi('keytop_modern.ui', self)
+        uic.loadUi('../assets/ui/keytop_modern.ui', self)
         self.setText(text)
-        self.text = text
+        self.char = text
         self.toggle = toggle
         self.setKeyListner(lambda x: print("Default handler [" + x + "]"))
         # print(self.isEnabled())
@@ -27,10 +27,10 @@ class KeyTop(QtWidgets.QWidget):
         # self.background.setDisabled(True)
 
     def text(self):
-        return self.text
+        return self.char
 
     def setText(self, text):
-        self.text = text
+        self.char = text
         self.button.setText(text.upper())
 
     # def mousePressEvent(self, a0):

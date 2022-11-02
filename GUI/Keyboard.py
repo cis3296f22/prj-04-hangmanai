@@ -18,7 +18,7 @@ class TestWindow(QtWidgets.QMainWindow):
 class Keyboard(QtWidgets.QWidget):
     def __init__(self, text="A"):
         super(Keyboard, self).__init__()
-        uic.loadUi('keyboard.ui', self)
+        uic.loadUi('../assets/ui/keyboard.ui', self)
         # self.text(text)
 
         keyRowsMap = {self.keyboardFirstRowView: "qwertyuiop",

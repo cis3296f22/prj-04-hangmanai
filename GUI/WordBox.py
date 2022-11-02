@@ -16,7 +16,7 @@ class TestWindow(QtWidgets.QMainWindow):
 class WordBox(QtWidgets.QWidget):
     def __init__(self, word="Sample"):
         super(WordBox, self).__init__()
-        uic.loadUi('wordBox.ui', self)
+        uic.loadUi('../assets/ui/wordBox.ui', self)
 
         self.wordFrame.setLayout(QtWidgets.QHBoxLayout())
         self.wordFrame.layout().setSpacing(20)

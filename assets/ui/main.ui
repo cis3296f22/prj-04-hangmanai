@@ -183,7 +183,7 @@ QPushButton:pressed {
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../.designer/backup/assets/minimize.png</normaloff>../.designer/backup/assets/minimize.png</iconset>
+                <normaloff>../minimize.png</normaloff>../minimize.png</iconset>
               </property>
              </widget>
             </item>
@@ -216,7 +216,7 @@ QPushButton:pressed {
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../.designer/backup/assets/fullscreen.png</normaloff>../.designer/backup/assets/fullscreen.png</iconset>
+                <normaloff>../fullscreen.png</normaloff>../fullscreen.png</iconset>
               </property>
              </widget>
             </item>
@@ -250,7 +250,7 @@ QPushButton:pressed {
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../.designer/backup/assets/X.png</normaloff>../.designer/backup/assets/X.png</iconset>
+                <normaloff>../X.png</normaloff>../X.png</iconset>
               </property>
              </widget>
             </item>
