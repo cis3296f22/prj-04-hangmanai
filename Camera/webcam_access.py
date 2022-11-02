@@ -21,13 +21,18 @@ def determine_camera():
 def start_capture(cam_id):
     capture = cv2.VideoCapture(cam_id)
 
+    # until webcam is closed have live feed
     while capture.isOpened():
         ret, frame = capture.read()
 
+        # shows active webcam feed
         cv2.imshow('Hangman text', frame)
 
+        # window waits for key press and if it is q it will close
+        # can use this for taking picture?
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
     capture.release()
     cv2.destroyAllWindows()
 
