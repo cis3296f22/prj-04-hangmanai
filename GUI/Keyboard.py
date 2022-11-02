@@ -16,7 +16,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class Keyboard(QtWidgets.QWidget):
-    def __init__(self, text="A"):
+    def __init__(self, handler=lambda x: print("Keyboard handler [" + x + "]")):
         super(Keyboard, self).__init__()
         uic.loadUi('../assets/ui/keyboard.ui', self)
         # self.text(text)
@@ -36,9 +36,12 @@ class Keyboard(QtWidgets.QWidget):
                 self.keyMap[letter] = keyTop
                 key.layout().addWidget(keyTop)
 
-        self.setKeyListner(lambda x: print("Keyboard handler [" + x + "]"))
+        self.setKeyboardListner(handler)
 
-    def setKeyListner(self, handler, append=False):
+    def setKeyListner(self, key, handler, append=False):
+        self.keyMap[key].setKeyListner(handler, append)
+
+    def setKeyboardListner(self, handler, append=False):
         for key in self.keyMap:
             self.keyMap[key].setKeyListner(handler, append)
 
