@@ -1,16 +1,6 @@
 import random
 import time
 
-# welcome user the game
-print("\nWelcome to Hangman game\n")
-# ask player for their name
-name = input("Enter your name: ")
-# wait for the game to start
-print("Hello " + name + ", welcome to Hangman Extra!")
-time.sleep(2)
-print("The game is about to start!\n Let's play Hangman!")
-time.sleep(3)
-
 
 # main function
 class Hangman():
@@ -23,32 +13,42 @@ class Hangman():
         self.display = None
         self.already_guessed = None
         self.play_game = None
+        self.name = None
 
+        self.welcom()
         self.initialize()
+
+    def welcom(self):
+        # welcome user the game
+        print("\nWelcome to Hangman game\n")
+        # ask player for their name
+        self.name = input("Enter your name: ")
+        # wait for the game to start
+        print("Hello " + self.name + ", welcome to Hangman Extra!")
+        time.sleep(2)
+        print("The game is about to start!\n Let's play Hangman!")
+        time.sleep(3)
 
     def initialize(self):
         self.words_to_guess = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
         # variable word to set a randomly picked word as the word to guess
-        self.word = random.choice(words_to_guess)
+        self.word = random.choice(self.words_to_guess)
         # set the length of the guessing word to the length of the picked word
-        self.length = len(word)
+        self.length = len(self.word)
         # initialize count as 0
         self.count = 0
         # display the word the underline will show how many letter are in the word.
-        self.display = '_' * length
+        self.display = '_' * self.length
         self.already_guessed = []
         self.play_game = ""
 
     def play(self):
-        main_loop()
+        self.main_loop()
 
     def main_loop(self):
         self.game()
-
         while self.repeat():
             self.game()
-            self.play()
-
         self.end()
 
     # loop the game, as user if he or she wants to restart the game
@@ -67,110 +67,113 @@ class Hangman():
             print("Thanks For Playing! We expect you back again!")
             return False
 
-
     # hangman method with each stage of the hangman
     def game(self):
         self.initialize()
         # set lives
         limit = 5
-        guess = input("This is the Hangman Word: " + self.display + " Enter your guess: \n")
-        guess = guess.strip()
-        # invalid input
-        if len(guess.strip()) == 0 or len(guess.strip()) >= 2 or guess <= "9":
-            print("Please enter a letter\n")
-            hangman()
 
-        # if guessed letter is correct
-        elif guess in self.word:
-            # add an index when letter correctly guessed
-            already_guessed.extend([guess])
-            index = self.word.find(guess)
-            word = self.word[:index] + "_" + self.word[index + 1:]
-            display = self.display[:index] + guess + self.display[index + 1:]
-            print(display + "\n")
+        while True:
+            guess = input("This is the Hangman Word: " + self.display + " Enter your guess: \n")
+            guess = guess.strip()
+            # invalid input
+            if len(guess.strip()) == 0 or len(guess.strip()) >= 2 or guess <= "9":
+                print("Please enter a letter\n")
+                continue
 
-        # ask user to guess another guess
-        elif guess in already_guessed:
-            print("Try another letter.\n")
+            # if guessed letter is correct
+            elif guess in self.word:
+                # add an index when letter correctly guessed
+                self.already_guessed.extend([guess])
+                index = self.word.find(guess)
+                self.word = self.word[:index] + "_" + self.word[index + 1:]
+                self.display = self.display[:index] + guess + self.display[index + 1:]
+                print(self.display + "\n")
 
-        # lost 1 live count +1
-        else:
-            self.count += 1
+            # ask user to guess another guess
+            elif guess in self.already_guessed:
+                print("Try another letter.\n")
 
-            if self.count == 1:
-                time.sleep(1)
-                print("   _____ \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "__|__\n")
-                print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
+            # lost 1 live count +1
+            else:
+                self.count += 1
 
-            # lost 2 lives count +2
-            elif self.count == 2:
-                time.sleep(1)
-                print("   _____ \n"
-                      "  |     | \n"
-                      "  |     |\n"
-                      "  |      \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "__|__\n")
-                print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
+                if self.count == 1:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
 
-            # lost 3 lives count +3
-            elif self.count == 3:
-                time.sleep(1)
-                print("   _____ \n"
-                      "  |     | \n"
-                      "  |     |\n"
-                      "  |     | \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "__|__\n")
-                print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
+                # lost 2 lives count +2
+                elif self.count == 2:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
 
-            # lost 4 lives count +4
-            elif self.count == 4:
-                time.sleep(1)
-                print("   _____ \n"
-                      "  |     | \n"
-                      "  |     |\n"
-                      "  |     | \n"
-                      "  |     O \n"
-                      "  |      \n"
-                      "  |      \n"
-                      "__|__\n")
-                print("Wrong guess. " + str(limit - self.count) + " last guess remaining\n")
+                # lost 3 lives count +3
+                elif self.count == 3:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |     | \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
 
-            # lost 5 lives count +5
-            elif self.count == 5:
-                time.sleep(1)
-                print("   _____ \n"
-                      "  |     | \n"
-                      "  |     |\n"
-                      "  |     | \n"
-                      "  |     O \n"
-                      "  |    /|\ \n"
-                      "  |    / \ \n"
-                      "__|__\n")
-                # show the word if the user failed to guess the word and lost all lives.
-                print("Wrong guess. You are hanged!!!\n")
-                print("The word was:", already_guessed, self.word)
-                play_loop()
+                # lost 4 lives count +4
+                elif self.count == 4:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |     | \n"
+                          "  |     O \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - self.count) + " last guess remaining\n")
 
-        # when guessed word equal to length
-        if self.word == '_' * self.length:
-            print("You won the game.")
-            play_loop()
+                # lost 5 lives count +5
+                elif self.count == 5:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
+                          "  |     | \n"
+                          "  |     O \n"
+                          "  |    /|\ \n"
+                          "  |    / \ \n"
+                          "__|__\n")
+                    # show the word if the user failed to guess the word and lost all lives.
+                    print("Wrong guess. You are hanged!!!\n")
+                    print("The word was:", self.already_guessed, self.word)
+                    break
 
-        elif self.count != limit:
-            hangman()
+            # when guessed word equal to length
+            if self.word == '_' * self.length:
+                print("You won the game.")
+                return
+
+            elif self.count != limit:
+                continue
+
 
 if __name__ == "__main__":
-
+    game = Hangman()
+    game.play()
