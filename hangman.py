@@ -32,6 +32,7 @@ class Hangman():
         self.updateUI()
         # FIXME CHECK Mainframe callback set here
         self.display.setKeyboardListner(lambda x: self.guess(x))
+        self.display.setMaxAttempts(max_attempts)
 
     def updateUI(self):
         for i in range(len(self.word)):
@@ -48,6 +49,7 @@ class Hangman():
 
         if char not in self.word:
             self.attempts = self.attempts + 1
+            self.display.setLife(self.max_attempts - self.attempts)
         self.updateUI()
 
         self.finishGameCondition()
@@ -56,9 +58,9 @@ class Hangman():
     # NOTE Done coding, needs check
     def finishGameCondition(self):
         all_match = all([(x in self.already_guessed) for x in self.word])
-        if self.attempts == 0 and all_match:
+        if self.max_attempts - self.attempts > 0 and all_match:
             self.display.win()
-        elif self.attempts == self.max_attempts - 1:
+        elif self.attempts >= self.max_attempts:
             self.display.lose()
         else:
             return

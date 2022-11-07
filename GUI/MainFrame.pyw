@@ -9,6 +9,7 @@ import sys
 
 from GUI.Keyboard import Keyboard
 from GUI.WordBox import WordBox
+from GUI.LifeBox import LifeBox
 
 # Global value for the windows status
 WINDOW_SIZE = 0
@@ -105,12 +106,14 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.wordBox.setCharacterAt(index, char)
 
     # TODO setRemainingAttempts
-    def setRemainingAttempts(self, number):
-        print("TODO setRemainingAttempts(" + number + ")")
+    def setMaxAttempts(self, max_attempts):
+        self.ui.lifeBox.setMaxAttempts(max_attempts)
 
-    # TODO getRemainingAttempts
-    def getRemainingAttempts(self, number):
-        print("TODO getRemainingAttempts()")
+    def setLife(self, number):
+        self.ui.lifeBox.setLife(number)
+
+    def takeLife(self, zeroHandler):
+        self.ui.lifeBox.takeLife(zeroHandler)
 
     # TODO win
     def win(self):
@@ -130,12 +133,28 @@ class Ui(QtWidgets.QWidget):
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
         self.keyboard = Keyboard(assets_dir=assets_dir)
         self.wordBox = WordBox(assets_dir=assets_dir)
+        self.lifeBox = LifeBox(assets_dir=assets_dir)
         self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
         self.keyboardView.layout().addWidget(self.keyboard)
         self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
         self.wordInputView.layout().setContentsMargins(0, 0, 0, 0)
         self.wordInputView.layout().addWidget(self.wordBox)
+        self.lifeView.setLayout(QtWidgets.QHBoxLayout())
+        self.lifeView.layout().setContentsMargins(0, 0, 0, 0)
+        self.lifeView.layout().addWidget(self.lifeBox)
+        # self.lifeBox.setMaxAttempts(7)
 
+    def paintEvent(self, e):
+        super().paintEvent(e)
+        print("Painting")
+        painter = QtGui.QPainter(self)
+        brush = QtGui.QBrush()
+        brush.setColor(QtGui.QColor(100, 100, 100))
+        # brush.setStyle(QtCore.Qt.SolidPattern)
+        print(painter.device().width())
+        rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
+        painter.fillRect(rect, brush)
+        painter.end()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
