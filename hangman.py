@@ -1,9 +1,13 @@
 import random
 import time
+from easywords_list import easylist
+from medianwords_list import medianlist
+from hardwords_list import hardlist
 
 
 # main function
 class Hangman():
+
     def __init__(self):
         # test of the words, later will be placed
         self.words_to_guess = None
@@ -15,10 +19,10 @@ class Hangman():
         self.play_game = None
         self.name = None
 
-        self.welcom()
+        self.welcome()
         self.initialize()
 
-    def welcom(self):
+    def welcome(self):
         # welcome user the game
         print("\nWelcome to Hangman game\n")
         # ask player for their name
@@ -29,18 +33,29 @@ class Hangman():
         print("The game is about to start!\n Let's play Hangman!")
         time.sleep(3)
 
+    # promot for input for difficulty level
+    def get_difficulty_input(self):
+
+        difficulty = input('Before the game starts please pick a level! E for easy, M for median, H for hard!\n')
+        return difficulty.upper()
+
     def initialize(self):
-        self.words_to_guess = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
-        # variable word to set a randomly picked word as the word to guess
+        difficulty = self.get_difficulty_input()
+
+        if difficulty == 'H':
+            self.word = self.words_to_guess[hardlist]
+        elif difficulty == 'M':
+            self.word = self.words_to_guess[medianlist]
+        else:
+            self.word = self.words_to_guess[easylist]
+
         self.word = random.choice(self.words_to_guess)
-        # set the length of the guessing word to the length of the picked word
         self.length = len(self.word)
-        # initialize count as 0
         self.count = 0
-        # display the word the underline will show how many letter are in the word.
         self.display = '_' * self.length
         self.already_guessed = []
-        self.play_game = ""
+        self.play_game = ''
+
 
     def play(self):
         self.main_loop()
