@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets, uic
 import sys
-from CharactorBox import CharacterBox
+from GUI.CharactorBox import CharacterBox
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -14,10 +14,10 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class WordBox(QtWidgets.QWidget):
-    def __init__(self, word="Sample"):
+    def __init__(self, word="Sample", assets_dir="../assets"):
         super(WordBox, self).__init__()
-        uic.loadUi('../assets/ui/wordBox.ui', self)
-
+        uic.loadUi(assets_dir + '/ui/wordBox.ui', self)
+        self.assets_dir = assets_dir
         self.wordFrame.setLayout(QtWidgets.QHBoxLayout())
         self.wordFrame.layout().setSpacing(20)
         self.word = word
@@ -36,7 +36,7 @@ class WordBox(QtWidgets.QWidget):
         self.characterBoxList.clear()
 
         for char in self.word:
-            char_box = CharacterBox(char)
+            char_box = CharacterBox(char, assets_dir=self.assets_dir)
             self.characterBoxList.append(char_box)
             self.wordFrame.layout().addWidget(char_box)
 

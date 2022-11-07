@@ -15,9 +15,9 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class KeyTop(QtWidgets.QWidget):
-    def __init__(self, text="A", toggle=True):
+    def __init__(self, text="A", toggle=True, assets_dir="../assets"):
         super(KeyTop, self).__init__()
-        uic.loadUi('../assets/ui/keytop_modern.ui', self)
+        uic.loadUi(assets_dir + '/ui/keytop_modern.ui', self)
         self.setText(text)
         self.char = text
         self.toggle = toggle

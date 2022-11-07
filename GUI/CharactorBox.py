@@ -14,9 +14,9 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class CharacterBox(QtWidgets.QWidget):
-    def __init__(self, text="A"):
+    def __init__(self, text="A", assets_dir="../assets"):
         super(CharacterBox, self).__init__()
-        uic.loadUi('../assets/ui/characterBox.ui', self)
+        uic.loadUi(assets_dir + '/ui/characterBox.ui', self)
         self.setText(text)
 
     def text(self):

@@ -7,18 +7,18 @@ from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime
 
 import sys
 
-from Keyboard import Keyboard
-from WordBox import WordBox
+from GUI.Keyboard import Keyboard
+from GUI.WordBox import WordBox
 
 # Global value for the windows status
 WINDOW_SIZE = 0
 
 
-class MyMainWindow(QtWidgets.QMainWindow):
-    def __init__(self, parent=None):
+class MainFrame(QtWidgets.QMainWindow):
+    def __init__(self, parent=None, assets_dir="../assets"):
 
-        super(MyMainWindow, self).__init__(parent)
-        self.ui = Ui()
+        super(MainFrame, self).__init__(parent)
+        self.ui = Ui(assets_dir=assets_dir)
         self.setCentralWidget(self.ui)
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
@@ -79,13 +79,14 @@ class MyMainWindow(QtWidgets.QMainWindow):
             # self.ui.restoreButton.setIcon(QtGui.QIcon(u":/icons/icons/cil-window-restore.png"))  # Show minized icon
 
 
+
 class Ui(QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self, assets_dir="../assets"):
         super(Ui, self).__init__()
-        uic.loadUi('../assets/ui/main.ui', self)
+        uic.loadUi(assets_dir + '/ui/main.ui', self)
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
-        self.keyboard = Keyboard()
-        self.wordBox = WordBox()
+        self.keyboard = Keyboard(assets_dir=assets_dir)
+        self.wordBox = WordBox(assets_dir=assets_dir)
         self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
         self.keyboardView.layout().addWidget(self.keyboard)
         self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
@@ -95,5 +96,5 @@ class Ui(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    widget = MyMainWindow()
+    widget = MainFrame()
     app.exec()
