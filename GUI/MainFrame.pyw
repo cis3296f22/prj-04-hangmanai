@@ -14,14 +14,14 @@ from WordBox import WordBox
 WINDOW_SIZE = 0
 
 
-class MyMainWindow(QtWidgets.QMainWindow):
-    def __init__(self, parent=None):
+class MainFrame(QtWidgets.QMainWindow):
+    def __init__(self, handler=lambda x: print("Keyboard handler [" + x + "]"), parent=None):
 
-        super(MyMainWindow, self).__init__(parent)
+        super(MainFrame, self).__init__(parent)
         self.ui = Ui()
         self.setCentralWidget(self.ui)
         self.setLayout(QtWidgets.QHBoxLayout())
-        self.show()
+        # self.show()
 
         # Button click events to our top bar buttons
         #
@@ -50,8 +50,10 @@ class MyMainWindow(QtWidgets.QMainWindow):
             if hasattr(self.ui, "title_bar"):
                 self.ui.title_bar.mouseMoveEvent = moveWindow
 
+        self.ui.keyboard.setKeyboardListner(handler)
+
         # Show window
-        self.show()
+        # self.show()
 
         # self.ui.
 
@@ -78,6 +80,27 @@ class MyMainWindow(QtWidgets.QMainWindow):
             # Update button icon
             # self.ui.restoreButton.setIcon(QtGui.QIcon(u":/icons/icons/cil-window-restore.png"))  # Show minized icon
 
+    def setKeyListner(self, key, handler, append=False):
+        self.ui.keyboard.setKeyListner(key, handler, append)
+
+    def setKeyboardListner(self, handler, append=False):
+        self.ui.setKeyboardListner.setKeyListner(handler, append)
+
+    def reset(self):
+        self.ui.keyboard.reset()
+        self.ui.wordBox.reset()
+
+    def blank(self):
+        self.ui.wordBox.blank()
+
+    def blankAt(self, index):
+        self.ui.wordBox.blankAt(index)
+
+    def setWord(self, word):
+        self.ui.wordBox.setWord(word)
+
+    def setCharactorAt(self, index, char):
+        self.ui.wordBox.setCharactorAt(index, char)
 
 class Ui(QtWidgets.QWidget):
     def __init__(self):
@@ -95,5 +118,7 @@ class Ui(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    widget = MyMainWindow()
+    widget = MainFrame()
+    widget.show()
+    widget.reset()
     app.exec()
