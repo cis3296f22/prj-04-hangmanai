@@ -12,7 +12,8 @@ import sys
 from GUI.MainFrame import MainFrame
 
 
-# main function
+# TODO Create new class which generates the list of words
+# TODO Separate word generate and select from the actual game.
 class Hangman():
     def __init__(self, main_frame, word="sample", max_attempts=6):
         # test of the words, later will be placed
@@ -27,7 +28,10 @@ class Hangman():
 
         # self.welcome()
         # self.initialize()
+
         self.updateUI()
+        # FIXME CHECK Mainframe callback set here
+        self.display.setKeyboardListner(lambda x: self.guess(x))
 
     def updateUI(self):
         for i in range(len(self.word)):
@@ -35,27 +39,33 @@ class Hangman():
             self.display.setCharacterAt(i, character)
 
     # FIXME Call back function for processing key pressing
+    # NOTE Done coding, needs check
     def guess(self, char):
         if char in self.already_guessed:
             print("You cannot guess the same letter twice")
 
         self.already_guessed.append(char)
-        self.attempts = self.attempts - 1
 
+        if char not in self.word:
+            self.attempts = self.attempts + 1
         self.updateUI()
 
         self.finishGameCondition()
 
     # FIXME See if game ends 1) Attempts reaches 0 with incompleted word or 2) Guessed word correctly
+    # NOTE Done coding, needs check
     def finishGameCondition(self):
         all_match = all([(x in self.already_guessed) for x in self.word])
         if self.attempts == 0 and all_match:
             self.display.win()
-        elif self.attempts != 0:
-            return
-        else:
+        elif self.attempts == self.max_attempts - 1:
             self.display.lose()
+        else:
+            return
 
+    # TODO Deprecate this method
+    # TODO Need GUI form system to accept name input
+    # TODO Separate name input form from the actual game system
     def welcome(self):
         # welcome user the game
         print("\nWelcome to Hangman game\n")
@@ -67,6 +77,7 @@ class Hangman():
         print("The game is about to start!\n Let's play Hangman!")
         # time.sleep(3)
 
+    # TODO Deprecate this method
     def initialize(self):
         self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
         # variable word to set a randomly picked word as the word to guess
@@ -90,6 +101,7 @@ class Hangman():
     #     self.end()
 
     # TODO callback event for yes/no button action to inquire user for the next match
+    # TODO Deprecate this method
     # loop the game, as user if he or she wants to restart the game
     def repeat(self):
         # prompt user if he or she wants to play the game again
@@ -106,6 +118,7 @@ class Hangman():
             print("Thanks For Playing! We expect you back again!")
             return False
 
+    # TODO Deprecate this method
     # hangman method with each stage of the hangman
     def game(self):
         self.initialize()

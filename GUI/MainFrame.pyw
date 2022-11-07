@@ -18,6 +18,8 @@ class MainFrame(QtWidgets.QMainWindow):
     def __init__(self, parent=None,  handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir="../assets"):
 
         super(MainFrame, self).__init__(parent)
+        self.game = None
+        # TODO Word API needed to pass word to guess to hangman
         self.ui = Ui(assets_dir=assets_dir)
         self.setCentralWidget(self.ui)
         self.setLayout(QtWidgets.QHBoxLayout())
@@ -84,7 +86,7 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyListner(key, handler, append)
 
     def setKeyboardListner(self, handler, append=False):
-        self.ui.setKeyboardListner.setKeyListner(handler, append)
+        self.ui.keyboard.setKeyboardListner(handler, append)
 
     def reset(self):
         self.ui.keyboard.reset()
@@ -99,8 +101,27 @@ class MainFrame(QtWidgets.QMainWindow):
     def setWord(self, word):
         self.ui.wordBox.setWord(word)
 
-    def setCharactorAt(self, index, char):
-        self.ui.wordBox.setCharactorAt(index, char)
+    def setCharacterAt(self, index, char):
+        self.ui.wordBox.setCharacterAt(index, char)
+
+    # TODO setRemainingAttempts
+    def setRemainingAttempts(self, number):
+        print("TODO setRemainingAttempts(" + number + ")")
+
+    # TODO getRemainingAttempts
+    def getRemainingAttempts(self, number):
+        print("TODO getRemainingAttempts()")
+
+    # TODO win
+    def win(self):
+        print("TODO win()")
+
+    # TODO lose
+    def lose(self):
+        print("TODO lose()")
+
+    def setGame(self, game):
+        self.game = game
 
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):

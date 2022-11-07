@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets, uic
 import sys
-from GUI.CharactorBox import CharacterBox
+from GUI.CharacterBox import CharacterBox
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -24,8 +24,8 @@ class WordBox(QtWidgets.QWidget):
         self.characterBoxList = []
         self.setWord(word)
         # self.blank()
-        # self.setCharactorAt(0, "a")
-        # self.setCharactorAt(len(self.word) - 1, "a")
+        # self.setCharacterAt(0, "a")
+        # self.setCharacterAt(len(self.word) - 1, "a")
         self.blankAt(2)
 
     def setWord(self, word):
@@ -40,7 +40,7 @@ class WordBox(QtWidgets.QWidget):
             self.characterBoxList.append(char_box)
             self.wordFrame.layout().addWidget(char_box)
 
-    def setCharactorAt(self, index, char):
+    def setCharacterAt(self, index, char):
         if index >= len(self.word):
             print("Character index should not be over the length of word set in word box")
             return
@@ -48,7 +48,7 @@ class WordBox(QtWidgets.QWidget):
         self.setWord(self.word)
 
     def blankAt(self, index):
-        self.setCharactorAt(index, " ")
+        self.setCharacterAt(index, " ")
 
     def blank(self):
         self.setWord(" " * len(self.word))
