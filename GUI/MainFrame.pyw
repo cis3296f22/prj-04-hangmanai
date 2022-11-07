@@ -15,7 +15,7 @@ WINDOW_SIZE = 0
 
 
 class MainFrame(QtWidgets.QMainWindow):
-    def __init__(self, parent=None, assets_dir="../assets"):
+    def __init__(self, parent=None,  handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir="../assets"):
 
         super(MainFrame, self).__init__(parent)
         self.ui = Ui(assets_dir=assets_dir)
@@ -50,6 +50,8 @@ class MainFrame(QtWidgets.QMainWindow):
             if hasattr(self.ui, "title_bar"):
                 self.ui.title_bar.mouseMoveEvent = moveWindow
 
+        self.ui.keyboard.setKeyboardListner(handler)
+
         # Show window
         self.show()
 
@@ -78,7 +80,27 @@ class MainFrame(QtWidgets.QMainWindow):
             # Update button icon
             # self.ui.restoreButton.setIcon(QtGui.QIcon(u":/icons/icons/cil-window-restore.png"))  # Show minized icon
 
+    def setKeyListner(self, key, handler, append=False):
+        self.ui.keyboard.setKeyListner(key, handler, append)
 
+    def setKeyboardListner(self, handler, append=False):
+        self.ui.setKeyboardListner.setKeyListner(handler, append)
+
+    def reset(self):
+        self.ui.keyboard.reset()
+        self.ui.wordBox.reset()
+
+    def blank(self):
+        self.ui.wordBox.blank()
+
+    def blankAt(self, index):
+        self.ui.wordBox.blankAt(index)
+
+    def setWord(self, word):
+        self.ui.wordBox.setWord(word)
+
+    def setCharactorAt(self, index, char):
+        self.ui.wordBox.setCharactorAt(index, char)
 
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
