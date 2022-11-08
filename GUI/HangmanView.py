@@ -50,6 +50,7 @@ class HangmanView(QtWidgets.QWidget):
             height32 = width * height_ratio / width_ratio
             top = (height - height32) / 2
             left = 0
+
         else:
             height32 = height
             width32 = height32 * width_ratio / height_ratio
