@@ -34,7 +34,7 @@ class HangmanView(QtWidgets.QWidget):
         qp.begin(self)
         qp.setPen(QtGui.QColor(168, 34, 3))
         qp.setFont(QFont('Decorative', 10))
-        qp.drawText(e.rect(), QtCore.Qt.Alignment.AlignCenter, "Sample")
+        qp.drawText(e.rect(), QtCore.Qt.AlignmentFlag.AlignCenter, "Sample")
         qp.end()
         painter = QtGui.QPainter(self)
         painter.begin(self)
