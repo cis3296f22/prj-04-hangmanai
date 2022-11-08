@@ -35,18 +35,9 @@ class HangmanView(QtWidgets.QWidget):
         qp.setPen(QtGui.QColor(168, 34, 3))
         qp.setFont(QFont('Decorative', 10))
         qp.drawText(e.rect(), QtCore.Qt.AlignmentFlag.AlignCenter, "Sample")
-        qp.end()
-        painter = QtGui.QPainter(self)
-        painter.begin(self)
-        width = painter.device().width()
-        height = painter.device().height()
-        brush = QtGui.QBrush()
-        brush.setColor(QtGui.QColor(0, 255, 255))
-        # brush.setStyle(QtCore.Qt.SolidPattern)
-        # print(painter.device().width())
-        rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
-        painter.fillRect(rect, brush)
 
+        width = qp.device().width()
+        height = qp.device().height()
         width_ratio = 2
         height_ratio = 3
 
@@ -54,7 +45,7 @@ class HangmanView(QtWidgets.QWidget):
         height32 = None
         top = None
         left = None
-        if width * height_ratio / width_ratio > height:
+        if width * height_ratio / width_ratio < height:
             width32 = width
             height32 = width * height_ratio / width_ratio
             top = (height - height32) / 2
@@ -69,6 +60,30 @@ class HangmanView(QtWidgets.QWidget):
         height32 = int(height32)
         top = int(top)
         left = int(left)
+
+        print(left)
+        print(top)
+        print(width32)
+        print(height32)
+        rect = QtCore.QRect(left, top, width32, height32)
+
+        qp.fillRect(rect, Qt.BrushStyle.SolidPattern)
+        qp.end()
+
+
+        painter = QtGui.QPainter(self)
+        painter.begin(self)
+
+        brush = QtGui.QBrush()
+        brush.setColor(QtGui.QColor(0, 255, 255))
+        # brush.setStyle(QtCore.Qt.SolidPattern)
+        # print(painter.device().width())
+        rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
+        painter.fillRect(rect, brush)
+
+
+
+
 
         rect1 = QtCore.QRect(top, left, width32, height32)
         brush1 = QtGui.QBrush()
