@@ -7,6 +7,7 @@ from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime
 
 import sys
 
+from GUI.HangmanView import HangmanView
 from GUI.Keyboard import Keyboard
 from GUI.WordBox import WordBox
 from GUI.LifeBox import LifeBox
@@ -134,6 +135,7 @@ class Ui(QtWidgets.QWidget):
         self.keyboard = Keyboard(assets_dir=assets_dir)
         self.wordBox = WordBox(assets_dir=assets_dir)
         self.lifeBox = LifeBox(assets_dir=assets_dir)
+        self.hangmanDisplay = HangmanView(assets_dir=assets_dir)
         self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
         self.keyboardView.layout().addWidget(self.keyboard)
         self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
@@ -142,6 +144,10 @@ class Ui(QtWidgets.QWidget):
         self.lifeView.setLayout(QtWidgets.QHBoxLayout())
         self.lifeView.layout().setContentsMargins(0, 0, 0, 0)
         self.lifeView.layout().addWidget(self.lifeBox)
+
+        self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
+        self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
+        self.hangmanView.layout().addWidget(self.hangmanDisplay)
         # self.lifeBox.setMaxAttempts(7)
 
     def paintEvent(self, e):

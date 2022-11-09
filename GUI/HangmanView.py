@@ -7,7 +7,7 @@ from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime
 import sys
 from GUI.LifeCircle import LifeCircle
 from PyQt6.QtWidgets import QWidget, QApplication
-from PyQt6.QtGui import QPainter, QColor, QFont
+from PyQt6.QtGui import QPainter, QColor, QFont, QPen
 from PyQt6.QtCore import Qt
 
 class TestWindow(QtWidgets.QMainWindow):
@@ -32,7 +32,7 @@ class HangmanView(QtWidgets.QWidget):
         print("Painting")
         qp = QtGui.QPainter()
         qp.begin(self)
-        qp.setPen(QtGui.QColor(168, 34, 3))
+        # qp.setPen(QtGui.QColor(168, 34, 3))
         qp.setFont(QFont('Decorative', 10))
         qp.drawText(e.rect(), QtCore.Qt.AlignmentFlag.AlignCenter, "Sample")
 
@@ -61,42 +61,74 @@ class HangmanView(QtWidgets.QWidget):
         height32 = int(height32)
         top = int(top)
         left = int(left)
-
-        print(left)
-        print(top)
-        print(width32)
-        print(height32)
         rect = QtCore.QRect(left, top, width32, height32)
+        qp.setBrush(QColor(100, 100, 0))
+        qp.drawRect(rect)
+        # qp.fillRect(rect, Qt.BrushStyle.SolidPattern)
 
-        qp.fillRect(rect, Qt.BrushStyle.SolidPattern)
+
+        positionBottomBar = (
+            left,
+            top + int(height32 * 0.9),
+            width32,
+            int(height32 * 0.05)
+        )
+        qp.setBrush(QColor(255, 255, 255))
+        qp.drawRect(
+            positionBottomBar[0],
+            positionBottomBar[1],
+            positionBottomBar[2],
+            positionBottomBar[3])
+
+        positionPoll = (
+            left + int(width32 * 0.2),
+            top + int(height32 * 0.1),
+            int(width32 * 0.05),
+            int(height32 * 0.8)
+        )
+        qp.drawRect(
+            positionPoll[0],
+            positionPoll[1],
+            positionPoll[2],
+            positionPoll[3])
+
+        positionTopBar = (
+            left + int(width32 * 0.1),
+            top + int(height32 * 0.2),
+            int(width32 * 0.8),
+            int(height32 * 0.05)
+        )
+        qp.drawRect(
+            positionTopBar[0],
+            positionTopBar[1],
+            positionTopBar[2],
+            positionTopBar[3])
+
+        # pen = QPen(Qt.GlobalColor.white, int(height32 * 0.05), Qt.PenStyle.SolidLine)
+        #
+        # qp.setPen(pen)
+        #
+        # positionSupportBar = (
+        #     left + int(width32 * 0.2),
+        #     top + int(height32 * 0.4),
+        #     left + int(width32 * 0.4),
+        #     top + int(height32 * 0.2),
+        # )
+        # qp.drawLine(
+        #     positionSupportBar[0],
+        #     positionSupportBar[1],
+        #     positionSupportBar[2],
+        #     positionSupportBar[3])
+
+        qp.drawPolygon(
+            QtGui.QPolygon([
+                QPoint(left + int(width32 * 0.4), top + int(height32 * 0.2),),
+                QPoint(left + int(width32 * 0.5), top + int(height32 * 0.2), ),
+                QPoint(left + int(width32 * 0.2), top + int(height32 * 0.5), ),
+                QPoint(left + int(width32 * 0.2), top + int(height32 * 0.4) )
+            ]))
+
         qp.end()
-
-
-        painter = QtGui.QPainter(self)
-        painter.begin(self)
-
-        brush = QtGui.QBrush()
-        brush.setColor(QtGui.QColor(0, 255, 255))
-        # brush.setStyle(QtCore.Qt.SolidPattern)
-        # print(painter.device().width())
-        rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
-        painter.fillRect(rect, brush)
-
-
-
-
-
-        rect1 = QtCore.QRect(top, left, width32, height32)
-        brush1 = QtGui.QBrush()
-        brush1.setColor(QtGui.QColor(0, 0, 0))
-        painter.fillRect(rect1, brush1)
-
-
-
-
-
-
-        painter.end()
 
 
 
