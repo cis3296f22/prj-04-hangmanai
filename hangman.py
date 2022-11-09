@@ -1,8 +1,8 @@
 import random
 import time
 from easywords_list import easylist
-from medianwords_list import medianlist
-from hardwords_list import hardlist
+# from medianwords_list import medianlist
+# from hardwords_list import hardlist
 from PyQt6 import QtWidgets, uic, QtCore
 from PyQt6.QtCore import Qt
 
@@ -42,8 +42,8 @@ class Hangman():
             character = self.word[i] if self.word[i] in self.already_guessed else " "
             self.display.setCharacterAt(i, character)
 
-        self.welcome()
-        self.initialize()
+        # self.welcome()
+        # self.initialize()
     # FIXME Call back function for processing key pressing
     # NOTE Done coding, needs check
     def guess(self, char):
@@ -93,23 +93,23 @@ class Hangman():
     def initialize(self):
         difficulty = self.get_difficulty_input()
 
-        if difficulty == 'H':
-            self.word = self.words_to_guess[hardlist]
-        elif difficulty == 'M':
-            self.word = self.words_to_guess[medianlist]
-        else:
-            self.word = self.words_to_guess[easylist]
+        # if difficulty == 'H':
+        #     self.word = self.words_to_guess[hardlist]
+        # elif difficulty == 'M':
+        #     self.word = self.words_to_guess[medianlist]
+        # else:
+        #     self.word = self.words_to_guess[easylist]
 
-        self.word = random.choice(self.words_to_guess)
+        # self.word = random.choice(self.words_to_guess)
         self.length = len(self.word)
         self.count = 0
         self.display = '_' * self.length
         self.already_guessed = []
         self.play_game = ''
 
-        self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
-        # variable word to set a randomly picked word as the word to guess
-        self.word = random.choice(self.word_list)
+        # self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
+        # # variable word to set a randomly picked word as the word to guess
+        # self.word = random.choice(self.word_list)
         # initialize attempts as 0
         # self.attempts = 0
 
