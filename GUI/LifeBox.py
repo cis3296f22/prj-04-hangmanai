@@ -59,14 +59,8 @@ class LifeBox(QtWidgets.QWidget):
         if self.life <= 0:
             zeroHandler()
 
-    def blankAt(self, index):
-        self.setCharacterAt(index, " ")
-
-    def blank(self):
-        self.setWord(" " * len(self.word))
-
     def reset(self):
-        self.setWord("")
+        self.setLife(self.max_attempts)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

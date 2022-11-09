@@ -7,7 +7,7 @@ class TestWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
 
         super(TestWindow, self).__init__(parent)
-        self.form_widget = LifeCircle(toggle=False)
+        self.form_widget = LifeCircle()
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
         # self.setFixedHeight(500)
@@ -16,7 +16,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class LifeCircle(QtWidgets.QWidget):
-    def __init__(self, text="A", toggle=True, assets_dir="../assets"):
+    def __init__(self, assets_dir="../assets"):
         super(LifeCircle, self).__init__()
         uic.loadUi(assets_dir + '/ui/lifeCircle.ui', self)
         # self.setContentsMargins(2, 2, 2, 2)
