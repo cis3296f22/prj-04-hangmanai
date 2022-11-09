@@ -19,26 +19,35 @@ class WordBox(QtWidgets.QWidget):
         uic.loadUi(assets_dir + '/ui/wordBox.ui', self)
         self.assets_dir = assets_dir
         self.wordFrame.setLayout(QtWidgets.QHBoxLayout())
-        self.wordFrame.layout().setSpacing(20)
+        # self.wordFrame.layout().setSpacing(30)
         self.word = word
         self.characterBoxList = []
         self.setWord(word)
         # self.blank()
         # self.setCharacterAt(0, "a")
         # self.setCharacterAt(len(self.word) - 1, "a")
-        self.blankAt(2)
+        self.hideCharAt(2)
 
-    def setWord(self, word):
+    def setWord(self, word, hide=False):
         self.word = word.upper()
         for char_box in self.characterBoxList:
             self.wordFrame.layout().removeWidget(char_box)
 
         self.characterBoxList.clear()
 
+        # width = self.minimumWidth() * 0.8
+
         for char in self.word:
             char_box = CharacterBox(char, assets_dir=self.assets_dir)
+            # char_box.label.setMinimumWidth(int(width / len(self.word)))
             self.characterBoxList.append(char_box)
             self.wordFrame.layout().addWidget(char_box)
+
+        if hide:
+            self.hideWord()
+        else:
+            self.showWord()
+
 
     def setCharacterAt(self, index, char):
         if index >= len(self.word):
@@ -47,11 +56,20 @@ class WordBox(QtWidgets.QWidget):
         self.word = self.word[:index] + char + self.word[index + 1:]
         self.setWord(self.word)
 
-    def blankAt(self, index):
-        self.setCharacterAt(index, " ")
 
-    def blank(self):
-        self.setWord(" " * len(self.word))
+    def showWord(self):
+        for charBox in self.characterBoxList:
+            charBox.showChar()
+
+    def showCharAt(self, index):
+        self.characterBoxList[index].showChar()
+
+    def hideWord(self):
+        for charBox in self.characterBoxList:
+            charBox.hideChar()
+
+    def hideCharAt(self, index):
+        self.characterBoxList[index].hideChar()
 
     def reset(self):
         self.setWord("")

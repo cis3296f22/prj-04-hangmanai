@@ -1,4 +1,4 @@
-from PyQt6 import QtWidgets, uic
+from PyQt6 import QtWidgets, uic, QtCore
 import sys
 
 
@@ -11,12 +11,18 @@ class TestWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(
+            lambda: self.form_widget.hideChar() if self.form_widget.isShown() else self.form_widget.showChar()
+        )
+        self.timer.start(1000)
+        self.form_widget.hideChar()
 
 
 class CharacterBox(QtWidgets.QWidget):
     def __init__(self, text="A", assets_dir="../assets"):
         super(CharacterBox, self).__init__()
-        uic.loadUi(assets_dir + '/ui/characterBox.ui', self)
+        uic.loadUi(assets_dir + '/ui/characterBox_simple.ui', self)
         self.setText(text)
 
     def text(self):
@@ -29,13 +35,16 @@ class CharacterBox(QtWidgets.QWidget):
     #     print("Mouse clicked")
     #     # self.keyBackFrame.setStylesheet()
 
-    def reset(self):
-        self.clicked = False
-        self.disabled = False
+    def showChar(self):
+        # print("Show")
+        self.setDisabled(False)
 
-    def blank(self):
-        self.setText("")
+    def hideChar(self):
+        # print("Hide")
+        self.setDisabled(True)
 
+    def isShown(self):
+        return self.isEnabled()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

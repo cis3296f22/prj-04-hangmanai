@@ -18,7 +18,7 @@ from GUI.MainFrame import MainFrame
 # TODO Create new class which generates the list of words
 # TODO Separate word generate and select from the actual game.
 class Hangman():
-    def __init__(self, main_frame, word="sample", max_attempts=6):
+    def __init__(self, main_frame, word="Sameweadsadsadasdasl", max_attempts=6):
         # test of the words, later will be placed
         # self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
         self.word = word
@@ -36,22 +36,27 @@ class Hangman():
         # FIXME CHECK Mainframe callback set here
         self.display.setKeyboardListner(lambda x: self.guess(x))
         self.display.setMaxAttempts(max_attempts)
+        self.display.setWord(self.word, True)
 
     def updateUI(self):
+        self.display.setWord(self.word.upper(), True)
+        print(self.word)
         for i in range(len(self.word)):
-            character = self.word[i] if self.word[i] in self.already_guessed else " "
-            self.display.setCharacterAt(i, character)
+            if self.word.upper()[i] in self.already_guessed:
+                self.display.showCharAt(i)
+            else:
+                self.display.hideCharAt(i)
 
         # self.welcome()
         # self.initialize()
     # FIXME Call back function for processing key pressing
     # NOTE Done coding, needs check
     def guess(self, char):
-        if char in self.already_guessed:
+        if char.upper() in self.already_guessed:
             print("You cannot guess the same letter twice")
-        self.already_guessed.append(char)
+        self.already_guessed.append(char.upper())
 
-        if char not in self.word:
+        if char.upper() not in self.word.upper():
             self.attempts = self.attempts + 1
             self.display.setLife(self.max_attempts - self.attempts)
         self.updateUI()

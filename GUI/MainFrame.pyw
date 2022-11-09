@@ -94,14 +94,20 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.reset()
         self.ui.wordBox.reset()
 
-    def blank(self):
-        self.ui.wordBox.blank()
+    def hideWord(self):
+        self.ui.wordBox.hideWord()
 
-    def blankAt(self, index):
-        self.ui.wordBox.blankAt(index)
+    def hideCharAt(self, index):
+        self.ui.wordBox.hideCharAt(index)
 
-    def setWord(self, word):
-        self.ui.wordBox.setWord(word)
+    def showWord(self):
+        self.ui.wordBox.showWord()
+
+    def showCharAt(self, index):
+        self.ui.wordBox.showCharAt(index)
+
+    def setWord(self, word, hide=False):
+        self.ui.wordBox.setWord(word, hide)
 
     def setCharacterAt(self, index, char):
         self.ui.wordBox.setCharacterAt(index, char)
@@ -152,12 +158,12 @@ class Ui(QtWidgets.QWidget):
 
     def paintEvent(self, e):
         super().paintEvent(e)
-        print("Painting")
+        # print("Painting")
         painter = QtGui.QPainter(self)
         brush = QtGui.QBrush()
         brush.setColor(QtGui.QColor(100, 100, 100))
         # brush.setStyle(QtCore.Qt.SolidPattern)
-        print(painter.device().width())
+        # print(painter.device().width())
         rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
         painter.fillRect(rect, brush)
         painter.end()
