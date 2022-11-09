@@ -136,7 +136,7 @@ class MainFrame(QtWidgets.QMainWindow):
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
         super(Ui, self).__init__()
-        uic.loadUi(assets_dir + '/ui/main.ui', self)
+        uic.loadUi(assets_dir + '/ui/main_v2.ui', self)
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
         self.keyboard = Keyboard(assets_dir=assets_dir)
         self.wordBox = WordBox(assets_dir=assets_dir)

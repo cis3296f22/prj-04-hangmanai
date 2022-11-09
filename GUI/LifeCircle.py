@@ -18,7 +18,7 @@ class TestWindow(QtWidgets.QMainWindow):
 class LifeCircle(QtWidgets.QWidget):
     def __init__(self, text="A", toggle=True, assets_dir="../assets"):
         super(LifeCircle, self).__init__()
-        uic.loadUi(assets_dir + '/ui/lifeCircle.ui', self)
+        uic.loadUi(assets_dir + '/ui/lifeCircle_v2.ui', self)
         # self.setContentsMargins(2, 2, 2, 2)
         shadow = QtWidgets.QGraphicsDropShadowEffect(self.circleFrame,
                                                      blurRadius=9.0,
