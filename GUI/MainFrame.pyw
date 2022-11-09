@@ -7,18 +7,22 @@ from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime
 
 import sys
 
-from Keyboard import Keyboard
-from WordBox import WordBox
+from GUI.HangmanView import HangmanView
+from GUI.Keyboard import Keyboard
+from GUI.WordBox import WordBox
+from GUI.LifeBox import LifeBox
 
 # Global value for the windows status
 WINDOW_SIZE = 0
 
 
-class MyMainWindow(QtWidgets.QMainWindow):
-    def __init__(self, parent=None):
+class MainFrame(QtWidgets.QMainWindow):
+    def __init__(self, parent=None,  handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir="../assets"):
 
-        super(MyMainWindow, self).__init__(parent)
-        self.ui = Ui()
+        super(MainFrame, self).__init__(parent)
+        self.game = None
+        # TODO Word API needed to pass word to guess to hangman
+        self.ui = Ui(assets_dir=assets_dir)
         self.setCentralWidget(self.ui)
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
@@ -50,6 +54,8 @@ class MyMainWindow(QtWidgets.QMainWindow):
             if hasattr(self.ui, "title_bar"):
                 self.ui.title_bar.mouseMoveEvent = moveWindow
 
+        self.ui.keyboard.setKeyboardListner(handler)
+
         # Show window
         self.show()
 
@@ -78,22 +84,85 @@ class MyMainWindow(QtWidgets.QMainWindow):
             # Update button icon
             # self.ui.restoreButton.setIcon(QtGui.QIcon(u":/icons/icons/cil-window-restore.png"))  # Show minized icon
 
+    def setKeyListner(self, key, handler, append=False):
+        self.ui.keyboard.setKeyListner(key, handler, append)
+
+    def setKeyboardListner(self, handler, append=False):
+        self.ui.keyboard.setKeyboardListner(handler, append)
+
+    def reset(self):
+        self.ui.keyboard.reset()
+        self.ui.wordBox.reset()
+
+    def blank(self):
+        self.ui.wordBox.blank()
+
+    def blankAt(self, index):
+        self.ui.wordBox.blankAt(index)
+
+    def setWord(self, word):
+        self.ui.wordBox.setWord(word)
+
+    def setCharacterAt(self, index, char):
+        self.ui.wordBox.setCharacterAt(index, char)
+
+    # TODO setRemainingAttempts
+    def setMaxAttempts(self, max_attempts):
+        self.ui.lifeBox.setMaxAttempts(max_attempts)
+
+    def setLife(self, number):
+        self.ui.lifeBox.setLife(number)
+
+    def takeLife(self, zeroHandler):
+        self.ui.lifeBox.takeLife(zeroHandler)
+
+    # TODO win
+    def win(self):
+        print("TODO win()")
+
+    # TODO lose
+    def lose(self):
+        print("TODO lose()")
+
+    def setGame(self, game):
+        self.game = game
 
 class Ui(QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self, assets_dir="../assets"):
         super(Ui, self).__init__()
-        uic.loadUi('../assets/ui/main.ui', self)
+        uic.loadUi(assets_dir + '/ui/main.ui', self)
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
-        self.keyboard = Keyboard()
-        self.wordBox = WordBox()
+        self.keyboard = Keyboard(assets_dir=assets_dir)
+        self.wordBox = WordBox(assets_dir=assets_dir)
+        self.lifeBox = LifeBox(assets_dir=assets_dir)
+        self.hangmanDisplay = HangmanView(assets_dir=assets_dir)
         self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
         self.keyboardView.layout().addWidget(self.keyboard)
         self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
         self.wordInputView.layout().setContentsMargins(0, 0, 0, 0)
         self.wordInputView.layout().addWidget(self.wordBox)
+        self.lifeView.setLayout(QtWidgets.QHBoxLayout())
+        self.lifeView.layout().setContentsMargins(0, 0, 0, 0)
+        self.lifeView.layout().addWidget(self.lifeBox)
 
+        self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
+        self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
+        self.hangmanView.layout().addWidget(self.hangmanDisplay)
+        # self.lifeBox.setMaxAttempts(7)
+
+    def paintEvent(self, e):
+        super().paintEvent(e)
+        print("Painting")
+        painter = QtGui.QPainter(self)
+        brush = QtGui.QBrush()
+        brush.setColor(QtGui.QColor(100, 100, 100))
+        # brush.setStyle(QtCore.Qt.SolidPattern)
+        print(painter.device().width())
+        rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
+        painter.fillRect(rect, brush)
+        painter.end()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    widget = MyMainWindow()
+    widget = MainFrame()
     app.exec()

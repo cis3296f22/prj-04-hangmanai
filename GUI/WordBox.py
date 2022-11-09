@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets, uic
 import sys
-from CharactorBox import CharacterBox
+from GUI.CharacterBox import CharacterBox
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -14,18 +14,18 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class WordBox(QtWidgets.QWidget):
-    def __init__(self, word="Sample"):
+    def __init__(self, word="Sample", assets_dir="../assets"):
         super(WordBox, self).__init__()
-        uic.loadUi('../assets/ui/wordBox.ui', self)
-
+        uic.loadUi(assets_dir + '/ui/wordBox.ui', self)
+        self.assets_dir = assets_dir
         self.wordFrame.setLayout(QtWidgets.QHBoxLayout())
         self.wordFrame.layout().setSpacing(20)
         self.word = word
         self.characterBoxList = []
         self.setWord(word)
         # self.blank()
-        # self.setCharactorAt(0, "a")
-        # self.setCharactorAt(len(self.word) - 1, "a")
+        # self.setCharacterAt(0, "a")
+        # self.setCharacterAt(len(self.word) - 1, "a")
         self.blankAt(2)
 
     def setWord(self, word):
@@ -36,11 +36,11 @@ class WordBox(QtWidgets.QWidget):
         self.characterBoxList.clear()
 
         for char in self.word:
-            char_box = CharacterBox(char)
+            char_box = CharacterBox(char, assets_dir=self.assets_dir)
             self.characterBoxList.append(char_box)
             self.wordFrame.layout().addWidget(char_box)
 
-    def setCharactorAt(self, index, char):
+    def setCharacterAt(self, index, char):
         if index >= len(self.word):
             print("Character index should not be over the length of word set in word box")
             return
@@ -48,7 +48,7 @@ class WordBox(QtWidgets.QWidget):
         self.setWord(self.word)
 
     def blankAt(self, index):
-        self.setCharactorAt(index, " ")
+        self.setCharacterAt(index, " ")
 
     def blank(self):
         self.setWord(" " * len(self.word))

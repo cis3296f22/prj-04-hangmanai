@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets, uic
-import sys
-from Keytop import KeyTop
+import sys, os
+from GUI.Keytop import KeyTop
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -16,9 +16,11 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class Keyboard(QtWidgets.QWidget):
-    def __init__(self, handler=lambda x: print("Keyboard handler [" + x + "]")):
+    def __init__(self, handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir="../assets"):
         super(Keyboard, self).__init__()
-        uic.loadUi('../assets/ui/keyboard.ui', self)
+        self.assets_dir = assets_dir
+
+        uic.loadUi(assets_dir + '/ui/keyboard.ui', self)
         # self.text(text)
 
         keyRowsMap = {self.keyboardFirstRowView: "qwertyuiop",
@@ -32,7 +34,7 @@ class Keyboard(QtWidgets.QWidget):
         for key in keyRowsMap:
             key.setLayout(QtWidgets.QHBoxLayout())
             for letter in keyRowsMap[key]:
-                keyTop = KeyTop(letter)
+                keyTop = KeyTop(letter, assets_dir=self.assets_dir)
                 self.keyMap[letter] = keyTop
                 key.layout().addWidget(keyTop)
 

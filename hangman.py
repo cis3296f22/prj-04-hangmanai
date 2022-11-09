@@ -1,26 +1,77 @@
 import random
 import time
 from easywords_list import easylist
-from medianwords_list import medianlist
-from hardwords_list import hardlist
+# from medianwords_list import medianlist
+# from hardwords_list import hardlist
+from PyQt6 import QtWidgets, uic, QtCore
+from PyQt6.QtCore import Qt
+
+from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
+                          QSize, QTime, QTimer, QUrl, Qt, QEvent)
+
+import sys
+
+from GUI.MainFrame import MainFrame
 
 
-# main function
+# TODO Create new class which generates the list of words
+# TODO Separate word generate and select from the actual game.
 class Hangman():
-
-    def __init__(self):
+    def __init__(self, main_frame, word="sample", max_attempts=6):
         # test of the words, later will be placed
-        self.words_to_guess = None
-        self.word = None
-        self.length = None
-        self.count = None
-        self.display = None
-        self.already_guessed = None
-        self.play_game = None
-        self.name = None
+        # self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
+        self.word = word
+        self.attempts = 0
+        self.max_attempts = max_attempts
+        self.display = main_frame
+        self.already_guessed = []
+        # self.play_game = True
+        self.name = "Unknown"
 
-        self.welcome()
-        self.initialize()
+        # self.welcome()
+        # self.initialize()
+
+        self.updateUI()
+        # FIXME CHECK Mainframe callback set here
+        self.display.setKeyboardListner(lambda x: self.guess(x))
+        self.display.setMaxAttempts(max_attempts)
+
+    def updateUI(self):
+        for i in range(len(self.word)):
+            character = self.word[i] if self.word[i] in self.already_guessed else " "
+            self.display.setCharacterAt(i, character)
+
+        # self.welcome()
+        # self.initialize()
+    # FIXME Call back function for processing key pressing
+    # NOTE Done coding, needs check
+    def guess(self, char):
+        if char in self.already_guessed:
+            print("You cannot guess the same letter twice")
+        self.already_guessed.append(char)
+
+        if char not in self.word:
+            self.attempts = self.attempts + 1
+            self.display.setLife(self.max_attempts - self.attempts)
+        self.updateUI()
+
+        self.finishGameCondition()
+
+    # FIXME See if game ends 1) Attempts reaches 0 with incompleted word or 2) Guessed word correctly
+    # NOTE Done coding, needs check
+    def finishGameCondition(self):
+        all_match = all([(x in self.already_guessed) for x in self.word])
+        if self.max_attempts - self.attempts > 0 and all_match:
+            self.display.win()
+        elif self.attempts >= self.max_attempts:
+            self.display.lose()
+        else:
+            return
+
+    # TODO Deprecate this method
+    # TODO Need GUI form system to accept name input
+    # TODO Separate name input form from the actual game system
 
     def welcome(self):
         # welcome user the game
@@ -29,9 +80,9 @@ class Hangman():
         self.name = input("Enter your name: ")
         # wait for the game to start
         print("Hello " + self.name + ", welcome to Hangman Extra!")
-        time.sleep(2)
+        # time.sleep(2)
         print("The game is about to start!\n Let's play Hangman!")
-        time.sleep(3)
+        # time.sleep(3)
 
     # promot for input for difficulty level
     def get_difficulty_input(self):
@@ -42,20 +93,31 @@ class Hangman():
     def initialize(self):
         difficulty = self.get_difficulty_input()
 
-        if difficulty == 'H':
-            self.word = self.words_to_guess[hardlist]
-        elif difficulty == 'M':
-            self.word = self.words_to_guess[medianlist]
-        else:
-            self.word = self.words_to_guess[easylist]
+        # if difficulty == 'H':
+        #     self.word = self.words_to_guess[hardlist]
+        # elif difficulty == 'M':
+        #     self.word = self.words_to_guess[medianlist]
+        # else:
+        #     self.word = self.words_to_guess[easylist]
 
-        self.word = random.choice(self.words_to_guess)
+        # self.word = random.choice(self.words_to_guess)
         self.length = len(self.word)
         self.count = 0
         self.display = '_' * self.length
         self.already_guessed = []
         self.play_game = ''
 
+        # self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
+        # # variable word to set a randomly picked word as the word to guess
+        # self.word = random.choice(self.word_list)
+        # initialize attempts as 0
+        # self.attempts = 0
+
+        # display the word the underline will show how many letter are in the word.
+        # self.display = '_' * self.length
+        self.display.setWord(self.word)
+        self.display.blank()
+        # self.play_game = True
 
     def play(self):
         self.main_loop()
@@ -82,6 +144,7 @@ class Hangman():
             print("Thanks For Playing! We expect you back again!")
             return False
 
+    # TODO Deprecate this method
     # hangman method with each stage of the hangman
     def game(self):
         self.initialize()
@@ -190,5 +253,11 @@ class Hangman():
 
 
 if __name__ == "__main__":
-    game = Hangman()
-    game.play()
+    # game = Hangman()
+    # game.play()
+
+    app = QtWidgets.QApplication(sys.argv)
+    main_frame = MainFrame(assets_dir="assets")
+    game = Hangman(main_frame)
+
+    app.exec()
