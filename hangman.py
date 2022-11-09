@@ -1,5 +1,8 @@
 import random
 import time
+from easywords_list import easylist
+from medianwords_list import medianlist
+from hardwords_list import hardlist
 from PyQt6 import QtWidgets, uic, QtCore
 from PyQt6.QtCore import Qt
 
@@ -39,12 +42,13 @@ class Hangman():
             character = self.word[i] if self.word[i] in self.already_guessed else " "
             self.display.setCharacterAt(i, character)
 
+        self.welcome()
+        self.initialize()
     # FIXME Call back function for processing key pressing
     # NOTE Done coding, needs check
     def guess(self, char):
         if char in self.already_guessed:
             print("You cannot guess the same letter twice")
-
         self.already_guessed.append(char)
 
         if char not in self.word:
@@ -68,6 +72,7 @@ class Hangman():
     # TODO Deprecate this method
     # TODO Need GUI form system to accept name input
     # TODO Separate name input form from the actual game system
+
     def welcome(self):
         # welcome user the game
         print("\nWelcome to Hangman game\n")
@@ -79,8 +84,29 @@ class Hangman():
         print("The game is about to start!\n Let's play Hangman!")
         # time.sleep(3)
 
-    # TODO Deprecate this method
+    # promot for input for difficulty level
+    def get_difficulty_input(self):
+
+        difficulty = input('Before the game starts please pick a level! E for easy, M for median, H for hard!\n')
+        return difficulty.upper()
+
     def initialize(self):
+        difficulty = self.get_difficulty_input()
+
+        if difficulty == 'H':
+            self.word = self.words_to_guess[hardlist]
+        elif difficulty == 'M':
+            self.word = self.words_to_guess[medianlist]
+        else:
+            self.word = self.words_to_guess[easylist]
+
+        self.word = random.choice(self.words_to_guess)
+        self.length = len(self.word)
+        self.count = 0
+        self.display = '_' * self.length
+        self.already_guessed = []
+        self.play_game = ''
+
         self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
         # variable word to set a randomly picked word as the word to guess
         self.word = random.choice(self.word_list)
@@ -93,17 +119,15 @@ class Hangman():
         self.display.blank()
         # self.play_game = True
 
-    # def play(self):
-    #     self.main_loop()
+    def play(self):
+        self.main_loop()
 
-    # def main_loop(self):
-    #     self.game()
-    #     while self.repeat():
-    #         self.game()
-    #     self.end()
+    def main_loop(self):
+        self.game()
+        while self.repeat():
+            self.game()
+        self.end()
 
-    # TODO callback event for yes/no button action to inquire user for the next match
-    # TODO Deprecate this method
     # loop the game, as user if he or she wants to restart the game
     def repeat(self):
         # prompt user if he or she wants to play the game again
@@ -148,11 +172,11 @@ class Hangman():
             elif guess in self.already_guessed:
                 print("Try another letter.\n")
 
-            # lost 1 live attempts +1
+            # lost 1 live count +1
             else:
-                self.attempts += 1
+                self.count += 1
 
-                if self.attempts == 1:
+                if self.count == 1:
                     time.sleep(1)
                     print("   _____ \n"
                           "  |      \n"
@@ -162,36 +186,36 @@ class Hangman():
                           "  |      \n"
                           "  |      \n"
                           "__|__\n")
-                    print("Wrong guess. " + str(limit - self.attempts) + " guesses remaining\n")
+                    print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
 
-                # lost 2 lives attempts +2
-                elif self.attempts == 2:
-                    time.sleep(1)
-                    print("   _____ \n"
-                          "  |     | \n"
-                          "  |     |\n"
-                          "  |      \n"
-                          "  |      \n"
-                          "  |      \n"
-                          "  |      \n"
-                          "__|__\n")
-                    print("Wrong guess. " + str(limit - self.attempts) + " guesses remaining\n")
-
-                # lost 3 lives attempts +3
-                elif self.attempts == 3:
+                # lost 2 lives count +2
+                elif self.count == 2:
                     time.sleep(1)
                     print("   _____ \n"
                           "  |     | \n"
                           "  |     |\n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "  |      \n"
+                          "__|__\n")
+                    print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
+
+                # lost 3 lives count +3
+                elif self.count == 3:
+                    time.sleep(1)
+                    print("   _____ \n"
+                          "  |     | \n"
+                          "  |     |\n"
                           "  |     | \n"
                           "  |      \n"
                           "  |      \n"
                           "  |      \n"
                           "__|__\n")
-                    print("Wrong guess. " + str(limit - self.attempts) + " guesses remaining\n")
+                    print("Wrong guess. " + str(limit - self.count) + " guesses remaining\n")
 
-                # lost 4 lives attempts +4
-                elif self.attempts == 4:
+                # lost 4 lives count +4
+                elif self.count == 4:
                     time.sleep(1)
                     print("   _____ \n"
                           "  |     | \n"
@@ -201,10 +225,10 @@ class Hangman():
                           "  |      \n"
                           "  |      \n"
                           "__|__\n")
-                    print("Wrong guess. " + str(limit - self.attempts) + " last guess remaining\n")
+                    print("Wrong guess. " + str(limit - self.count) + " last guess remaining\n")
 
-                # lost 5 lives attempts +5
-                elif self.attempts == 5:
+                # lost 5 lives count +5
+                elif self.count == 5:
                     time.sleep(1)
                     print("   _____ \n"
                           "  |     | \n"
@@ -224,7 +248,7 @@ class Hangman():
                 print("You won the game.")
                 return
 
-            elif self.attempts != limit:
+            elif self.count != limit:
                 continue
 
 
