@@ -20,31 +20,32 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class CharacterBox(QtWidgets.QWidget):
-    def __init__(self, text="A", assets_dir="../assets"):
+    def __init__(self, text: str = "A", assets_dir: str = "../assets"):
         super(CharacterBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/characterBox_simple.ui', self)
         self.setText(text)
 
-    def text(self):
+    def text(self) -> str:
         return self.label.text()
 
-    def setText(self, text):
+    def setText(self, text: str) -> None:
         self.label.setText(text.upper())
 
     # def mousePressEvent(self, a0):
     #     print("Mouse clicked")
     #     # self.keyBackFrame.setStylesheet()
 
-    def showChar(self):
+    def showChar(self) -> None:
         # print("Show")
         self.setDisabled(False)
 
-    def hideChar(self):
+    def hideChar(self) -> None:
         # print("Hide")
         self.setDisabled(True)
 
-    def isShown(self):
+    def isShown(self) -> bool:
         return self.isEnabled()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

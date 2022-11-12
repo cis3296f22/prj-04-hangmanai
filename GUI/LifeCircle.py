@@ -2,12 +2,13 @@ from PyQt6 import QtWidgets, uic
 from PyQt6 import QtCore, QtGui
 import sys
 
+
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
 
         super(TestWindow, self).__init__(parent)
-        self.form_widget = LifeCircle(toggle=False)
+        self.form_widget = LifeCircle()
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
         # self.setFixedHeight(500)
@@ -16,7 +17,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class LifeCircle(QtWidgets.QWidget):
-    def __init__(self, text="A", toggle=True, assets_dir="../assets"):
+    def __init__(self, assets_dir: str = "../assets"):
         super(LifeCircle, self).__init__()
         uic.loadUi(assets_dir + '/ui/lifeCircle_v2.ui', self)
         # self.setContentsMargins(2, 2, 2, 2)
@@ -26,17 +27,16 @@ class LifeCircle(QtWidgets.QWidget):
                                                      offset=QtCore.QPointF(2.0, 2.0)
                                                      )
         self.setGraphicsEffect(shadow)
-        # self.setEnabled(False)
-        # print(self.isEnabled())
 
-    def setEnabled(self, boolean):
+    def setEnabled(self, boolean: bool) -> None:
         self.circleFrame.setEnabled(boolean)
 
-    def isEnabled(self):
+    def isEnabled(self) -> bool:
         return self.circleFrame.isEnabled()
 
-    def reset(self):
+    def reset(self) -> None:
         self.setEnabled(True)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

@@ -1,5 +1,6 @@
-from PyQt6 import QtWidgets, uic
+from PyQt6 import QtWidgets, uic, QtCore
 import sys
+
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -9,27 +10,30 @@ class TestWindow(QtWidgets.QMainWindow):
         self.form_widget = KeyTop(toggle=False)
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
-        # self.setFixedHeight(500)
-        # self.setFixedWidth(500)
         self.show()
 
 
 class KeyTop(QtWidgets.QWidget):
-    def __init__(self, text="A", toggle=True, assets_dir="../assets"):
+    def __init__(self,
+                 text: str = "A",
+                 toggle: bool = True,
+                 handler=lambda x: print("Default handler [" + x + "]"),
+                 assets_dir: str = "../assets"):
+
         super(KeyTop, self).__init__()
         uic.loadUi(assets_dir + '/ui/keytop_modern_v2.ui', self)
         self.setText(text)
-        self.char = text
-        self.toggle = toggle
-        self.setKeyListner(lambda x: print("Default handler [" + x + "]"))
+        self.char: str = text
+        self.toggle: bool = toggle
+        self.setKeyListner(handler)
         # print(self.isEnabled())
         # self.button.setDisabled(True)
         # self.background.setDisabled(True)
 
-    def text(self):
+    def text(self) -> str:
         return self.char
 
-    def setText(self, text):
+    def setText(self, text: str) -> None:
         self.char = text
         self.button.setText(text.upper())
 
@@ -42,23 +46,23 @@ class KeyTop(QtWidgets.QWidget):
         if self.toggle:
             self.setDisabled(True)
 
-
-    def isEnabled(self):
+    def isEnabled(self) -> bool:
         return self.button.isEnabled()
 
-    def setDisabled(self, boolean):
+    def setDisabled(self, boolean: bool) -> None:
         super(KeyTop, self).setDisabled(boolean)
         # self.disabled = boolean
 
     def reset(self):
         self.setEnabled(True)
 
-    def setKeyListner(self, handler, append=False):
+    def setKeyListner(self, handler, append: bool = False) -> None:
         if not append:
             self.button.disconnect()
         self.button.clicked.connect(
             lambda: [self.mouseReleaseEvent(None), handler(self.text())]
         )
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

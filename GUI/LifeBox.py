@@ -1,6 +1,8 @@
-from PyQt6 import QtWidgets, uic
+from PyQt6 import QtWidgets, uic, QtCore
 import sys
+
 from GUI.LifeCircle import LifeCircle
+
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -9,25 +11,28 @@ class TestWindow(QtWidgets.QMainWindow):
         super(TestWindow, self).__init__(parent)
         self.form_widget = LifeBox()
         self.setCentralWidget(self.form_widget)
-        self.form_widget.setLife(self.form_widget.max_attempts - 1)
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(lambda: self.form_widget.takeLife(self.form_widget.reset))
+        self.timer.start(1000)
+        print(type(lambda: self.form_widget.takeLife(self.form_widget.reset)))
 
 
 class LifeBox(QtWidgets.QWidget):
-    def __init__(self, max_attempts=5, assets_dir="../assets"):
+    def __init__(self, max_attempts: int = 5, assets_dir: str = "../assets"):
         super(LifeBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/lifeBox.ui', self)
-        self.assets_dir = assets_dir
-        self.max_attempts = max_attempts
-        self.life = max_attempts
-        self.lifeCircleList = []
+        self.assets_dir: str = assets_dir
+        self.max_attempts: int = max_attempts
+        self.life: int = max_attempts
+        self.lifeCircleList: list[LifeCircle] = []
 
         self.lifeFrame.setLayout(QtWidgets.QHBoxLayout())
         # self.lifeFrame.layout().setSpacing(15)
         self.setLife(self.max_attempts)
 
-    def setLife(self, number):
+    def setLife(self, number: int) -> None:
         self.life = number
         if self.life > self.max_attempts:
             print("You cannot assign more life than max life specified -> " + str(self.life))
@@ -49,24 +54,27 @@ class LifeBox(QtWidgets.QWidget):
             self.lifeCircleList.append(life_circle)
             self.lifeFrame.layout().addWidget(life_circle)
 
-    def setMaxAttempts(self, max_attempts):
+    def getLife(self) -> int:
+        return self.life
+
+    def isZero(self) -> bool:
+        if self.life <= 0:
+            return True
+        else:
+            return False
+
+    def setMaxAttempts(self, max_attempts: int) -> None:
         self.max_attempts = max_attempts
         self.setLife(self.max_attempts)
 
-    def takeLife(self, zeroHandler):
+    def takeLife(self, zeroHandler) -> None:
         self.life = self.life - 1
         self.setLife(self.life)
-        if self.life <= 0:
+        if self.isZero():
             zeroHandler()
 
-    def blankAt(self, index):
-        self.setCharacterAt(index, " ")
-
-    def blank(self):
-        self.setWord(" " * len(self.word))
-
     def reset(self):
-        self.setWord("")
+        self.setLife(self.max_attempts)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
