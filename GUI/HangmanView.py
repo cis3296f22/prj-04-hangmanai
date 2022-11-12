@@ -27,14 +27,14 @@ class HangmanView(QtWidgets.QWidget):
         uic.loadUi(assets_dir + '/ui/hangmanView.ui', self)
         self.assets_dir = assets_dir
 
+        self.thicknessRatio = 0.05
+        self.thickness = self.thicknessRatio * 0
+
     def paintEvent(self, e):
-        # super().paintEvent(e)
-        print("Painting")
+
+
         qp = QtGui.QPainter()
         qp.begin(self)
-        # qp.setPen(QtGui.QColor(168, 34, 3))
-        qp.setFont(QFont('Decorative', 10))
-        qp.drawText(e.rect(), QtCore.Qt.AlignmentFlag.AlignCenter, "Sample")
 
         width = qp.device().width()
         height = qp.device().height()
@@ -61,76 +61,153 @@ class HangmanView(QtWidgets.QWidget):
         height32 = int(height32)
         top = int(top)
         left = int(left)
+
+        self.thickness = int(self.thicknessRatio * width32)
+
+
+        qp.setBrush(QColor(29, 27, 24))
+        pen = QPen()
+        pen.setStyle(Qt.PenStyle.NoPen)
+        qp.setPen(pen)
+
         rect = QtCore.QRect(left, top, width32, height32)
-        qp.setBrush(QColor(100, 100, 0))
         qp.drawRect(rect)
-        # qp.fillRect(rect, Qt.BrushStyle.SolidPattern)
 
 
+        self.drawBase(qp, QColor(100, 100, 100), left, top, width32, height32)
+        self.drawSupport(qp, QColor(100, 100, 100), left, top, width32, height32)
+        self.drawPoll(qp, QColor(100, 100, 100), left, top, width32, height32)
+        self.drawTop(qp, QColor(100, 100, 100), left, top, width32, height32)
+        self.drawHanger(qp, QColor(100, 100, 100), left, top, width32, height32)
+
+        self.drawHead(qp, QColor(255, 255, 255), left, top, width32, height32)
+        self.drawBody(qp, QColor(255, 255, 255), left, top, width32, height32)
+        self.drawLeftArm(qp, QColor(255, 255, 255), left, top, width32, height32)
+        self.drawRightArm(qp, QColor(255, 255, 255), left, top, width32, height32)
+        self.drawLeftLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
+        self.drawRightLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
+
+        qp.end()
+
+
+    def drawBase(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        # brush = QtGui.QBrush(QColor(255, 255, 255))
+        # brush.setStyle(Qt.BrushStyle.Dense6Pattern)
+        painter.setBrush(color)
         positionBottomBar = (
             left,
-            top + int(height32 * 0.9),
-            width32,
-            int(height32 * 0.05)
+            top + int(height * 0.9),
+            width,
+            self.thickness
         )
-        qp.setBrush(QColor(255, 255, 255))
-        qp.drawRect(
+
+        painter.drawRect(
             positionBottomBar[0],
             positionBottomBar[1],
             positionBottomBar[2],
             positionBottomBar[3])
 
+    def drawPoll(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        painter.setBrush(color)
         positionPoll = (
-            left + int(width32 * 0.2),
-            top + int(height32 * 0.1),
-            int(width32 * 0.05),
-            int(height32 * 0.8)
+            left + int(width * 0.2),
+            top + int(height * 0.1),
+            self.thickness,
+            int(height * 0.8)
         )
-        qp.drawRect(
+        painter.drawRect(
             positionPoll[0],
             positionPoll[1],
             positionPoll[2],
             positionPoll[3])
 
+    def drawTop(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        painter.setBrush(color)
         positionTopBar = (
-            left + int(width32 * 0.1),
-            top + int(height32 * 0.2),
-            int(width32 * 0.8),
-            int(height32 * 0.05)
+            left + int(width * 0.1),
+            top + int(height * 0.2),
+            int(width * 0.8),
+            self.thickness
         )
-        qp.drawRect(
+        painter.drawRect(
             positionTopBar[0],
             positionTopBar[1],
             positionTopBar[2],
             positionTopBar[3])
 
-        # pen = QPen(Qt.GlobalColor.white, int(height32 * 0.05), Qt.PenStyle.SolidLine)
-        #
-        # qp.setPen(pen)
-        #
-        # positionSupportBar = (
-        #     left + int(width32 * 0.2),
-        #     top + int(height32 * 0.4),
-        #     left + int(width32 * 0.4),
-        #     top + int(height32 * 0.2),
-        # )
-        # qp.drawLine(
-        #     positionSupportBar[0],
-        #     positionSupportBar[1],
-        #     positionSupportBar[2],
-        #     positionSupportBar[3])
-
-        qp.drawPolygon(
+    def drawSupport(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        painter.setBrush(color)
+        painter.drawPolygon(
             QtGui.QPolygon([
-                QPoint(left + int(width32 * 0.4), top + int(height32 * 0.2),),
-                QPoint(left + int(width32 * 0.5), top + int(height32 * 0.2), ),
-                QPoint(left + int(width32 * 0.2), top + int(height32 * 0.5), ),
-                QPoint(left + int(width32 * 0.2), top + int(height32 * 0.4) )
+                QPoint(left + int(width * 0.4), top + int(height * 0.2)),
+                QPoint(left + int(width * 0.4) + self.thickness, top + int(height * 0.2)),
+                QPoint(left + int(width * 0.2), top + int(height * 0.4) + self.thickness),
+                QPoint(left + int(width * 0.2), top + int(height * 0.4))
             ]))
 
-        qp.end()
+    def drawHanger(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        pen = QPen(color)
+        pen.setWidth(self.thickness // 2)
+        painter.setPen(pen)
 
+        start = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.2))
+        end = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.35))
+        painter.drawLine(start, end)
 
+    def drawHead(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        pen = QPen(color)
+        painter.setPen(self.initPen(pen))
+        painter.setBrush(color)
+
+        radius = int(self.thickness * 1.5)
+        center = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.35))
+
+        painter.drawEllipse(center, radius, radius)
+
+    def drawBody(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        pen = QPen(color)
+        painter.setPen(self.initPen(pen))
+
+        start = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.35))
+        end = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.6))
+        painter.drawLine(start, end)
+
+    def drawLeftArm(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        pen = QPen(color)
+        painter.setPen(self.initPen(pen))
+
+        start = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.4))
+        end = QPoint(left + int(width * 0.5) + self.thickness, top + int(height * 0.5))
+        painter.drawLine(start, end)
+
+    def drawRightArm(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        pen = QPen(color)
+        painter.setPen(self.initPen(pen))
+
+        start = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.4))
+        end = QPoint(left + int(width * 0.7) + self.thickness, top + int(height * 0.5))
+        painter.drawLine(start, end)
+
+    def drawLeftLeg(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        pen = QPen(color)
+        painter.setPen(self.initPen(pen))
+
+        start = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.6))
+        end = QPoint(left + int(width * 0.5) + self.thickness, top + int(height * 0.7))
+        painter.drawLine(start, end)
+
+    def drawRightLeg(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int):
+        pen = QPen(color)
+        painter.setPen(self.initPen(pen))
+
+        start = QPoint(left + int(width * 0.6) + self.thickness, top + int(height * 0.6))
+        end = QPoint(left + int(width * 0.7) + self.thickness, top + int(height * 0.7))
+        painter.drawLine(start, end)
+
+    def initPen(self, pen: QPen):
+        pen.setWidth(self.thickness // 2)
+        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+        return pen
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

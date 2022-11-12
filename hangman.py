@@ -18,7 +18,7 @@ from GUI.MainFrame import MainFrame
 # TODO Create new class which generates the list of words
 # TODO Separate word generate and select from the actual game.
 class Hangman():
-    def __init__(self, main_frame, word="Sameweadsadsadasdasl", max_attempts=6):
+    def __init__(self, main_frame, word="Electrocardiographic", max_attempts=6):
         # test of the words, later will be placed
         # self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
         self.word = word
