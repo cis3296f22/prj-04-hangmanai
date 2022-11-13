@@ -184,7 +184,7 @@ class HangmanView(QtWidgets.QWidget):
         painter.setBrush(color)
         positionBottomBar = (
             left,
-            top + int(height * 0.9),
+            top + height - self.thickness,
             width,
             self.thickness
         )
@@ -201,7 +201,7 @@ class HangmanView(QtWidgets.QWidget):
             left + int(width * 0.2),
             top + int(height * 0.1),
             self.thickness,
-            int(height * 0.8)
+            int(height * 0.9)
         )
         painter.drawRect(
             positionPoll[0],

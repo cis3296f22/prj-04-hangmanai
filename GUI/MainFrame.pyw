@@ -8,6 +8,7 @@ from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime
 import sys
 
 from GUI.HangmanView import HangmanView
+from GUI.Home import Home
 from GUI.Keyboard import Keyboard
 from GUI.WordBox import WordBox
 from GUI.LifeBox import LifeBox
@@ -20,24 +21,32 @@ class MainFrame(QtWidgets.QMainWindow):
     def __init__(self, parent=None,  handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir="../assets"):
 
         super(MainFrame, self).__init__(parent)
+        self.assets_dir = assets_dir
         self.game = None
         # TODO Word API needed to pass word to guess to hangman
-        self.ui = Ui(assets_dir=assets_dir)
-        self.setCentralWidget(self.ui)
-        self.setLayout(QtWidgets.QHBoxLayout())
-        self.show()
+        # self.ui = Ui(assets_dir=assets_dir)
+        # self.setCentralWidget(self.ui)
+        self.ui = Ui(assets_dir=self.assets_dir)
+        self.home = Home(assets_dir=assets_dir, buttonHandler=self.transitMainGame)
+        self.setCentralWidget(self.home)
 
-        # Button click events to our top bar buttons
-        #
-        # Minimize window
-        if hasattr(self.ui, "minimizeButton"):
-            self.ui.minimizeButton.clicked.connect(lambda: self.showMinimized())
+        self.handler = handler
+        self.ui.keyboard.setKeyboardListner(handler)
+
+        self.show()
+        self.windowInit()
+
+        # self.ui.
+    def windowInit(self):
+        central_widget = self.centralWidget()
+        if hasattr(central_widget, "minimizeButton"):
+            central_widget.minimizeButton.clicked.connect(lambda: self.showMinimized())
         # Close window
-        if hasattr(self.ui, "closeButton"):
-            self.ui.closeButton.clicked.connect(lambda: self.close())
+        if hasattr(central_widget, "closeButton"):
+            central_widget.closeButton.clicked.connect(lambda: self.close())
         # Restore/Maximize window
-        if hasattr(self.ui, "restoreButton"):
-            self.ui.restoreButton.clicked.connect(lambda: self.restore_or_maximize_window())
+        if hasattr(central_widget, "restoreButton"):
+            central_widget.restoreButton.clicked.connect(lambda: self.restore_or_maximize_window())
 
         def moveWindow(event):
             if event.buttons() == Qt.MouseButton.LeftButton:
@@ -45,21 +54,26 @@ class MainFrame(QtWidgets.QMainWindow):
                 self.dragPos = event.globalPosition()
                 event.accept()
 
-        if hasattr(self.ui, "title_bar"):
+        if hasattr(central_widget, "title_bar"):
             # Remove window tlttle bar
             self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
 
             # Set main background to transparent
             self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
-            if hasattr(self.ui, "title_bar"):
-                self.ui.title_bar.mouseMoveEvent = moveWindow
-
-        self.ui.keyboard.setKeyboardListner(handler)
+            if hasattr(central_widget, "title_bar"):
+                central_widget.title_bar.mouseMoveEvent = moveWindow
 
         # Show window
         self.show()
 
-        # self.ui.
+
+    def transitMainGame(self):
+        self.setCentralWidget(self.ui)
+        self.windowInit()
+
+    def transitHome(self):
+        self.setCentralWidget(self.home)
+        self.windowInit()
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition()
