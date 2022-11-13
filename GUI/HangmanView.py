@@ -1,5 +1,7 @@
+import PyQt6.QtMultimedia
 from PyQt6 import QtWidgets, uic, QtCore
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import pyqtProperty, pyqtSignal
+from PyQt6.QtMultimedia import QSoundEffect
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
@@ -10,32 +12,97 @@ from PyQt6.QtWidgets import QWidget, QApplication
 from PyQt6.QtGui import QPainter, QColor, QFont, QPen
 from PyQt6.QtCore import Qt
 
+SOUND_FILE = "sound/knife.wav"
+
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
 
         super(TestWindow, self).__init__(parent)
-        self.form_widget = HangmanView()
+        self.form_widget = HangmanView(progress=1, debug_anim=True)
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
 
 
 class HangmanView(QtWidgets.QWidget):
-    def __init__(self, assets_dir: str = "../assets"):
+    def __init__(self, max_attempts: int = 5, progress: float = 0, assets_dir: str = "../assets", debug_anim: bool = False):
         super(HangmanView, self).__init__()
         uic.loadUi(assets_dir + '/ui/hangmanView.ui', self)
         self.assets_dir: str = assets_dir
 
         self.thicknessRatio: float = 0.05
         self.thickness: int = 1
-        self.progress_percentage: float = 0
+        self.progress_percentage: float = progress
+        self.max_attempts: int = max_attempts
+        self.attempts: int = self.max_attempts
+        self.debug_anim: bool = debug_anim
 
-    def setStageProgress(self, progress_ratio: float) -> None:
-        self.progress_percentage = progress_ratio
+        self.drawings = [
+            self.drawBase,
+            self.drawPoll,
+            self.drawSupport,
+            self.drawTop,
+            self.drawHanger,
+            self.drawHead,
+            self.drawBody,
+            self.drawLeftArm,
+            self.drawRightArm,
+            self.drawLeftLeg,
+            self.drawRightLeg
+        ]
+        self.value: float = 0
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda: self.animTest())
+        self.effect = None
+
+
+
+    def tageDamage(self)-> None:
+        filename = self.assets_dir + "/" + SOUND_FILE
+        self.effect = QSoundEffect()
+        self.effect.setSource(QUrl.fromLocalFile(filename))
+        self.effect.play()
+
+        self.value = 1
+        self.timer.start(10)
+        if self.attempts <= 0:
+            print("Hangman animation cannot got beyond")
+            return
+        self.attempts = self.attempts - 1
+        if self.attempts == 0:
+            self.setStageProgress(1)
+        else:
+            self.setStageProgress((self.max_attempts - self.attempts) / self.max_attempts)
+
+
+    def setMaxAttempts(self, max_attempts: int) -> None:
+        print("Changed max attempts (Hangman View) -> " + str(max_attempts))
+        self.max_attempts = max_attempts
+        self.attempts = max_attempts
+
+    def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
+        if self.debug_anim:
+            self.tageDamage()
+            self.reset()
+            self.progress_percentage = 1
+
+    def animTest(self):
+        self.value -= 0.1
+        if self.value < 0:
+            self.value = 1
+            self.timer.stop()
+        else:
+            self.repaint()
+
+    def setStageProgress(self, progress_percentage: float) -> None:
+        self.progress_percentage = progress_percentage
+        print("Changed max progress (Hangman View) -> " + str(progress_percentage))
+
+    def reset(self):
+        self.attempts = self.max_attempts
 
     def paintEvent(self, e) -> None:
-
 
         qp = QtGui.QPainter()
         qp.begin(self)
@@ -68,8 +135,8 @@ class HangmanView(QtWidgets.QWidget):
 
         self.thickness = int(self.thicknessRatio * width32)
 
-
         qp.setBrush(QColor(29, 27, 24))
+        # qp.setBrush(QColor(int(29 * self.value), int(27 * self.value), int(24 * self.value)))
         pen = QPen()
         pen.setStyle(Qt.PenStyle.NoPen)
         qp.setPen(pen)
@@ -78,19 +145,35 @@ class HangmanView(QtWidgets.QWidget):
         qp.drawRect(rect)
 
 
-        self.drawBase(qp, QColor(100, 100, 100), left, top, width32, height32)
-        self.drawSupport(qp, QColor(100, 100, 100), left, top, width32, height32)
-        self.drawPoll(qp, QColor(100, 100, 100), left, top, width32, height32)
-        self.drawTop(qp, QColor(100, 100, 100), left, top, width32, height32)
-        self.drawHanger(qp, QColor(100, 100, 100), left, top, width32, height32)
+        # self.drawBase(qp, QColor(100, 100, 100), left, top, width32, height32)
+        # self.drawSupport(qp, QColor(100, 100, 100), left, top, width32, height32)
+        # self.drawPoll(qp, QColor(100, 100, 100), left, top, width32, height32)
+        # self.drawTop(qp, QColor(100, 100, 100), left, top, width32, height32)
+        # self.drawHanger(qp, QColor(100, 100, 100), left, top, width32, height32)
+        #
+        # self.drawHead(qp, QColor(255, 255, 255), left, top, width32, height32)
+        # self.drawBody(qp, QColor(255, 255, 255), left, top, width32, height32)
+        # self.drawLeftArm(qp, QColor(255, 255, 255), left, top, width32, height32)
+        # self.drawRightArm(qp, QColor(255, 255, 255), left, top, width32, height32)
+        # self.drawLeftLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
+        # self.drawRightLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
 
-        self.drawHead(qp, QColor(255, 255, 255), left, top, width32, height32)
-        self.drawBody(qp, QColor(255, 255, 255), left, top, width32, height32)
-        self.drawLeftArm(qp, QColor(255, 255, 255), left, top, width32, height32)
-        self.drawRightArm(qp, QColor(255, 255, 255), left, top, width32, height32)
-        self.drawLeftLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
-        self.drawRightLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
+        for i in range(len(self.drawings)):
+            if self.progress_percentage <= i / len(self.drawings):
+                break
+            if i == (len(self.drawings) - 1) and self.progress_percentage != 1:
+                break
 
+            # color = QColor(100, 100, 100) if i < 5 else QColor(255, 255, 255)
+            color = QColor(
+                    100 + int((255 - 100) * self.value),
+                    100 + int((255 - 100) * self.value),
+                    100 + int((255 - 100) * self.value)) if i < 5 else QColor(
+                                                                    255,
+                                                                    255 - int(255 * self.value),
+                                                                    255 - int(255 * self.value))
+
+            self.drawings[i](qp, color, left, top, width32, height32)
 
         qp.end()
 

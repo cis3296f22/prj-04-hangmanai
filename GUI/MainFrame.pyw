@@ -115,12 +115,21 @@ class MainFrame(QtWidgets.QMainWindow):
     # TODO setRemainingAttempts
     def setMaxAttempts(self, max_attempts):
         self.ui.lifeBox.setMaxAttempts(max_attempts)
+        self.ui.hangmanDisplay.setMaxAttempts(max_attempts)
 
     def setLife(self, number):
+        life = self.ui.lifeBox.getLife()
         self.ui.lifeBox.setLife(number)
+        if life > number:
+            self.ui.hangmanDisplay.tageDamage()
 
     def takeLife(self, zeroHandler):
+
+        life = self.ui.lifeBox.getLife()
+        if life > 0:
+            self.ui.hangmanDisplay.tageDamage()
         self.ui.lifeBox.takeLife(zeroHandler)
+
 
     # TODO win
     def win(self):
@@ -156,17 +165,6 @@ class Ui(QtWidgets.QWidget):
         self.hangmanView.layout().addWidget(self.hangmanDisplay)
         # self.lifeBox.setMaxAttempts(7)
 
-    def paintEvent(self, e):
-        super().paintEvent(e)
-        # print("Painting")
-        painter = QtGui.QPainter(self)
-        brush = QtGui.QBrush()
-        brush.setColor(QtGui.QColor(100, 100, 100))
-        # brush.setStyle(QtCore.Qt.SolidPattern)
-        # print(painter.device().width())
-        rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
-        painter.fillRect(rect, brush)
-        painter.end()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
