@@ -8,6 +8,7 @@ from GUI.HangmanView import HangmanView
 from GUI.Home import Home
 from GUI.Keyboard import Keyboard
 from GUI.LifeBox import LifeBox
+from GUI.ScoreView import ScoreView
 from GUI.WordBox import WordBox
 
 # Global value for the windows status
@@ -167,12 +168,13 @@ class MainFrame(QtWidgets.QMainWindow):
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
         super(Ui, self).__init__()
-        uic.loadUi(assets_dir + '/ui/main_v3.ui', self)
+        uic.loadUi(assets_dir + '/ui/main_v4.ui', self)
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
         self.keyboard = Keyboard(assets_dir=assets_dir)
         self.wordBox = WordBox(assets_dir=assets_dir)
         self.lifeBox = LifeBox(assets_dir=assets_dir)
         self.hangmanDisplay = HangmanView(assets_dir=assets_dir)
+        self.scoreDisplay = ScoreView(assets_dir=assets_dir)
         self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
         self.keyboardView.layout().addWidget(self.keyboard)
         self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
@@ -193,7 +195,9 @@ class Ui(QtWidgets.QWidget):
                                                       self.wordBox.reset(),
                                                       self.lifeBox.reset(),
                                                       self.hangmanDisplay.reset()])
-
+        self.scoreView.setLayout(QtWidgets.QHBoxLayout())
+        self.scoreView.layout().setContentsMargins(0, 0, 0, 0)
+        self.scoreView.layout().addWidget(self.scoreDisplay)
         # self.lifeBox.setMaxAttempts(7)
 
 
