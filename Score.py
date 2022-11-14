@@ -5,6 +5,10 @@ class Score:
         return 5
 
     @staticmethod
+    def WRONG():
+        return 0
+
+    @staticmethod
     def LOSE():
         return 0
 

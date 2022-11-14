@@ -23,6 +23,7 @@ class ScoreView(QtWidgets.QWidget):
         super(ScoreView, self).__init__()
         uic.loadUi(assets_dir + '/ui/scoreView.ui', self)
 
+        self.confirmed_score = score
         self.score = score
         self.setScore(self.score)
 
@@ -31,7 +32,13 @@ class ScoreView(QtWidgets.QWidget):
 
     def setScore(self, score: int):
         self.score = score
-        self.scoreNum.setText(str(self.score))
+        print("Score set -> Score sum " + str(self.confirmed_score) + " temp score " + str(self.score))
+        self.scoreNum.setText(str(self.score + self.confirmed_score))
+
+    def confirmScore(self):
+        self.confirmed_score = self.confirmed_score + self.score
+        self.setScore(0)
+        print("Score confimed -> Score sum " + str(self.confirmed_score) + " temp score "  + str(self.score))
 
     def reset(self) -> None:
         self.setEnabled(True)

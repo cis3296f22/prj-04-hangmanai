@@ -12,6 +12,8 @@ from GUI.ScoreView import ScoreView
 from GUI.WordBox import WordBox
 
 # Global value for the windows status
+from Score import Score
+
 WINDOW_SIZE = 0
 
 
@@ -105,7 +107,15 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyListner(key, handler, append)
 
     def setKeyboardListner(self, handler, append=False):
-        self.ui.keyboard.setKeyboardListner(handler, append)
+        self.ui.keyboard.setKeyboardListner(lambda x, y:
+                                            [
+                                             self.ui.scoreDisplay.setScore(
+                                                 Score.CORRECT() * sum([char in y for char in self.ui.wordBox.getWord()])
+                                             ) if x in y else
+                                             self.ui.scoreDisplay.addScore(Score.WRONG()),
+                                                handler(x, y)
+
+                                             ], append)
 
     def reset(self):
         self.ui.keyboard.reset()
@@ -129,7 +139,6 @@ class MainFrame(QtWidgets.QMainWindow):
     def setCharacterAt(self, index, char):
         self.ui.wordBox.setCharacterAt(index, char)
 
-    # TODO setRemainingAttempts
     def setMaxAttempts(self, max_attempts):
         self.ui.lifeBox.setMaxAttempts(max_attempts)
         self.ui.hangmanDisplay.setMaxAttempts(max_attempts)
@@ -153,13 +162,15 @@ class MainFrame(QtWidgets.QMainWindow):
     def setHomeHandler(self, handler, append: bool = True):
         self.ui.hangmanDisplay.setHomeHandler(handler, append)
 
-    # TODO win
     def win(self):
         self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.WIN())
+        self.ui.scoreDisplay.confirmScore()
 
-    # TODO lose
     def lose(self):
         self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.LOSE())
+        self.ui.scoreDisplay.confirmScore()
 
     def setGame(self, game):
         self.game = game
