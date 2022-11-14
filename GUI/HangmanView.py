@@ -14,6 +14,7 @@ from PyQt6.QtCore import Qt
 
 SOUND_FILE = "sound/knife.wav"
 
+
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
@@ -132,12 +133,13 @@ class HangmanView(QtWidgets.QWidget):
     def overlayAnim(self) -> None:
         # if self.overlay < 0.5:
         #     self.overlay = 1
-        self.overlay -= 0.01
-        print(self.overlay)
+
         if self.overlay < 0.5:
             self.overlayTimer.stop()
         else:
+            self.overlay -= 0.01
             self.repaint()
+
 
     def damageAnim(self):
         if self.damageAnimValue <= 0:
@@ -232,8 +234,8 @@ class HangmanView(QtWidgets.QWidget):
         qp.end()
 
     def getHomeRect(self, left: int, top: int, width: int, height: int) -> QRectF:
-        center = QPointF(left + 0.5 * width, top + 0.6 * height)
-        size = QPointF(width * 0.4, height * 0.1)
+        center = QPointF(left + 0.5 * width, top + 0.7 * height)
+        size = QPointF(width * 0.8, height * 0.2)
         return QRectF(
             (center - size / 2),
             (center + size / 2)
@@ -253,7 +255,6 @@ class HangmanView(QtWidgets.QWidget):
         length = size.y() if size.y() < size.x() else size.x()
         corner_radius = int(length) / 2
         painter.drawRoundedRect(rect, corner_radius, corner_radius)
-
         color_icon = QColor(255, 255, 255, int(255 * ((1 - self.overlay) * 2)))
         pen = QPen(color_icon)
         pen.setWidth(int(height * 0.1 / 8))
@@ -281,8 +282,8 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawRect(rect)
 
     def getReplyButtonRect(self, left: int, top: int, width: int, height: int) -> QRectF:
-        center = QPointF(left + 0.5 * width, top + 0.4 * height)
-        size = QPointF(width * 0.4, height * 0.1)
+        center = QPointF(left + 0.5 * width, top + 0.3 * height)
+        size = QPointF(width * 0.8, height * 0.2)
         return QRectF(
             (center - size / 2),
             (center + size / 2)
@@ -314,7 +315,7 @@ class HangmanView(QtWidgets.QWidget):
         startAngle = 0 * 16
         spanAngle = -270 * 16
         pen = QPen(color_icon)
-        pen.setWidth(int(height * 0.1 / 8))
+        pen.setWidth(int(height * 0.2 / 8))
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
         painter.setPen(pen)
 

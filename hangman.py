@@ -37,12 +37,17 @@ class Hangman():
 
         self.updateUI()
         # FIXME CHECK Mainframe callback set here
+        self.setUpDisplay()
+
+    def setUpDisplay(self):
         self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
-        self.display.setMaxAttempts(max_attempts)
+        self.display.setMaxAttempts(self.max_attempts)
         self.display.setWord(self.word, True)
         self.display.setReplayHandler(self.reset)
+        self.display.setHomeHandler(self.reset)
 
     def reset(self):
+        self.setUpDisplay()
         self.attempts: int = 0
         self.already_guessed = []
         self.updateUI()
@@ -80,8 +85,10 @@ class Hangman():
         all_match = all([(x in self.already_guessed) for x in self.word.upper()])
         if self.max_attempts - self.attempts > 0 and all_match:
             self.display.win()
+            self.display.setKeyboardListner( lambda x, y: print("[" + x + "] -> " + str(y)))
         elif self.attempts >= self.max_attempts:
             self.display.lose()
+            self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
         else:
             return
 

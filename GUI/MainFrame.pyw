@@ -30,6 +30,7 @@ class MainFrame(QtWidgets.QMainWindow):
         # self.ui = Ui(assets_dir=assets_dir)
         # self.setCentralWidget(self.ui)
         self.ui = Ui(assets_dir=self.assets_dir)
+        self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
         self.home = Home(assets_dir=assets_dir, buttonHandler=self.transitMainGame)
         self.setCentralWidget(self.home)
 
@@ -69,12 +70,13 @@ class MainFrame(QtWidgets.QMainWindow):
         # Show window
         self.show()
 
-
     def transitMainGame(self):
+        self.home = self.takeCentralWidget()
         self.setCentralWidget(self.ui)
         self.windowInit()
 
     def transitHome(self):
+        self.ui = self.takeCentralWidget()
         self.setCentralWidget(self.home)
         self.windowInit()
 
@@ -150,6 +152,9 @@ class MainFrame(QtWidgets.QMainWindow):
     def setReplayHandler(self, handler, append: bool = True):
         self.ui.hangmanDisplay.setReplayHandler(handler, append)
 
+    def setHomeHandler(self, handler, append: bool = True):
+        self.ui.hangmanDisplay.setHomeHandler(handler, append)
+
     # TODO win
     def win(self):
         self.ui.hangmanDisplay.showReplayButton()
@@ -186,6 +191,11 @@ class Ui(QtWidgets.QWidget):
                                                       self.wordBox.reset(),
                                                       self.lifeBox.reset(),
                                                       self.hangmanDisplay.reset()])
+        self.hangmanDisplay.setHomeHandler(lambda: [self.keyboard.reset(),
+                                                      self.wordBox.reset(),
+                                                      self.lifeBox.reset(),
+                                                      self.hangmanDisplay.reset()])
+
         # self.lifeBox.setMaxAttempts(7)
 
 
