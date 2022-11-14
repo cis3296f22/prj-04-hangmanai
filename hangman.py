@@ -1,8 +1,6 @@
 import random
 import time
 
-from PyQt6.QtMultimedia import QSoundEffect
-
 from easywords_list import easylist
 # from medianwords_list import medianlist
 # from hardwords_list import hardlist

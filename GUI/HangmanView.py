@@ -1,7 +1,7 @@
 import PyQt6.QtMultimedia
 from PyQt6 import QtWidgets, uic, QtCore
 from PyQt6.QtCore import pyqtProperty, pyqtSignal, QPointF, QSizeF, QRectF
-from PyQt6.QtMultimedia import QSoundEffect
+from  PyQt6.QtMultimedia import QSoundEffect
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
