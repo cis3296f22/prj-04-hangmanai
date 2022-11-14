@@ -21,11 +21,13 @@ class TestWindow(QtWidgets.QMainWindow):
 class Home(QtWidgets.QWidget):
     def __init__(self, buttonHandler=lambda: print("Jump action"), assets_dir: str = "../assets"):
         super(Home, self).__init__()
-        uic.loadUi(assets_dir + '/ui/home.ui', self)
+        uic.loadUi(assets_dir + '/ui/home_v2.ui', self)
         self.assets_dir = assets_dir
 
         self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
+        self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
         self.hangmanView.layout().addWidget(HangmanView(progress=1, assets_dir=self.assets_dir))
+
         self.setJumpAction(buttonHandler)
 
     def setJumpAction(self, handler):
