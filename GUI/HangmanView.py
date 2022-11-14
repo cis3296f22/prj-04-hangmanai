@@ -1,6 +1,6 @@
 import PyQt6.QtMultimedia
 from PyQt6 import QtWidgets, uic, QtCore
-from PyQt6.QtCore import pyqtProperty, pyqtSignal
+from PyQt6.QtCore import pyqtProperty, pyqtSignal, QPointF, QSizeF, QRectF
 from PyQt6.QtMultimedia import QSoundEffect
 
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -9,7 +9,7 @@ from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime
 import sys
 from GUI.LifeCircle import LifeCircle
 from PyQt6.QtWidgets import QWidget, QApplication
-from PyQt6.QtGui import QPainter, QColor, QFont, QPen
+from PyQt6.QtGui import QPainter, QColor, QFont, QPen, QPolygon
 from PyQt6.QtCore import Qt
 
 SOUND_FILE = "sound/knife.wav"
@@ -26,7 +26,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class HangmanView(QtWidgets.QWidget):
-    def __init__(self, max_attempts: int = 5, progress: float = 0, assets_dir: str = "../assets", debug_anim: bool = False):
+    def __init__(self, max_attempts: int = 5, progress: float = 0, assets_dir: str = "../assets", reply_handler=lambda:print("Replay!!"), debug_anim: bool = False):
         super(HangmanView, self).__init__()
 
         uic.loadUi(assets_dir + '/ui/hangmanView.ui', self)
@@ -38,6 +38,7 @@ class HangmanView(QtWidgets.QWidget):
         self.max_attempts: int = max_attempts
         self.attempts: int = self.max_attempts
         self.debug_anim: bool = debug_anim
+        self.reply_handler = reply_handler
 
         self.drawings = [
             self.drawBase,
@@ -59,26 +60,27 @@ class HangmanView(QtWidgets.QWidget):
         self.overlay: float = 1
         self.overlayTimer = QTimer()
         self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
-        self.overlayTimer.start(100)
+        self.overlayTimer.start(5)
 
-    def overlayAnim(self):
-        # if self.overlay < 0.5:
-        #     self.overlay = 1
-        self.overlay -= 0.01
-        print(self.overlay)
-        if self.overlay < 0.5:
-            self.overlayTimer.stop()
-        else:
-            self.repaint()
+    def showReplayButton(self, duration: int = 5) -> None:
+        self.overlayTimer.start(duration)
 
-    def takeDamage(self)-> None:
+    def hideReplayButton(self) -> None:
+        self.overlayTimer.stop()
+        self.overlay = 1
+
+    def startDamageAnimation(self, duration: int = 5):
+        self.damageAnimValue = 1
+        self.damageTimer.start(duration)
+
+    def takeDamage(self) -> None:
         filename = self.assets_dir + "/" + SOUND_FILE
         self.effect = QSoundEffect()
         self.effect.setSource(QUrl.fromLocalFile(filename))
         self.effect.play()
 
-        self.damageAnimValue = 1
-        self.damageTimer.start(5)
+        self.startDamageAnimation(5)
+
         if self.attempts <= 0:
             print("Hangman animation cannot got beyond")
             return
@@ -88,16 +90,32 @@ class HangmanView(QtWidgets.QWidget):
         else:
             self.setStageProgress((self.max_attempts - self.attempts) / self.max_attempts)
 
+    def setReplayHandler(self, handler):
+        self.reply_handler = handler
+
+    def setStageProgress(self, progress_percentage: float) -> None:
+        self.progress_percentage = progress_percentage
 
     def setMaxAttempts(self, max_attempts: int) -> None:
         self.max_attempts = max_attempts
         self.attempts = max_attempts
 
-    def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
-        if self.debug_anim:
-            self.takeDamage()
-            self.reset()
-            self.progress_percentage = 1
+    def reset(self):
+        self.attempts = self.max_attempts
+        self.overlay = 1
+        self.damageAnimValue = 0
+        self.damageTimer.stop()
+        self.overlayTimer.stop()
+
+    def overlayAnim(self) -> None:
+        # if self.overlay < 0.5:
+        #     self.overlay = 1
+        self.overlay -= 0.01
+        print(self.overlay)
+        if self.overlay < 0.5:
+            self.overlayTimer.stop()
+        else:
+            self.repaint()
 
     def damageAnim(self):
         if self.damageAnimValue <= 0:
@@ -108,25 +126,25 @@ class HangmanView(QtWidgets.QWidget):
         else:
             self.repaint()
 
-    def setStageProgress(self, progress_percentage: float) -> None:
-        self.progress_percentage = progress_percentage
+    def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
+        if self.debug_anim:
+            self.takeDamage()
+            self.attempts = self.max_attempts
+            self.progress_percentage = 1
+        rect = self.getHangmanRect()
+        if self.getReplyButtonRect(
+                rect.left(), rect.top(), rect.width(), rect.height()
+        ).contains(event.position()) and self.overlay != 1:
+            if self.reply_handler is not None:
+                self.reply_handler()
 
-    def reset(self):
-        self.attempts = self.max_attempts
-        self.overlay = 1
-        self.damageAnimValue = 0
 
 
-    def paintEvent(self, e) -> None:
-
-        qp = QtGui.QPainter()
-        qp.begin(self)
-
-        width = qp.device().width()
-        height = qp.device().height()
+    def getHangmanRect(self) -> QRectF:
+        width = self.width()
+        height = self.height()
         width_ratio = 2
         height_ratio = 3
-
         width32 = None
         height32 = None
         top = None
@@ -143,12 +161,16 @@ class HangmanView(QtWidgets.QWidget):
             top = 0
             left = (width - width32) / 2
 
-        width32 = int(width32)
-        height32 = int(height32)
-        top = int(top)
-        left = int(left)
+        rect = QRectF(left, top, width32, height32)
+        return rect
 
-        self.thickness = int(self.thicknessRatio * width32)
+    def paintEvent(self, e) -> None:
+        qp = QtGui.QPainter()
+        qp.begin(self)
+
+        regionRect: QRectF = self.getHangmanRect()
+
+        self.thickness = int(self.thicknessRatio * regionRect.width())
 
         qp.setBrush(QColor(29, 27, 24))
         # qp.setBrush(QColor(int(29 * self.value), int(27 * self.value), int(24 * self.value)))
@@ -156,7 +178,7 @@ class HangmanView(QtWidgets.QWidget):
         pen.setStyle(Qt.PenStyle.NoPen)
         qp.setPen(pen)
 
-        rect = QtCore.QRect(left, top, width32, height32)
+        rect = regionRect.toRect()
         qp.drawRect(rect)
 
         for i in range(len(self.drawings)):
@@ -174,8 +196,68 @@ class HangmanView(QtWidgets.QWidget):
                                 int((255 - int(255 * self.damageAnimValue)) * self.overlay),
                                 int((255 - int(255 * self.damageAnimValue)) * self.overlay))
 
-            self.drawings[i](qp, color, left, top, width32, height32)
+            self.drawings[i](qp, color, rect.left(), rect.top(), rect.width(), rect.height())
+        # self.overlay = 0.5
+        self.drawReplayButton(qp, QColor(66, 205, 82), rect.left(), rect.top(), rect.width(), rect.height())
         qp.end()
+
+    def getReplyButtonRect(self, left: int, top: int, width: int, height: int) -> QRectF:
+        center = QPointF(left + 0.5 * width, top + 0.5 * height)
+        size = QPointF(width * 0.4, height * 0.1)
+        return QRectF(
+            (center - size / 2),
+            (center + size / 2)
+        )
+
+    def getReplyButtonPosition(self, left: int, top: int, width: int, height: int) -> QPointF:
+        return self.getReplyButtonRect(left, top, width, height).center()
+
+    def getReplyButtonSize(self, left: int, top: int, width: int, height: int) -> QPointF:
+        rect = self.getReplyButtonRect(left, top, width, height)
+        return rect.bottomRight() - rect.topLeft()
+
+    def drawReplayButton(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        color.setAlpha(int(255 * ((1 - self.overlay) * 2)))
+        pen = QPen()
+        pen.setStyle(Qt.PenStyle.NoPen)
+        painter.setBrush(color)
+        painter.setPen(pen)
+
+        center = self.getReplyButtonPosition(left, top, width, height)
+        size = self.getReplyButtonSize(left, top, width, height)
+        rect = self.getReplyButtonRect(left, top, width, height).toRect()
+
+        length = size.y() if size.y() < size.x() else size.x()
+        corner_radius = int(length) / 2
+        painter.drawRoundedRect(rect, corner_radius, corner_radius)
+
+        color_icon = QColor(255, 255, 255, int(255 * ((1 - self.overlay) * 2)))
+        startAngle = 0 * 16
+        spanAngle = -270 * 16
+        pen = QPen(color_icon)
+        pen.setWidth(int(height * 0.1 / 8))
+        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+        painter.setPen(pen)
+
+        size_arc = QPointF(length, length) / 7 * 2
+        arc_rect = QRect(
+            (center - size_arc).toPoint(),
+            (center + size_arc).toPoint()
+        )
+        painter.drawArc(arc_rect, startAngle, spanAngle)
+
+        pen = QPen()
+        pen.setStyle(Qt.PenStyle.NoPen)
+        painter.setPen(pen)
+        painter.setBrush(color_icon)
+        size_triangle = size_arc
+        triangle = QPolygon([
+            QPointF(center.x() - size_triangle.x() * 1 / 3, center.y() - size_triangle.y() / 2).toPoint(),
+            QPointF(center.x() + size_triangle.x() * 2 / 3, center.y()).toPoint(),
+            QPointF(center.x() - size_triangle.x() * 1 / 3, center.y() + size_triangle.y() / 2).toPoint()]
+        ).translated(0, - size_arc.toPoint().y())
+        painter.drawPolygon(triangle, Qt.FillRule.WindingFill)
+
 
     def drawBase(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
         painter.setBrush(color)

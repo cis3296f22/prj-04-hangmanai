@@ -17,7 +17,7 @@ class KeyTop(QtWidgets.QWidget):
     def __init__(self,
                  text: str = "A",
                  toggle: bool = True,
-                 handler=lambda x: print("Default handler [" + x + "]"),
+                 handler: callable(str) = lambda x: print("Default handler [" + x + "]"),
                  assets_dir: str = "../assets"):
 
         super(KeyTop, self).__init__()
@@ -37,30 +37,22 @@ class KeyTop(QtWidgets.QWidget):
         self.char = text
         self.button.setText(text.upper())
 
-    # def mousePressEvent(self, a0):
-    #     print("Mouse clicked")
-    #     # self.keyBackFrame.setStylesheet()
-
     def mouseReleaseEvent(self, a0):
         # print(self.text())
         if self.toggle:
             self.setDisabled(True)
 
-    def isEnabled(self) -> bool:
-        return self.button.isEnabled()
-
-    def setDisabled(self, boolean: bool) -> None:
-        super(KeyTop, self).setDisabled(boolean)
-        # self.disabled = boolean
+    def isDisabled(self) -> bool:
+        return not self.button.isEnabled()
 
     def reset(self):
         self.setEnabled(True)
 
-    def setKeyListner(self, handler, append: bool = False) -> None:
+    def setKeyListner(self, handler: callable(str), append: bool = False) -> None:
         if not append:
             self.button.disconnect()
         self.button.clicked.connect(
-            lambda: [self.mouseReleaseEvent(None), handler(self.text())]
+            lambda: [self.mouseReleaseEvent(None), handler(self.text().upper())]
         )
 
 

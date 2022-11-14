@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets, uic
-import sys, os
+import sys
 from GUI.Keytop import KeyTop
-
+from typing import Callable, Any, Iterable
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -11,13 +11,15 @@ class TestWindow(QtWidgets.QMainWindow):
         self.form_widget = Keyboard()
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
-        # self.setFixedHeight(500)
-        # self.setFixedWidth(500)
+        self.form_widget.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
         self.show()
 
 
 class Keyboard(QtWidgets.QWidget):
-    def __init__(self, handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir: str = "../assets"):
+    def __init__(self,
+                 handler: callable([str, list[str]]) = lambda x: print("Keyboard handler [" + x + "]"),
+                 assets_dir: str = "../assets"):
+
         super(Keyboard, self).__init__()
         uic.loadUi(assets_dir + '/ui/keyboard.ui', self)
 
@@ -26,7 +28,7 @@ class Keyboard(QtWidgets.QWidget):
                       self.keyboardSecondRowView: "asdfghjkl",
                       self.keyboardThirdRowView: "zxcvbnm"}
 
-        self.keyMap: dict[str, QtWidgets.QWidget] = {}
+        self.keyMap: dict[str, KeyTop] = {}
 
         for key in keyRowsMap:
             key.setLayout(QtWidgets.QHBoxLayout())
@@ -37,12 +39,19 @@ class Keyboard(QtWidgets.QWidget):
 
         self.setKeyboardListner(handler)
 
-    def setKeyListner(self, key: str, handler, append: bool = False) -> None:
-        self.keyMap[key].setKeyListner(handler, append)
-
-    def setKeyboardListner(self, handler, append: bool = False) -> None:
+    def getToggleKeys(self) -> list[str]:
+        keys = []
         for key in self.keyMap:
-            self.keyMap[key].setKeyListner(handler, append)
+            if self.keyMap[key].isDisabled():
+                keys.append(key.upper())
+        return keys
+
+    def setKeyListner(self, key: str, handler: callable([str, list[str]]), append: bool = False) -> None:
+        self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
+
+    def setKeyboardListner(self, handler: callable([str, list[str]]), append: bool = False) -> None:
+        for key in self.keyMap:
+            self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
 
     def reset(self) -> None:
         for key in self.keyMap:

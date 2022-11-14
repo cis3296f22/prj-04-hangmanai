@@ -67,7 +67,7 @@ class LifeBox(QtWidgets.QWidget):
         self.max_attempts = max_attempts
         self.setLife(self.max_attempts)
 
-    def takeLife(self, zeroHandler) -> None:
+    def takeLife(self, zeroHandler: callable(any) ) -> None:
         self.life = self.life - 1
         self.setLife(self.life)
         if self.isZero():

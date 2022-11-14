@@ -37,7 +37,7 @@ class Hangman():
 
         self.updateUI()
         # FIXME CHECK Mainframe callback set here
-        self.display.setKeyboardListner(lambda x: self.guess(x))
+        self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
         self.display.setMaxAttempts(max_attempts)
         self.display.setWord(self.word, True)
 
@@ -54,10 +54,10 @@ class Hangman():
         # self.initialize()
     # FIXME Call back function for processing key pressing
     # NOTE Done coding, needs check
-    def guess(self, char):
+    def guess(self, char: str, used_chars: list[str]):
         if char.upper() in self.already_guessed:
             print("You cannot guess the same letter twice")
-        self.already_guessed.append(char.upper())
+        self.already_guessed = used_chars
 
         if char.upper() not in self.word.upper():
             self.attempts = self.attempts + 1
