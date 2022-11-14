@@ -8,7 +8,7 @@ from PyQt6 import QtWidgets
 
 
 class Hangman():
-    def __init__(self, main_frame: MainFrame, word: str = "Electrocardiographic", max_attempts: int = 6):
+    def __init__(self, main_frame: MainFrame, word: str = "Dichlorodifluoromethane", max_attempts: int = 6):
 
         self.word: str = word
         self.attempts: int = 0

@@ -196,7 +196,7 @@ class HangmanView(QtWidgets.QWidget):
     def paintEvent(self, e) -> None:
         qp = QtGui.QPainter()
         qp.begin(self)
-
+        qp.setRenderHint(QPainter.RenderHint.Antialiasing)
         regionRect: QRectF = self.getHangmanRect()
 
         self.thickness = int(self.thicknessRatio * regionRect.width())
