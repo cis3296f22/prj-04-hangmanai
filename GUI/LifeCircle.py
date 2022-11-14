@@ -1,6 +1,7 @@
-from PyQt6 import QtWidgets, uic
-from PyQt6 import QtCore, QtGui
 import sys
+
+from PyQt6 import QtCore, QtGui
+from PyQt6 import QtWidgets, uic
 
 
 class TestWindow(QtWidgets.QMainWindow):

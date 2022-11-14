@@ -1,16 +1,14 @@
-import PyQt6.QtMultimedia
-from PyQt6 import QtWidgets, uic, QtCore
-from PyQt6.QtCore import pyqtProperty, pyqtSignal, QPointF, QSizeF, QRectF
-from  PyQt6.QtMultimedia import QSoundEffect
-
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
-                          QSize, QTime, QTimer, QUrl, Qt, QEvent)
+from PyQt6 import uic
 import sys
-from GUI.LifeCircle import LifeCircle
-from PyQt6.QtWidgets import QWidget, QApplication
-from PyQt6.QtGui import QPainter, QColor, QFont, QPen, QPolygon
+
+from PyQt6 import QtGui, QtWidgets
+from PyQt6 import uic
+from PyQt6.QtCore import (QPoint, QRect,
+                          QTimer, QUrl)
+from PyQt6.QtCore import QPointF, QRectF
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon
+from PyQt6.QtMultimedia import QSoundEffect
 
 SOUND_FILE = "sound/knife.wav"
 

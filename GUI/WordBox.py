@@ -1,5 +1,7 @@
-from PyQt6 import QtWidgets, uic
 import sys
+
+from PyQt6 import QtWidgets, uic
+
 from GUI.CharacterBox import CharacterBox
 
 

@@ -1,23 +1,12 @@
-import random
-import time
-
-from easywords_list import easylist
 # from medianwords_list import medianlist
 # from hardwords_list import hardlist
-from PyQt6 import QtWidgets, uic, QtCore
-from PyQt6.QtCore import Qt
-
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
-                          QSize, QTime, QTimer, QUrl, Qt, QEvent)
 
 import sys
 
 from GUI.MainFrame import MainFrame
+from PyQt6 import QtWidgets
 
 
-# TODO Create new class which generates the list of words
-# TODO Separate word generate and select from the actual game.
 class Hangman():
     def __init__(self, main_frame: MainFrame, word: str = "Electrocardiographic", max_attempts: int = 6):
 
@@ -78,10 +67,8 @@ class Hangman():
         else:
             return
 
-if __name__ == "__main__":
-    # game = Hangman()
-    # game.play()
 
+if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     main_frame = MainFrame(assets_dir="assets")
     game = Hangman(main_frame)

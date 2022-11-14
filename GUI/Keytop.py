@@ -26,9 +26,6 @@ class KeyTop(QtWidgets.QWidget):
         self.char: str = text
         self.toggle: bool = toggle
         self.setKeyListner(handler)
-        # print(self.isEnabled())
-        # self.button.setDisabled(True)
-        # self.background.setDisabled(True)
 
     def text(self) -> str:
         return self.char

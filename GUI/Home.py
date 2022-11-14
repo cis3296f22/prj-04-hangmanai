@@ -1,6 +1,6 @@
-from PyQt6 import QtWidgets, uic
-from PyQt6 import QtCore, QtGui
 import sys
+
+from PyQt6 import QtWidgets, uic
 
 from GUI.HangmanView import HangmanView
 

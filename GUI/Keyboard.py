@@ -1,7 +1,9 @@
-from PyQt6 import QtWidgets, uic
 import sys
+
+from PyQt6 import QtWidgets, uic
+
 from GUI.Keytop import KeyTop
-from typing import Callable, Any, Iterable
+
 
 class TestWindow(QtWidgets.QMainWindow):
 

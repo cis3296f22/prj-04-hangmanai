@@ -1,17 +1,14 @@
-from PyQt6 import QtWidgets, uic, QtCore
-from PyQt6.QtCore import Qt
-
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
-                          QSize, QTime, QTimer, QUrl, Qt, QEvent)
-
 import sys
+
+from PyQt6 import QtCore, QtWidgets
+from PyQt6 import uic
+from PyQt6.QtCore import (Qt)
 
 from GUI.HangmanView import HangmanView
 from GUI.Home import Home
 from GUI.Keyboard import Keyboard
-from GUI.WordBox import WordBox
 from GUI.LifeBox import LifeBox
+from GUI.WordBox import WordBox
 
 # Global value for the windows status
 WINDOW_SIZE = 0
