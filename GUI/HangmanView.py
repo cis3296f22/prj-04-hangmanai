@@ -28,6 +28,7 @@ class TestWindow(QtWidgets.QMainWindow):
 class HangmanView(QtWidgets.QWidget):
     def __init__(self, max_attempts: int = 5, progress: float = 0, assets_dir: str = "../assets", debug_anim: bool = False):
         super(HangmanView, self).__init__()
+
         uic.loadUi(assets_dir + '/ui/hangmanView.ui', self)
         self.assets_dir: str = assets_dir
 
@@ -51,21 +52,33 @@ class HangmanView(QtWidgets.QWidget):
             self.drawLeftLeg,
             self.drawRightLeg
         ]
-        self.value: float = 0
-        self.timer = QTimer()
-        self.timer.timeout.connect(lambda: self.animTest())
+        self.damageAnimValue: float = 0
+        self.damageTimer = QTimer()
+        self.damageTimer.timeout.connect(lambda: self.damageAnim())
         self.effect = None
+        self.overlay: float = 1
+        self.overlayTimer = QTimer()
+        self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
+        self.overlayTimer.start(100)
 
+    def overlayAnim(self):
+        # if self.overlay < 0.5:
+        #     self.overlay = 1
+        self.overlay -= 0.01
+        print(self.overlay)
+        if self.overlay < 0.5:
+            self.overlayTimer.stop()
+        else:
+            self.repaint()
 
-
-    def tageDamage(self)-> None:
+    def takeDamage(self)-> None:
         filename = self.assets_dir + "/" + SOUND_FILE
         self.effect = QSoundEffect()
         self.effect.setSource(QUrl.fromLocalFile(filename))
         self.effect.play()
 
-        self.value = 1
-        self.timer.start(10)
+        self.damageAnimValue = 1
+        self.damageTimer.start(5)
         if self.attempts <= 0:
             print("Hangman animation cannot got beyond")
             return
@@ -77,30 +90,32 @@ class HangmanView(QtWidgets.QWidget):
 
 
     def setMaxAttempts(self, max_attempts: int) -> None:
-        print("Changed max attempts (Hangman View) -> " + str(max_attempts))
         self.max_attempts = max_attempts
         self.attempts = max_attempts
 
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
         if self.debug_anim:
-            self.tageDamage()
+            self.takeDamage()
             self.reset()
             self.progress_percentage = 1
 
-    def animTest(self):
-        self.value -= 0.1
-        if self.value < 0:
-            self.value = 1
-            self.timer.stop()
+    def damageAnim(self):
+        if self.damageAnimValue <= 0:
+            self.damageAnimValue = 1
+        self.damageAnimValue -= 0.05
+        if self.damageAnimValue < 0:
+            self.damageTimer.stop()
         else:
             self.repaint()
 
     def setStageProgress(self, progress_percentage: float) -> None:
         self.progress_percentage = progress_percentage
-        print("Changed max progress (Hangman View) -> " + str(progress_percentage))
 
     def reset(self):
         self.attempts = self.max_attempts
+        self.overlay = 1
+        self.damageAnimValue = 0
+
 
     def paintEvent(self, e) -> None:
 
@@ -144,43 +159,25 @@ class HangmanView(QtWidgets.QWidget):
         rect = QtCore.QRect(left, top, width32, height32)
         qp.drawRect(rect)
 
-
-        # self.drawBase(qp, QColor(100, 100, 100), left, top, width32, height32)
-        # self.drawSupport(qp, QColor(100, 100, 100), left, top, width32, height32)
-        # self.drawPoll(qp, QColor(100, 100, 100), left, top, width32, height32)
-        # self.drawTop(qp, QColor(100, 100, 100), left, top, width32, height32)
-        # self.drawHanger(qp, QColor(100, 100, 100), left, top, width32, height32)
-        #
-        # self.drawHead(qp, QColor(255, 255, 255), left, top, width32, height32)
-        # self.drawBody(qp, QColor(255, 255, 255), left, top, width32, height32)
-        # self.drawLeftArm(qp, QColor(255, 255, 255), left, top, width32, height32)
-        # self.drawRightArm(qp, QColor(255, 255, 255), left, top, width32, height32)
-        # self.drawLeftLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
-        # self.drawRightLeg(qp, QColor(255, 255, 255), left, top, width32, height32)
-
         for i in range(len(self.drawings)):
             if self.progress_percentage <= i / len(self.drawings):
                 break
             if i == (len(self.drawings) - 1) and self.progress_percentage != 1:
                 break
 
-            # color = QColor(100, 100, 100) if i < 5 else QColor(255, 255, 255)
             color = QColor(
-                    100 + int((255 - 100) * self.value),
-                    100 + int((255 - 100) * self.value),
-                    100 + int((255 - 100) * self.value)) if i < 5 else QColor(
-                                                                    255,
-                                                                    255 - int(255 * self.value),
-                                                                    255 - int(255 * self.value))
+                    int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay),
+                    int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay),
+                    int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay)
+            ) if i < 5 else QColor(
+                                int(255 * self.overlay),
+                                int((255 - int(255 * self.damageAnimValue)) * self.overlay),
+                                int((255 - int(255 * self.damageAnimValue)) * self.overlay))
 
             self.drawings[i](qp, color, left, top, width32, height32)
-
         qp.end()
 
-
     def drawBase(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
-        # brush = QtGui.QBrush(QColor(255, 255, 255))
-        # brush.setStyle(Qt.BrushStyle.Dense6Pattern)
         painter.setBrush(color)
         positionBottomBar = (
             left,

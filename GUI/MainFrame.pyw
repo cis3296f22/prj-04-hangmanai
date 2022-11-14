@@ -135,13 +135,13 @@ class MainFrame(QtWidgets.QMainWindow):
         life = self.ui.lifeBox.getLife()
         self.ui.lifeBox.setLife(number)
         if life > number:
-            self.ui.hangmanDisplay.tageDamage()
+            self.ui.hangmanDisplay.takeDamage()
 
     def takeLife(self, zeroHandler):
 
         life = self.ui.lifeBox.getLife()
         if life > 0:
-            self.ui.hangmanDisplay.tageDamage()
+            self.ui.hangmanDisplay.takeDamage()
         self.ui.lifeBox.takeLife(zeroHandler)
 
 
