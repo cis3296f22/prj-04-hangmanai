@@ -22,11 +22,12 @@ class TestWindow(QtWidgets.QMainWindow):
         self.form_widget = HangmanView(progress=1, debug_anim=True)
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
+        self.form_widget.showReplayButton(5)
         self.show()
 
 
 class HangmanView(QtWidgets.QWidget):
-    def __init__(self, max_attempts: int = 5, progress: float = 0, assets_dir: str = "../assets", reply_handler=lambda:print("Replay!!"), debug_anim: bool = False):
+    def __init__(self, max_attempts: int = 5, progress: float = 0, assets_dir: str = "../assets", reply_handler=lambda: print("Replay!!"), debug_anim: bool = False):
         super(HangmanView, self).__init__()
 
         uic.loadUi(assets_dir + '/ui/hangmanView.ui', self)
@@ -60,7 +61,7 @@ class HangmanView(QtWidgets.QWidget):
         self.overlay: float = 1
         self.overlayTimer = QTimer()
         self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
-        self.overlayTimer.start(5)
+        # self.showReplayButton(5)
 
     def showReplayButton(self, duration: int = 5) -> None:
         self.overlayTimer.start(duration)
@@ -90,8 +91,12 @@ class HangmanView(QtWidgets.QWidget):
         else:
             self.setStageProgress((self.max_attempts - self.attempts) / self.max_attempts)
 
-    def setReplayHandler(self, handler):
-        self.reply_handler = handler
+    def setReplayHandler(self, handler, append: bool = True):
+        func = self.reply_handler
+        if self.reply_handler is not None and append:
+            self.reply_handler = lambda: [func(), handler()]
+        else:
+            self.reply_handler = lambda: handler()
 
     def setStageProgress(self, progress_percentage: float) -> None:
         self.progress_percentage = progress_percentage
@@ -104,8 +109,11 @@ class HangmanView(QtWidgets.QWidget):
         self.attempts = self.max_attempts
         self.overlay = 1
         self.damageAnimValue = 0
+        self.setStageProgress(0)
+        self.repaint()
         self.damageTimer.stop()
         self.overlayTimer.stop()
+        # self.showReplayButton(5)
 
     def overlayAnim(self) -> None:
         # if self.overlay < 0.5:

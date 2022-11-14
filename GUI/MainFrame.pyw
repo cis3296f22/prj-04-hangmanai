@@ -18,7 +18,10 @@ WINDOW_SIZE = 0
 
 
 class MainFrame(QtWidgets.QMainWindow):
-    def __init__(self, parent=None,  handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir="../assets"):
+    def __init__(self,
+                 parent=None,
+                 handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 assets_dir="../assets"):
 
         super(MainFrame, self).__init__(parent)
         self.assets_dir = assets_dir
@@ -144,14 +147,16 @@ class MainFrame(QtWidgets.QMainWindow):
             self.ui.hangmanDisplay.takeDamage()
         self.ui.lifeBox.takeLife(zeroHandler)
 
+    def setReplayHandler(self, handler, append: bool = True):
+        self.ui.hangmanDisplay.setReplayHandler(handler, append)
 
     # TODO win
     def win(self):
-        print("TODO win()")
+        self.ui.hangmanDisplay.showReplayButton()
 
     # TODO lose
     def lose(self):
-        print("TODO lose()")
+        self.ui.hangmanDisplay.showReplayButton()
 
     def setGame(self, game):
         self.game = game
@@ -177,6 +182,10 @@ class Ui(QtWidgets.QWidget):
         self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
         self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
         self.hangmanView.layout().addWidget(self.hangmanDisplay)
+        self.hangmanDisplay.setReplayHandler(lambda: [self.keyboard.reset(),
+                                                      self.wordBox.reset(),
+                                                      self.lifeBox.reset(),
+                                                      self.hangmanDisplay.reset()])
         # self.lifeBox.setMaxAttempts(7)
 
 

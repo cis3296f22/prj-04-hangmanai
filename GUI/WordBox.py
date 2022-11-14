@@ -74,7 +74,7 @@ class WordBox(QtWidgets.QWidget):
         self.characterBoxList[index].hideChar()
 
     def reset(self) -> None:
-        self.setWord("")
+        self.hideWord()
 
 
 if __name__ == "__main__":

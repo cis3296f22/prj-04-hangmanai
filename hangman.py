@@ -21,13 +21,13 @@ from GUI.MainFrame import MainFrame
 # TODO Create new class which generates the list of words
 # TODO Separate word generate and select from the actual game.
 class Hangman():
-    def __init__(self, main_frame, word="Electrocardiographic", max_attempts=6):
+    def __init__(self, main_frame: MainFrame, word: int = "Electrocardiographic", max_attempts: int = 6):
         # test of the words, later will be placed
         # self.word_list = ["one", "two", "three", "four", "five", "six", "sevent", "eight", "nine", "ten", "zero"]
-        self.word = word
-        self.attempts = 0
-        self.max_attempts = max_attempts
-        self.display = main_frame
+        self.word: str = word
+        self.attempts: int = 0
+        self.max_attempts: int = max_attempts
+        self.display: MainFrame = main_frame
         self.already_guessed = []
         # self.play_game = True
         self.name = "Unknown"
@@ -40,10 +40,18 @@ class Hangman():
         self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
         self.display.setMaxAttempts(max_attempts)
         self.display.setWord(self.word, True)
+        self.display.setReplayHandler(self.reset)
+
+    def reset(self):
+        self.attempts: int = 0
+        self.already_guessed = []
+        self.updateUI()
 
     def updateUI(self):
+        print(self.max_attempts - self.attempts)
+        self.display.setLife(self.max_attempts - self.attempts)
         self.display.setWord(self.word.upper(), True)
-        print(self.word)
+
         for i in range(len(self.word)):
             if self.word.upper()[i] in self.already_guessed:
                 self.display.showCharAt(i)
@@ -61,7 +69,7 @@ class Hangman():
 
         if char.upper() not in self.word.upper():
             self.attempts = self.attempts + 1
-            self.display.setLife(self.max_attempts - self.attempts)
+
         self.updateUI()
 
         self.finishGameCondition()
@@ -69,7 +77,7 @@ class Hangman():
     # FIXME See if game ends 1) Attempts reaches 0 with incompleted word or 2) Guessed word correctly
     # NOTE Done coding, needs check
     def finishGameCondition(self):
-        all_match = all([(x in self.already_guessed) for x in self.word])
+        all_match = all([(x in self.already_guessed) for x in self.word.upper()])
         if self.max_attempts - self.attempts > 0 and all_match:
             self.display.win()
         elif self.attempts >= self.max_attempts:

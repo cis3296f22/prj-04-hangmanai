@@ -11,13 +11,12 @@ class TestWindow(QtWidgets.QMainWindow):
         self.form_widget = Keyboard()
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
-        self.form_widget.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
         self.show()
 
 
 class Keyboard(QtWidgets.QWidget):
     def __init__(self,
-                 handler: callable([str, list[str]]) = lambda x: print("Keyboard handler [" + x + "]"),
+                 handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
                  assets_dir: str = "../assets"):
 
         super(Keyboard, self).__init__()
