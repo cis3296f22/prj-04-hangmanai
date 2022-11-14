@@ -1,43 +1,56 @@
-from PyQt6 import QtWidgets, uic, QtCore
-from PyQt6.QtCore import Qt
-
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
-                          QSize, QTime, QTimer, QUrl, Qt, QEvent)
-
 import sys
 
+from PyQt6 import QtCore, QtWidgets
+from PyQt6 import uic
+from PyQt6.QtCore import (Qt)
+
 from GUI.HangmanView import HangmanView
+from GUI.Home import Home
 from GUI.Keyboard import Keyboard
-from GUI.WordBox import WordBox
 from GUI.LifeBox import LifeBox
+from GUI.ScoreView import ScoreView
+from GUI.WordBox import WordBox
 
 # Global value for the windows status
+from Score import Score
+
 WINDOW_SIZE = 0
 
 
 class MainFrame(QtWidgets.QMainWindow):
-    def __init__(self, parent=None,  handler=lambda x: print("Keyboard handler [" + x + "]"), assets_dir="../assets"):
+    def __init__(self,
+                 parent=None,
+                 handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 assets_dir="../assets"):
 
         super(MainFrame, self).__init__(parent)
+        self.assets_dir = assets_dir
         self.game = None
         # TODO Word API needed to pass word to guess to hangman
-        self.ui = Ui(assets_dir=assets_dir)
-        self.setCentralWidget(self.ui)
-        self.setLayout(QtWidgets.QHBoxLayout())
-        self.show()
+        # self.ui = Ui(assets_dir=assets_dir)
+        # self.setCentralWidget(self.ui)
+        self.ui = Ui(assets_dir=self.assets_dir)
+        self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
+        self.home = Home(assets_dir=assets_dir, buttonHandler=self.transitMainGame)
+        self.setCentralWidget(self.home)
 
-        # Button click events to our top bar buttons
-        #
-        # Minimize window
-        if hasattr(self.ui, "minimizeButton"):
-            self.ui.minimizeButton.clicked.connect(lambda: self.showMinimized())
+        self.handler = handler
+        self.ui.keyboard.setKeyboardListner(handler)
+
+        self.show()
+        self.windowInit()
+
+        # self.ui.
+    def windowInit(self):
+        central_widget = self.centralWidget()
+        if hasattr(central_widget, "minimizeButton"):
+            central_widget.minimizeButton.clicked.connect(lambda: self.showMinimized())
         # Close window
-        if hasattr(self.ui, "closeButton"):
-            self.ui.closeButton.clicked.connect(lambda: self.close())
+        if hasattr(central_widget, "closeButton"):
+            central_widget.closeButton.clicked.connect(lambda: self.close())
         # Restore/Maximize window
-        if hasattr(self.ui, "restoreButton"):
-            self.ui.restoreButton.clicked.connect(lambda: self.restore_or_maximize_window())
+        if hasattr(central_widget, "restoreButton"):
+            central_widget.restoreButton.clicked.connect(lambda: self.restore_or_maximize_window())
 
         def moveWindow(event):
             if event.buttons() == Qt.MouseButton.LeftButton:
@@ -45,21 +58,27 @@ class MainFrame(QtWidgets.QMainWindow):
                 self.dragPos = event.globalPosition()
                 event.accept()
 
-        if hasattr(self.ui, "title_bar"):
+        if hasattr(central_widget, "title_bar"):
             # Remove window tlttle bar
             self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
 
             # Set main background to transparent
             self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
-            if hasattr(self.ui, "title_bar"):
-                self.ui.title_bar.mouseMoveEvent = moveWindow
-
-        self.ui.keyboard.setKeyboardListner(handler)
+            if hasattr(central_widget, "title_bar"):
+                central_widget.title_bar.mouseMoveEvent = moveWindow
 
         # Show window
         self.show()
 
-        # self.ui.
+    def transitMainGame(self):
+        self.home = self.takeCentralWidget()
+        self.setCentralWidget(self.ui)
+        self.windowInit()
+
+    def transitHome(self):
+        self.ui = self.takeCentralWidget()
+        self.setCentralWidget(self.home)
+        self.windowInit()
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition()
@@ -88,7 +107,15 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyListner(key, handler, append)
 
     def setKeyboardListner(self, handler, append=False):
-        self.ui.keyboard.setKeyboardListner(handler, append)
+        self.ui.keyboard.setKeyboardListner(lambda x, y:
+                                            [
+                                             self.ui.scoreDisplay.setScore(
+                                                 Score.CORRECT() * sum([char in y for char in self.ui.wordBox.getWord()])
+                                             ) if x in y else
+                                             self.ui.scoreDisplay.addScore(Score.WRONG()),
+                                                handler(x, y)
+
+                                             ], append)
 
     def reset(self):
         self.ui.keyboard.reset()
@@ -112,36 +139,53 @@ class MainFrame(QtWidgets.QMainWindow):
     def setCharacterAt(self, index, char):
         self.ui.wordBox.setCharacterAt(index, char)
 
-    # TODO setRemainingAttempts
     def setMaxAttempts(self, max_attempts):
         self.ui.lifeBox.setMaxAttempts(max_attempts)
+        self.ui.hangmanDisplay.setMaxAttempts(max_attempts)
 
     def setLife(self, number):
+        life = self.ui.lifeBox.getLife()
         self.ui.lifeBox.setLife(number)
+        if life > number:
+            self.ui.hangmanDisplay.takeDamage()
 
     def takeLife(self, zeroHandler):
+
+        life = self.ui.lifeBox.getLife()
+        if life > 0:
+            self.ui.hangmanDisplay.takeDamage()
         self.ui.lifeBox.takeLife(zeroHandler)
 
-    # TODO win
-    def win(self):
-        print("TODO win()")
+    def setReplayHandler(self, handler, append: bool = True):
+        self.ui.hangmanDisplay.setReplayHandler(handler, append)
 
-    # TODO lose
+    def setHomeHandler(self, handler, append: bool = True):
+        self.ui.hangmanDisplay.setHomeHandler(handler, append)
+
+    def win(self):
+        self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.WIN())
+        self.ui.scoreDisplay.confirmScore()
+
     def lose(self):
-        print("TODO lose()")
+        self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.LOSE())
+        self.ui.scoreDisplay.confirmScore()
 
     def setGame(self, game):
         self.game = game
 
+
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
         super(Ui, self).__init__()
-        uic.loadUi(assets_dir + '/ui/main_v2.ui', self)
+        uic.loadUi(assets_dir + '/ui/main_v4.ui', self)
         # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
         self.keyboard = Keyboard(assets_dir=assets_dir)
         self.wordBox = WordBox(assets_dir=assets_dir)
         self.lifeBox = LifeBox(assets_dir=assets_dir)
         self.hangmanDisplay = HangmanView(assets_dir=assets_dir)
+        self.scoreDisplay = ScoreView(assets_dir=assets_dir)
         self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
         self.keyboardView.layout().addWidget(self.keyboard)
         self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
@@ -154,19 +198,19 @@ class Ui(QtWidgets.QWidget):
         self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
         self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
         self.hangmanView.layout().addWidget(self.hangmanDisplay)
+        self.hangmanDisplay.setReplayHandler(lambda: [self.keyboard.reset(),
+                                                      self.wordBox.reset(),
+                                                      self.lifeBox.reset(),
+                                                      self.hangmanDisplay.reset()])
+        self.hangmanDisplay.setHomeHandler(lambda: [self.keyboard.reset(),
+                                                      self.wordBox.reset(),
+                                                      self.lifeBox.reset(),
+                                                      self.hangmanDisplay.reset()])
+        self.scoreView.setLayout(QtWidgets.QHBoxLayout())
+        self.scoreView.layout().setContentsMargins(0, 0, 0, 0)
+        self.scoreView.layout().addWidget(self.scoreDisplay)
         # self.lifeBox.setMaxAttempts(7)
 
-    def paintEvent(self, e):
-        super().paintEvent(e)
-        # print("Painting")
-        painter = QtGui.QPainter(self)
-        brush = QtGui.QBrush()
-        brush.setColor(QtGui.QColor(100, 100, 100))
-        # brush.setStyle(QtCore.Qt.SolidPattern)
-        # print(painter.device().width())
-        rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
-        painter.fillRect(rect, brush)
-        painter.end()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

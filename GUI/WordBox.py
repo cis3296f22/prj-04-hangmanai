@@ -1,6 +1,9 @@
-from PyQt6 import QtWidgets, uic
 import sys
+
+from PyQt6 import QtWidgets, uic
+
 from GUI.CharacterBox import CharacterBox
+
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -12,23 +15,28 @@ class TestWindow(QtWidgets.QMainWindow):
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
 
+        # self.form_widget.blank()
+        # self.form_widget.setCharacterAt(0, "a")
+        # self.form_widget.setCharacterAt(len(self.word) - 1, "a")
+        self.form_widget.hideCharAt(2)
+
 
 class WordBox(QtWidgets.QWidget):
-    def __init__(self, word="Sample", assets_dir="../assets"):
+    def __init__(self, word: str = "Sample", assets_dir: str = "../assets"):
         super(WordBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/wordBox.ui', self)
-        self.assets_dir = assets_dir
+        self.assets_dir: str = assets_dir
+
         self.wordFrame.setLayout(QtWidgets.QHBoxLayout())
         # self.wordFrame.layout().setSpacing(30)
-        self.word = word
-        self.characterBoxList = []
+        self.word: str = word
+        self.characterBoxList: list[CharacterBox] = []
         self.setWord(word)
-        # self.blank()
-        # self.setCharacterAt(0, "a")
-        # self.setCharacterAt(len(self.word) - 1, "a")
-        self.hideCharAt(2)
 
-    def setWord(self, word, hide=False):
+    def getWord(self):
+        return "".join([x.text() for x in self.characterBoxList])
+
+    def setWord(self, word: str, hide: bool = False) -> None:
         self.word = word.upper()
         for char_box in self.characterBoxList:
             self.wordFrame.layout().removeWidget(char_box)
@@ -48,8 +56,7 @@ class WordBox(QtWidgets.QWidget):
         else:
             self.showWord()
 
-
-    def setCharacterAt(self, index, char):
+    def setCharacterAt(self, index: int, char: str) -> None:
         if index >= len(self.word):
             print("Character index should not be over the length of word set in word box")
             return
@@ -57,22 +64,23 @@ class WordBox(QtWidgets.QWidget):
         self.setWord(self.word)
 
 
-    def showWord(self):
+    def showWord(self) -> None:
         for charBox in self.characterBoxList:
             charBox.showChar()
 
-    def showCharAt(self, index):
+    def showCharAt(self, index: int) -> None:
         self.characterBoxList[index].showChar()
 
-    def hideWord(self):
+    def hideWord(self) -> None:
         for charBox in self.characterBoxList:
             charBox.hideChar()
 
-    def hideCharAt(self, index):
+    def hideCharAt(self, index: int) -> None:
         self.characterBoxList[index].hideChar()
 
-    def reset(self):
-        self.setWord("")
+    def reset(self) -> None:
+        self.hideWord()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
