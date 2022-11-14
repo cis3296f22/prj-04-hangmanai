@@ -27,7 +27,13 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class HangmanView(QtWidgets.QWidget):
-    def __init__(self, max_attempts: int = 5, progress: float = 0, assets_dir: str = "../assets", reply_handler=lambda: print("Replay!!"), debug_anim: bool = False):
+    def __init__(self,
+                 max_attempts: int = 5,
+                 progress: float = 0,
+                 assets_dir: str = "../assets",
+                 reply_handler=lambda: print("Replay!!"),
+                 home_handler=lambda: print("Home!!"),
+                 debug_anim: bool = False):
         super(HangmanView, self).__init__()
 
         uic.loadUi(assets_dir + '/ui/hangmanView.ui', self)
@@ -40,6 +46,7 @@ class HangmanView(QtWidgets.QWidget):
         self.attempts: int = self.max_attempts
         self.debug_anim: bool = debug_anim
         self.reply_handler = reply_handler
+        self.home_handler = home_handler
 
         self.drawings = [
             self.drawBase,
@@ -98,6 +105,13 @@ class HangmanView(QtWidgets.QWidget):
         else:
             self.reply_handler = lambda: handler()
 
+    def setHomeHandler(self, handler, append: bool = True):
+        func = self.home_handler
+        if self.home_handler is not None and append:
+            self.home_handler = lambda: [func(), handler()]
+        else:
+            self.home_handler = lambda: handler()
+
     def setStageProgress(self, progress_percentage: float) -> None:
         self.progress_percentage = progress_percentage
 
@@ -140,13 +154,20 @@ class HangmanView(QtWidgets.QWidget):
             self.attempts = self.max_attempts
             self.progress_percentage = 1
         rect = self.getHangmanRect()
+
+        # Reply
         if self.getReplyButtonRect(
                 rect.left(), rect.top(), rect.width(), rect.height()
         ).contains(event.position()) and self.overlay != 1:
             if self.reply_handler is not None:
                 self.reply_handler()
 
-
+        # Home button
+        if self.getHomeRect(
+                rect.left(), rect.top(), rect.width(), rect.height()
+        ).contains(event.position()) and self.overlay != 1:
+            if self.home_handler is not None:
+                self.home_handler()
 
     def getHangmanRect(self) -> QRectF:
         width = self.width()
@@ -207,10 +228,60 @@ class HangmanView(QtWidgets.QWidget):
             self.drawings[i](qp, color, rect.left(), rect.top(), rect.width(), rect.height())
         # self.overlay = 0.5
         self.drawReplayButton(qp, QColor(66, 205, 82), rect.left(), rect.top(), rect.width(), rect.height())
+        self.drawHomeButton(qp, QColor(66, 205, 82), rect.left(), rect.top(), rect.width(), rect.height())
         qp.end()
 
+    def getHomeRect(self, left: int, top: int, width: int, height: int) -> QRectF:
+        center = QPointF(left + 0.5 * width, top + 0.6 * height)
+        size = QPointF(width * 0.4, height * 0.1)
+        return QRectF(
+            (center - size / 2),
+            (center + size / 2)
+        )
+
+    def drawHomeButton(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        color.setAlpha(int(255 * ((1 - self.overlay) * 2)))
+        pen = QPen()
+        pen.setStyle(Qt.PenStyle.NoPen)
+        painter.setBrush(color)
+        painter.setPen(pen)
+
+        center = self.getHomeRect(left, top, width, height).center()
+        size = self.getReplyButtonSize(left, top, width, height)
+        rect = self.getHomeRect(left, top, width, height).toRect()
+
+        length = size.y() if size.y() < size.x() else size.x()
+        corner_radius = int(length) / 2
+        painter.drawRoundedRect(rect, corner_radius, corner_radius)
+
+        color_icon = QColor(255, 255, 255, int(255 * ((1 - self.overlay) * 2)))
+        pen = QPen(color_icon)
+        pen.setWidth(int(height * 0.1 / 8))
+        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+        painter.setPen(pen)
+
+        size_icon: QPointF = QPointF(length, length) / 24 * 9
+
+        pen = QPen()
+        pen.setStyle(Qt.PenStyle.NoPen)
+        painter.setPen(pen)
+        painter.setBrush(color_icon)
+        size_triangle = size_icon
+        triangle = QPolygon([
+            QPointF(center.x() - size_triangle.x(), center.y() + size_triangle.y() * 1 / 2).toPoint(),
+            QPointF(center.x(), center.y() - size_triangle.y() * 1 / 3).toPoint(),
+            QPointF(center.x() + size_triangle.x(), center.y() + size_triangle.y() * 1 / 2).toPoint()]
+        ).translated(0, - (size_icon.toPoint() / 3 * 2).y())
+        painter.drawPolygon(triangle, Qt.FillRule.WindingFill)
+
+        rect = QRect(
+            (center - size_icon / 2).toPoint(),
+            (center + size_icon / 2).toPoint()
+        ).translated(0, (size_icon / 4).toPoint().y())
+        painter.drawRect(rect)
+
     def getReplyButtonRect(self, left: int, top: int, width: int, height: int) -> QRectF:
-        center = QPointF(left + 0.5 * width, top + 0.5 * height)
+        center = QPointF(left + 0.5 * width, top + 0.4 * height)
         size = QPointF(width * 0.4, height * 0.1)
         return QRectF(
             (center - size / 2),
