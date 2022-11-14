@@ -33,9 +33,10 @@ class Hangman():
         # self.welcome()
         # self.initialize()
 
+        self.setUpDisplay()
         self.updateUI()
         # FIXME CHECK Mainframe callback set here
-        self.setUpDisplay()
+
 
     def setUpDisplay(self):
         self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
@@ -53,7 +54,6 @@ class Hangman():
     def updateUI(self):
         print(self.max_attempts - self.attempts)
         self.display.setLife(self.max_attempts - self.attempts)
-        self.display.setWord(self.word.upper(), True)
 
         for i in range(len(self.word)):
             if self.word.upper()[i] in self.already_guessed:

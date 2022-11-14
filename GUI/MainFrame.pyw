@@ -166,6 +166,7 @@ class MainFrame(QtWidgets.QMainWindow):
     def setGame(self, game):
         self.game = game
 
+
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
         super(Ui, self).__init__()
