@@ -107,15 +107,7 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyListner(key, handler, append)
 
     def setKeyboardListner(self, handler, append=False):
-        self.ui.keyboard.setKeyboardListner(lambda x, y:
-                                            [
-                                             self.ui.scoreDisplay.setScore(
-                                                 Score.CORRECT() * sum([char in y for char in self.ui.wordBox.getWord()])
-                                             ) if x in y else
-                                             self.ui.scoreDisplay.addScore(Score.WRONG()),
-                                                handler(x, y)
-
-                                             ], append)
+        self.ui.keyboard.setKeyboardListner(handler, append)
 
     def reset(self):
         self.ui.keyboard.reset()
@@ -172,9 +164,14 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.scoreDisplay.addScore(Score.LOSE())
         self.ui.scoreDisplay.confirmScore()
 
-    def setGame(self, game):
-        self.game = game
+    def updateScore(self, char: str, used_chars: list[str], word: str):
+        self.ui.scoreDisplay.scoreHandler(char, used_chars, word)
 
+    def attachScoreHandler(self):
+        self.ui.scoreDisplay.attachHandler()
+
+    def detachScoreHandler(self):
+        self.ui.scoreDisplay.detachHandler()
 
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):

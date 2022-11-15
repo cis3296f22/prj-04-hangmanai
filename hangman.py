@@ -27,6 +27,7 @@ class Hangman():
         self.display.setWord(self.word, True)
         self.display.setReplayHandler(self.reset)
         self.display.setHomeHandler(self.reset)
+        self.display.attachScoreHandler()
 
     def reset(self):
         self.setUpDisplay()
@@ -53,6 +54,7 @@ class Hangman():
             self.attempts = self.attempts + 1
 
         self.updateUI()
+        self.display.updateScore(char, used_chars, self.word)
 
         self.finishGameCondition()
 
@@ -60,10 +62,12 @@ class Hangman():
         all_match = all([(x in self.already_guessed) for x in self.word.upper()])
         if self.max_attempts - self.attempts > 0 and all_match:
             self.display.win()
-            self.display.setKeyboardListner( lambda x, y: print("[" + x + "] -> " + str(y)))
+            self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
+            self.display.detachScoreHandler()
         elif self.attempts >= self.max_attempts:
             self.display.lose()
             self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
+            self.display.detachScoreHandler()
         else:
             return
 

@@ -3,6 +3,8 @@ import sys
 from PyQt6 import QtCore, QtGui
 from PyQt6 import QtWidgets, uic
 
+from Score import Score
+
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -26,6 +28,18 @@ class ScoreView(QtWidgets.QWidget):
         self.confirmed_score = score
         self.score = score
         self.setScore(self.score)
+        self.onHandler = lambda x, y, words: [self.setScore(
+                                                 Score.CORRECT() * sum([char in y for char in words.upper()]))]
+
+        self.offHandler = lambda x, y, words: print()
+        self.scoreHandler = lambda x, y, words: print()
+        self.attachHandler()
+
+    def detachHandler(self):
+        self.scoreHandler = self.offHandler
+
+    def attachHandler(self):
+        self.scoreHandler = self.onHandler
 
     def addScore(self, score):
         self.setScore(self.score + score)
