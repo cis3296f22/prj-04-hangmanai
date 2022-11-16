@@ -3,7 +3,7 @@ import sys
 from PyQt6.QtCore import QUrl
 from PyQt6.QtMultimedia import QSoundEffect
 
-from GUI.MainFrame import MainFrame
+from Display.MainFrame import MainFrame
 from hangman import Hangman
 import PyQt6
 

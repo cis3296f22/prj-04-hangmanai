@@ -4,12 +4,12 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import (Qt)
 
-from GUI.HangmanView import HangmanView
-from GUI.Home import Home
-from GUI.Keyboard import Keyboard
-from GUI.LifeBox import LifeBox
-from GUI.ScoreView import ScoreView
-from GUI.WordBox import WordBox
+from Display.HangmanView import HangmanView
+from Display.Home import Home
+from Display.Keyboard import Keyboard
+from Display.LifeBox import LifeBox
+from Display.ScoreView import ScoreView
+from Display.WordBox import WordBox
 
 # Global value for the windows status
 from Score import Score

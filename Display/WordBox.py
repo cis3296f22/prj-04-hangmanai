@@ -2,7 +2,7 @@ import sys
 
 from PyQt6 import QtWidgets, uic
 
-from GUI.CharacterBox import CharacterBox
+from Display.CharacterBox import CharacterBox
 
 
 class TestWindow(QtWidgets.QMainWindow):

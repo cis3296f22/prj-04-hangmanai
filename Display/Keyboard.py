@@ -2,7 +2,7 @@ import sys
 
 from PyQt6 import QtWidgets, uic
 
-from GUI.Keytop import KeyTop
+from Display.Keytop import KeyTop
 
 
 class TestWindow(QtWidgets.QMainWindow):
