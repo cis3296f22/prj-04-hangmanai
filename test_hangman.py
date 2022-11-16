@@ -1,6 +1,7 @@
 import sys
 from unittest import TestCase
 
+import cv2
 from PyQt6 import QtWidgets
 
 from Display.CharacterBox import CharacterBox
@@ -8,7 +9,7 @@ from Display.HangmanView import HangmanView
 from Display.Keyboard import Keyboard
 from hangman import Hangman
 from Display.MainFrame import MainFrame
-
+from Camera.webcam_access import Webcam_Access
 
 class TestHangman(TestCase):
 
@@ -145,4 +146,30 @@ class TestHangman(TestCase):
         keyboard = Keyboard(assets_dir="assets")
         keyboard.disableAll()
         keyboard.setKeyboardListner(lambda: print("Keyboard listener"))
+
+    def test_determine_camera(self):
+        webcam = Webcam_Access()
+        cam_found = webcam.determine_camera()
+        if cam_found > -1:
+            assert True
+        else:
+            assert False
+
+    def test_take_pic(self):
+        webcam = Webcam_Access()
+        cam_id = webcam.determine_camera()
+        print(cam_id)
+        cap = cv2.VideoCapture(cam_id)
+        ret, frame = cap.read()
+        if ret == False:
+            assert False
+        result = Webcam_Access.take_pic(frame)
+        if result == True:
+            assert True
+
+    def test_start_capture(self):
+        webcam = Webcam_Access()
+        webcam.start_capture(0)
+        assert True
+
 
