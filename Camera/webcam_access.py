@@ -32,7 +32,7 @@ class Webcam_Access():
 
     # starts webcam capture video
     def start_capture(cam_id):
-        capture = cv2.VideoCapture(cam_id)
+        # capture = cv2.VideoCapture(cam_id)
         cv2.namedWindow("Hangman Webcam")
 
         # https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
