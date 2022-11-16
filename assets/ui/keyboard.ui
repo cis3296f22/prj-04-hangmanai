@@ -93,7 +93,7 @@ QPushButton:hover {
        <widget class="QFrame" name="keyboardFirstRowView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
+          <horstretch>2</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
@@ -181,7 +181,7 @@ QPushButton:hover {
        <widget class="QFrame" name="keyboardSecondRowView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
+          <horstretch>2</horstretch>
           <verstretch>1</verstretch>
          </sizepolicy>
         </property>
@@ -268,7 +268,7 @@ QPushButton:hover {
        <widget class="QFrame" name="keyboardThirdRowView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
+          <horstretch>2</horstretch>
           <verstretch>1</verstretch>
          </sizepolicy>
         </property>
