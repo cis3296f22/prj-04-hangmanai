@@ -4,6 +4,8 @@ from unittest import TestCase
 from PyQt6 import QtWidgets
 
 from Display.CharacterBox import CharacterBox
+from Display.HangmanView import HangmanView
+from Display.Keyboard import Keyboard
 from hangman import Hangman
 from Display.MainFrame import MainFrame
 
@@ -68,4 +70,79 @@ class TestHangman(TestCase):
         charBox = CharacterBox(assets_dir="assets")
         charBox.hideChar()
         self.assertTrue(charBox.isShown() == False)
+
+    def test_HangmanView_show_replay_button(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.showReplayButton()
+        self.assertTrue(True)
+
+    def test_HangmanView_hide_replay_button(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.hideReplayButton()
+        self.assertTrue(True)
+
+    def test_HangmanView_take_damage(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        print(hangmanView.attempts)
+        hangmanView.attempts = 5
+        hangmanView.takeDamage()
+        self.assertTrue(hangmanView.attempts == 4)
+
+    def test_HangmanView_set_replay_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.setReplayHandler(lambda: print("Reply Handler"))
+        self.assertTrue(True)
+
+    def test_HangmanView_set_home_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.setHomeHandler(lambda: print("Home Handler"))
+        self.assertTrue(True)
+
+    def test_HangmanView_set_stage_progress(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.setStageProgress(0.5)
+        self.assertTrue(hangmanView.progress_percentage == 0.5)
+
+    def test_HangmanView_set_max_attempts(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.setMaxAttempts(5)
+        self.assertTrue(hangmanView.max_attempts == 5)
+
+    def test_HangmanView_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.setMaxAttempts(5)
+        hangmanView.attempts = 0
+        hangmanView.reset()
+        self.assertTrue(hangmanView.max_attempts == 5)
+
+    def test_HangmanView_drawings(self):
+        app = QtWidgets.QApplication(sys.argv)
+        hangmanView = HangmanView(assets_dir="assets")
+        hangmanView.setStageProgress(1)
+        hangmanView.repaint()
+        self.assertTrue(True)
+
+    def test_Keyboard_HangmanView_get_toggle_keys(self):
+        app = QtWidgets.QApplication(sys.argv)
+        keyboard = Keyboard(assets_dir="assets")
+        keyboard.disableAll()
+        disabledKeys = keyboard.getToggleKeys()
+        keyboard.enableAll()
+        enabledKeys = keyboard.getToggleKeys()
+        b = len(disabledKeys)
+        self.assertTrue("".join(disabledKeys) == "QWERTYUIOPASDFGHJKLZXCVBNM" and len(enabledKeys) == 0)
+
+    def test_Keyboard_set_keyboard_listner(self):
+        app = QtWidgets.QApplication(sys.argv)
+        keyboard = Keyboard(assets_dir="assets")
+        keyboard.disableAll()
+        keyboard.setKeyboardListner(lambda: print("Keyboard listener"))
 
