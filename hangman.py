@@ -3,7 +3,7 @@
 
 import sys
 
-from GUI.MainFrame import MainFrame
+from Display.MainFrame import MainFrame
 from PyQt6 import QtWidgets
 
 

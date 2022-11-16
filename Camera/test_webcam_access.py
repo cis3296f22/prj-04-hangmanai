@@ -3,7 +3,6 @@ import pytest
 
 from Camera.webcam_access import Webcam_Access
 
-
 def test_determine_camera():
     webcam = Webcam_Access()
     cam_found = webcam.determine_camera()
@@ -32,3 +31,4 @@ def test_start_capture():
         webcam = Webcam_Access()
         webcam.start_capture(0)
     assert True
+

@@ -2,7 +2,7 @@ import sys
 
 from PyQt6 import QtWidgets, uic, QtCore
 
-from GUI.LifeCircle import LifeCircle
+from Display.LifeCircle import LifeCircle
 
 
 class TestWindow(QtWidgets.QMainWindow):

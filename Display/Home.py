@@ -2,7 +2,7 @@ import sys
 
 from PyQt6 import QtWidgets, uic
 
-from GUI.HangmanView import HangmanView
+from Display.HangmanView import HangmanView
 
 
 class TestWindow(QtWidgets.QMainWindow):
