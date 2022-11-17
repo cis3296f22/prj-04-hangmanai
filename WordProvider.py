@@ -1,57 +1,56 @@
+import random
+
 import requests
 from bs4 import BeautifulSoup
 
-headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
 
-def Get_html(url):
-    response = requests.get(url, headers = headers)
-    if response.status_code == 200:
-        Parse_html(response.text)
-    else:
-        print("ERROR: ", response.status_code)
+class WordProvider():
+    def __init__(self, url='https://www.ef.edu/english-resources/english-vocabulary/top-3000-words/'):
+        self.headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
+        self.word_list = []
+        self.Get_html(url)
 
-def Parse_html(content):
+    def Get_html(self, url):
+        response = requests.get(url, headers=self.headers)
+        print(response)
+        if response.status_code == 200:
+            self.Parse_html(response.text)
+        else:
+            print("ERROR: ", response.status_code)
 
-    soup = BeautifulSoup(content, 'lxml')
-    div = soup.find('div', class_="cefcom-container")
-    ps = div.find_all('p')[1]
-    print(str(ps).replace("<p>", "").replace("</p>", "").split("<br/>"))
-    word_list = [str(ps).replace("<p>", "").replace("</p>", "").split("<br/>")]
-    easy_words = word_list
-    easy_list = filter(lambda x: 1 < len(x) < 4, easy_words)
-    print(easy_list)
-    median_words = word_list
-    median_list = filter(lambda x: 4 < len(x) < 8, median_words)
-    print(median_list)
-    hard_words = word_list
-    hard_list = filter(lambda x: len(x) > 8, hard_words)
-    print(hard_list)
+    def Parse_html(self, content):
+        soup = BeautifulSoup(content, 'html.parser')
+        div = soup.find('div', class_="cefcom-container")
+        ps = div.find_all('p')[1]
 
-def get_easy(ew):
-    word_list = [str(ew).replace("<p>", "").replace("</p>", "").split("<br/>")]
-    easy_words = word_list
-    easy_list = filter(lambda x: 1 < len(x) < 4, easy_words)
-    print(easy_list)
+        self.word_list = str(ps).replace("<p>", "").replace("</p>", "").split("<br/>")
 
-def get_median(mw):
-    word_list = [str(mw).replace("<p>", "").replace("</p>", "").split("<br/>")]
-    median_words = word_list
-    median_list = filter(lambda x: 1 < len(x) < 4, median_words)
-    print(median_list)
+    def get_easy(self) -> list:
+        easy_words = self.word_list
+        return list(filter(lambda x: 0 < len(x) < 4, easy_words))
 
-def get_hard(hw):
-    word_list = [str(hw).replace("<p>", "").replace("</p>", "").split("<br/>")]
-    hard_words = word_list
-    hard_list = filter(lambda x: 1 < len(x) < 4, hard_words)
-    print(hard_list)
+    def get_median(self):
+        median_words = self.word_list
+        return list(filter(lambda x: 4 < len(x) < 8, median_words))
+
+    def get_hard(self):
+        hard_words = self.word_list
+        return list(filter(lambda x: len(x) > 8, hard_words))
+
+    def getEasyWordRandom(self):
+        words = self.get_easy()
+        return random.choice(words)
+
+    def getMediumWordRandom(self):
+        words = self.get_median()
+        return random.choice(words)
+
+    def getHardWordRandom(self):
+        words = self.get_hard()
+        return random.choice(words)
+
 
 
 if __name__ == '__main__':
-    url = 'https://www.ef.edu/english-resources/english-vocabulary/top-3000-words/'
-    Get_html(url)
-
-
-
-
-
-
+    wp = WordProvider()
+    print(wp.getHardWordRandom())
