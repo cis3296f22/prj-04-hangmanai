@@ -12,20 +12,20 @@ def Get_html(url):
 
 def Parse_html(content):
 
-    soup = BeautifulSoup(content, 'lxml')
+    soup = BeautifulSoup(content, 'html.parser')
     div = soup.find('div', class_="cefcom-container")
     ps = div.find_all('p')[1]
     print(str(ps).replace("<p>", "").replace("</p>", "").split("<br/>"))
-    word_list = [str(ps).replace("<p>", "").replace("</p>", "").split("<br/>")]
+    word_list = str(ps).replace("<p>", "").replace("</p>", "").split("<br/>")
     easy_words = word_list
-    easy_list = filter(lambda x: 1 < len(x) < 4, easy_words)
-    print(easy_list)
+    easy_list = filter(lambda x: 0 < len(x) < 4, easy_words)
+    print(list(easy_list))
     median_words = word_list
     median_list = filter(lambda x: 4 < len(x) < 8, median_words)
-    print(median_list)
+    print(list(median_list))
     hard_words = word_list
     hard_list = filter(lambda x: len(x) > 8, hard_words)
-    print(hard_list)
+    print(list(hard_list))
 
 def get_easy(ew):
     word_list = [str(ew).replace("<p>", "").replace("</p>", "").split("<br/>")]
