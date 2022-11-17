@@ -1,5 +1,8 @@
+import random
+
 import requests
 from bs4 import BeautifulSoup
+
 
 class WordProvider():
     def __init__(self, url='https://www.ef.edu/english-resources/english-vocabulary/top-3000-words/'):
@@ -22,7 +25,7 @@ class WordProvider():
 
         self.word_list = str(ps).replace("<p>", "").replace("</p>", "").split("<br/>")
 
-    def get_easy(self):
+    def get_easy(self) -> list:
         easy_words = self.word_list
         return list(filter(lambda x: 0 < len(x) < 4, easy_words))
 
@@ -34,10 +37,22 @@ class WordProvider():
         hard_words = self.word_list
         return list(filter(lambda x: len(x) > 8, hard_words))
 
+    def getEasyWordRandom(self):
+        words = self.get_easy()
+        return random.choice(words)
+
+    def getMediumWordRandom(self):
+        words = self.get_median()
+        return random.choice(words)
+
+    def getHardWordRandom(self):
+        words = self.get_hard()
+        return random.choice(words)
+
 
 if __name__ == '__main__':
     wp = WordProvider()
-    print(wp.get_easy())
+    print(wp.getHardWordRandom())
 
 
 
