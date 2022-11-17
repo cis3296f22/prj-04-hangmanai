@@ -3,8 +3,9 @@
 
 import sys
 
-from Display.MainFrame import MainFrame
 from PyQt6 import QtWidgets
+
+from Display.MainFrame import MainFrame
 
 
 class Hangman():
@@ -14,10 +15,10 @@ class Hangman():
         self.attempts: int = 0
         self.max_attempts: int = max_attempts
         self.display: MainFrame = main_frame
+
         self.already_guessed = []
 
         self.name = "Unknown"
-
         self.setUpDisplay()
         self.updateUI()
 
