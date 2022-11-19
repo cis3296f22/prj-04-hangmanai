@@ -6,12 +6,12 @@ import sys
 from PyQt6 import QtWidgets
 
 from Display.MainFrame import MainFrame
-
+from WordProvider import WordProvider
 
 class Hangman():
     def __init__(self, main_frame: MainFrame, word: str = "Dichlorodifluoromethane", max_attempts: int = 6):
 
-        self.word: str = word
+        self.word: str = word.upper()
         self.attempts: int = 0
         self.max_attempts: int = max_attempts
         self.display: MainFrame = main_frame
@@ -25,18 +25,18 @@ class Hangman():
 
     def setUpDisplay(self):
         self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
+        self.setWord(self.wordProvider.getWordFromSelectedListRandom())
         self.display.setMaxAttempts(self.max_attempts)
-        self.display.setWord(self.word, True)
         self.display.setReplayHandler(self.reset)
         self.display.setHomeHandler(self.reset)
         # self.setWordProviderWordRequester()
-        self.word
         self.display.attachScoreHandler()
 
     def reset(self):
         self.setUpDisplay()
         self.attempts: int = 0
         self.already_guessed = []
+        self.setWord(self.wordProvider.getWordFromSelectedListRandom())
         self.updateUI()
 
     def updateUI(self):
@@ -75,6 +75,9 @@ class Hangman():
         else:
             return
 
+    def setWord(self, word: str):
+        self.word = word.upper()
+        self.display.setWord(self.word, True)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

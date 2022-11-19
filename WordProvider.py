@@ -2,7 +2,13 @@ import random
 
 import requests
 from bs4 import BeautifulSoup
+from enum import Enum
 
+
+class Difficulty(Enum):
+    EASY = 1
+    NORMAL = 2
+    HARD = 3
 
 class WordProvider():
     def __init__(self, url='https://www.ef.edu/english-resources/english-vocabulary/top-3000-words/'):
@@ -57,7 +63,10 @@ class WordProvider():
         return self.selected_word_list
 
     def getWordFromSelectedListRandom(self):
+        if len(self.selected_word_list) == 0:
+            return "SAMPLE"
         return random.choice(self.selected_word_list)
+
 
 if __name__ == '__main__':
     wp = WordProvider()
