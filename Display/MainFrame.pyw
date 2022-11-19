@@ -20,22 +20,25 @@ WINDOW_SIZE = 0
 class MainFrame(QtWidgets.QMainWindow):
     def __init__(self,
                  parent=None,
-                 handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
-                 assets_dir="../assets"):
+                 keyboard_handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 difficulty_handler: callable(str) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 assets_dir: str = "../assets"):
 
         super(MainFrame, self).__init__(parent)
         self.assets_dir = assets_dir
-        self.game = None
+        self.game: hangman = None
         # TODO Word API needed to pass word to guess to hangman
         # self.ui = Ui(assets_dir=assets_dir)
         # self.setCentralWidget(self.ui)
         self.ui = Ui(assets_dir=self.assets_dir)
         self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
-        self.home = Home(assets_dir=assets_dir, buttonHandler=self.transitMainGame)
+        self.home = Home(buttonHandler=self.transitMainGame, assets_dir=assets_dir)
         self.setCentralWidget(self.home)
 
-        self.handler = handler
-        self.ui.keyboard.setKeyboardListner(handler)
+        self.keyboard_handler = keyboard_handler
+        self.ui.keyboard.setKeyboardListner(keyboard_handler)
+
+        self.difficultyHandler: callable(str) = lambda x: print(x)
 
         self.show()
         self.windowInit()
@@ -70,12 +73,16 @@ class MainFrame(QtWidgets.QMainWindow):
         # Show window
         self.show()
 
-    def transitMainGame(self):
+    def setDifficultyHandler(self, handler: callable(str)):
+        self.difficultyHandler = handler
+
+    def transitMainGame(self, args=None):
+        self.difficultyHandler(args)
         self.home = self.takeCentralWidget()
         self.setCentralWidget(self.ui)
         self.windowInit()
 
-    def transitHome(self):
+    def transitHome(self, args=None):
         self.ui = self.takeCentralWidget()
         self.setCentralWidget(self.home)
         self.windowInit()

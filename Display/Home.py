@@ -19,7 +19,19 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class Home(QtWidgets.QWidget):
-    def __init__(self, buttonHandler=lambda: print("Jump action"), assets_dir: str = "../assets"):
+    @staticmethod
+    def EASY():
+        return "EASY"
+
+    @staticmethod
+    def NORMAL():
+        return "NORMAL"
+
+    @staticmethod
+    def HARD():
+        return "HARD"
+
+    def __init__(self, buttonHandler: callable(str) = lambda x: print(x), assets_dir: str = "../assets"):
         super(Home, self).__init__()
         uic.loadUi(assets_dir + '/ui/home_v2.ui', self)
         self.assets_dir = assets_dir
@@ -31,9 +43,9 @@ class Home(QtWidgets.QWidget):
         self.setJumpAction(buttonHandler)
 
     def setJumpAction(self, handler):
-        self.easyButton.clicked.connect(handler)
-        self.normalButton.clicked.connect(handler)
-        self.hardButton.clicked.connect(handler)
+        self.easyButton.clicked.connect(lambda: handler(Home.EASY()))
+        self.normalButton.clicked.connect(lambda: handler(Home.NORMAL()))
+        self.hardButton.clicked.connect(lambda: handler(Home.HARD()))
 
     def reset(self) -> None:
         self.setEnabled(True)

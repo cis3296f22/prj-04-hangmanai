@@ -28,6 +28,7 @@ class Hangman():
         self.display.setWord(self.word, True)
         self.display.setReplayHandler(self.reset)
         self.display.setHomeHandler(self.reset)
+        # self.setWordProviderWordRequester()
         self.display.attachScoreHandler()
 
     def reset(self):
