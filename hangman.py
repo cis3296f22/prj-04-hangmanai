@@ -25,18 +25,17 @@ class Hangman():
 
     def setUpDisplay(self):
         self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
-        self.setWord(self.wordProvider.getWordFromSelectedListRandom())
+        self.display.setDifficultyHandler(lambda x: [self.wordProvider.setDifficulty(x), print(str(x), self.setWord(self.wordProvider.getRandomWord()))])
+        self.setWord(self.wordProvider.getRandomWord())
         self.display.setMaxAttempts(self.max_attempts)
         self.display.setReplayHandler(self.reset)
         self.display.setHomeHandler(self.reset)
-        # self.setWordProviderWordRequester()
         self.display.attachScoreHandler()
 
     def reset(self):
         self.setUpDisplay()
         self.attempts: int = 0
         self.already_guessed = []
-        self.setWord(self.wordProvider.getWordFromSelectedListRandom())
         self.updateUI()
 
     def updateUI(self):
