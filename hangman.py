@@ -15,6 +15,7 @@ class Hangman():
         self.attempts: int = 0
         self.max_attempts: int = max_attempts
         self.display: MainFrame = main_frame
+        self.wordProvider: WordProvider = WordProvider()
 
         self.already_guessed = []
 
@@ -29,6 +30,7 @@ class Hangman():
         self.display.setReplayHandler(self.reset)
         self.display.setHomeHandler(self.reset)
         # self.setWordProviderWordRequester()
+        self.word
         self.display.attachScoreHandler()
 
     def reset(self):

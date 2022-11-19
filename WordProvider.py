@@ -9,6 +9,7 @@ class WordProvider():
         self.headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
         self.word_list = []
         self.Get_html(url)
+        self.selected_word_list: list[str] = []
 
     def Get_html(self, url):
         response = requests.get(url, headers=self.headers)
@@ -49,7 +50,14 @@ class WordProvider():
         words = self.get_hard()
         return random.choice(words)
 
+    def setSelectedWordsList(self, words_list: list[str]):
+        self.selected_word_list = words_list
 
+    def getSelectedWordsList(self):
+        return self.selected_word_list
+
+    def getWordFromSelectedListRandom(self):
+        return random.choice(self.selected_word_list)
 
 if __name__ == '__main__':
     wp = WordProvider()
