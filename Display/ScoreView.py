@@ -27,12 +27,10 @@ class ScoreView(QtWidgets.QWidget):
 
         self.confirmed_score = 0
         self.score_feed: list[Score] = []
-        self.onHandler = lambda x, y, words: [self.addScore(Score.CORRECT) for x in  range(sum([char == x for char in words.upper()]))]
-
-        self.offHandler = lambda x, y, words: print()
-        self.scoreHandler = lambda x, y, words: print()
-        self.attachHandler()
         self.updateUI()
+
+    def getFeed(self, limit: int = 5) -> list[Score]:
+        return self.score_feed if len(self.score_feed) < limit else self.score_feed[: limit]
 
     def updateUI(self):
         self.scoreNum.setText(str(self.getTotalScore()))
@@ -40,14 +38,8 @@ class ScoreView(QtWidgets.QWidget):
     def getTotalScore(self):
         return self.confirmed_score + sum([x.value for x in self.score_feed])
 
-    def detachHandler(self):
-        self.scoreHandler = self.offHandler
-
-    def attachHandler(self):
-        self.scoreHandler = self.onHandler
-
     def addScore(self, score: Score):
-        self.score_feed.append(score)
+        self.score_feed.insert(0, score)
         self.updateUI()
 
     def confirmScore(self):
@@ -56,7 +48,7 @@ class ScoreView(QtWidgets.QWidget):
         self.updateUI()
 
     def reset(self) -> None:
-        self.setEnabled(True)
+        self.score_feed = []
 
 
 if __name__ == "__main__":

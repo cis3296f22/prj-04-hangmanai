@@ -12,6 +12,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon, QFont, QFontMetrics
 from PyQt6.QtMultimedia import QSoundEffect
 
+from Display.ScoreView import ScoreView
 from Score import Score
 
 SOUND_FILE = "sound/knife.wav"
@@ -72,11 +73,12 @@ class HangmanView(QtWidgets.QWidget):
         self.overlay: float = 1
         self.overlayTimer = QTimer()
         self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
+
+        self.scoreView: ScoreView  = None
         # self.showReplayButton(5)
 
-    def updateScoreFeed(self):
-        print("Update score feed")
-
+    def setScoreView(self, scoreView: ScoreView) -> None:
+        self.scoreView = scoreView
 
     def showReplayButton(self, duration: int = 5) -> None:
         self.overlayTimer.start(duration)
@@ -215,7 +217,8 @@ class HangmanView(QtWidgets.QWidget):
         qp.setRenderHint(QPainter.RenderHint.Antialiasing)
         regionRect: QRectF = self.getHangmanRect()
 
-        self.drawScoreFeed(qp, regionRect)
+        if self.scoreView is not None:
+            self.drawScoreFeed(qp, regionRect)
         self.thickness = int(self.thicknessRatio * regionRect.width())
 
         qp.setBrush(QColor(29, 27, 24))
@@ -252,9 +255,12 @@ class HangmanView(QtWidgets.QWidget):
         painter.setBrush(QColor(255, 27, 24))
         socreFeedRect = self.getScoreFeedRect(hangmanRect)
 
-        painter.drawRect(socreFeedRect.toRect())
+        # painter.drawRect(socreFeedRect.toRect())
 
-        for i in range(0, 5):
+
+        score_feed = self.scoreView.getFeed()
+        for i in range(0, len(score_feed)):
+            score = score_feed[i]
             rect = self.getButtonRect(socreFeedRect.left(),
                                       socreFeedRect.top(),
                                       socreFeedRect.width(),
@@ -262,74 +268,27 @@ class HangmanView(QtWidgets.QWidget):
 
             length = rect.height() if rect.height() < rect.width() else rect.width()
             corner_radius = int(length) / 2
+            painter.setPen(score.pen)
+            painter.setBrush(score.bg)
             painter.drawRoundedRect(rect, corner_radius, corner_radius)
-            # fm = painter.fontMetrics()
-            # fm = QFontMetrics(QFont("Consolas", 1))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 2))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 4))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 8))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 16))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 32))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 64))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 128))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 256))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 512))
-            # print(fm.boundingRect("123").width())
-            # fm = QFontMetrics(QFont("Consolas", 1024))
-            # print(fm.boundingRect("123").width())
-            #
-            # word = "12345"
-            # fontSize = 45
-            # fm = QFontMetrics(QFont("Consolas", fontSize))
-            # print("actual width -> " + str(fm.boundingRect(word).width()))
-            # print("calcul width -> " + str(self.wordWidth(word, fontSize)))
-            #
-            # word = "12345"
-            # width = 250
-            # fontSize = self.fontSizeForWidth(word, width)
-            # fm = QFontMetrics(QFont("Consolas", fontSize))
-            # print("actual width -> " + str(fm.boundingRect(word).width()))
-            # print("calcul width -> " + str(self.wordWidth(word, fontSize)))
-            #
-            #
-            # # for power in range(10):
-            # #     print("Pow" + str(math.pow(2, power)))
-            # #     fm = QFontMetrics(QFont("Consolas", math.pow(2, power)))
-            # #     for i in range(20):
-            # #         print(fm.boundingRect("".join([str(x % 10) for x in range(i + 1)])).width())
-            #
 
+            painter.setFont(QFont("Consolas", self.fontSize(str(score), rect.width(), rect.height(), 0.65)))
+            painter.setPen(QPen(QColor(255, 255, 255), 0))
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, str(score))
 
-
-            painter.setFont(QFont("Consolas", int(self.fontSize(rect.width(), rect.height(), "Sample"))))
-            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, "Sample")
-            font = painter.font()
-            ps = font
-            # print(str(ps.toString()))
-
-            # print(painter.fontMetrics().height())
-    def wordWidth(self, word, fontSize):
+    def wordWidth(self, word: str, fontSize: float) -> float:
         slope = 0.7331 * fontSize - 0.0438
         intercept = -0.0729 * fontSize + 0.1588
         return len(word) * slope + intercept
 
-    def fontSize(self, availableWidth, availableHeight, word):
-        widthForHeight = self.wordWidth(word, availableHeight * 3 / 4)
-        if widthForHeight > availableWidth:
-            return self.fontSizeForWidth(word, availableWidth)
-        return availableHeight * 3 / 4
+    def fontSize(self, word: str, availableWidth: float, availableHeight: float, marginRatio: float = 1) -> int:
+        widthForHeight = self.wordWidth(word, availableHeight * marginRatio * 3 / 4)
+        if widthForHeight > availableWidth * marginRatio:
+            return int(self.fontSizeForWidth(word, availableWidth * marginRatio))
+        return int(availableHeight * marginRatio * 3 / 4)
 
-    def fontSizeForWidth(self, word, width):
-        return (width + 0.0438 * len(word) - 0.1588) / (len(word) * 0.7331 - 0.1) # 0.0729
+    def fontSizeForWidth(self, word: str, width: float) -> int:
+        return int((width + 0.0438 * len(word) - 0.1588) / (len(word) * 0.7331 - 0.1)) # 0.0729
 
     def getButtonRect(self, left: int, top: int, width: int, height: int,
                       width_ratio: float, height_ratio: float, shift_y: float) -> QRectF:
