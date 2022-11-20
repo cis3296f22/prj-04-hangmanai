@@ -133,6 +133,12 @@ class MainFrame(QtWidgets.QMainWindow):
     def showCharAt(self, index):
         self.ui.wordBox.showCharAt(index)
 
+    def wrongChars(self):
+        self.ui.wordBox.wrongChars()
+
+    def wrongCharAt(self, index):
+        self.ui.wordBox.wrongCharAt(index)
+
     def setWord(self, word, hide=False):
         self.ui.wordBox.setWord(word, hide)
 

@@ -69,6 +69,7 @@ class Hangman():
             self.display.detachScoreHandler()
         elif self.attempts >= self.max_attempts:
             self.display.lose()
+            self.display.wrongChars()
             self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
             self.display.detachScoreHandler()
         else:
