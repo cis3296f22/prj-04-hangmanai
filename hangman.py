@@ -48,7 +48,7 @@ class Hangman():
                 self.display.showCharAt(i)
             else:
                 self.display.hideCharAt(i)
-        self.display.repaint()
+
 
     def guess(self, char: str, used_chars: list[str]):
         if char.upper() in self.already_guessed:
@@ -75,12 +75,12 @@ class Hangman():
         if self.max_attempts - self.attempts > 0 and all_match:
             self.display.win()
             self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
-            self.updateUI()
+            self.display.repaint()
         elif self.attempts >= self.max_attempts:
             self.display.lose()
             self.display.wrongChars()
             self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
-            self.updateUI()
+            self.display.repaint()
         else:
             return
 
