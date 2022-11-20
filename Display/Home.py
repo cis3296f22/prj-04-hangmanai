@@ -3,7 +3,7 @@ import sys
 from PyQt6 import QtWidgets, uic
 
 from Display.HangmanView import HangmanView
-
+from WordProvider import Difficulty
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -19,17 +19,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class Home(QtWidgets.QWidget):
-    @staticmethod
-    def EASY():
-        return "EASY"
 
-    @staticmethod
-    def NORMAL():
-        return "NORMAL"
-
-    @staticmethod
-    def HARD():
-        return "HARD"
 
     def __init__(self, buttonHandler: callable(str) = lambda x: print(x), assets_dir: str = "../assets"):
         super(Home, self).__init__()
@@ -40,12 +30,20 @@ class Home(QtWidgets.QWidget):
         self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
         self.hangmanView.layout().addWidget(HangmanView(progress=1, assets_dir=self.assets_dir))
 
-        self.setJumpAction(buttonHandler)
+        self.setDifficultyAction(buttonHandler)
 
-    def setJumpAction(self, handler):
-        self.easyButton.clicked.connect(lambda: handler(Home.EASY()))
-        self.normalButton.clicked.connect(lambda: handler(Home.NORMAL()))
-        self.hardButton.clicked.connect(lambda: handler(Home.HARD()))
+    def setDifficultyAction(self, handler):
+        self.easyButton.clicked.connect(lambda: handler(Difficulty.EASY))
+        self.normalButton.clicked.connect(lambda: handler(Difficulty.NORMAL))
+        self.hardButton.clicked.connect(lambda: handler(Difficulty.HARD))
+
+    def setDifficultyActionByDifficulty(self, handler, difficulty: Difficulty):
+        if difficulty == Difficulty.EASY:
+            self.easyButton.clicked.connect(handler)
+        elif difficulty == Difficulty.NORMAL:
+            self.normalButton.clicked.connect(handler)
+        elif difficulty == Difficulty.HARD:
+            self.hardButton.clicked.connect(handler)
 
     def reset(self) -> None:
         self.setEnabled(True)

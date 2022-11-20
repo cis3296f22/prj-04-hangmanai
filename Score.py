@@ -1,5 +1,10 @@
+from enum import Enum
 
-class Score:
+
+class Score(Enum):
+    
+
+
     @staticmethod
     def CORRECT():
         return 5

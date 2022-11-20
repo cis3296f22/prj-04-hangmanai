@@ -78,8 +78,17 @@ class WordBox(QtWidgets.QWidget):
     def hideCharAt(self, index: int) -> None:
         self.characterBoxList[index].hideChar()
 
+    def wrongChars(self) -> None:
+        for charBox in self.characterBoxList:
+            if not charBox.isShown():
+                charBox.wrongChar()
+
+    def wrongCharAt(self, index: int) -> None:
+        self.characterBoxList[index].wrongChar()
+
     def reset(self) -> None:
         self.hideWord()
+
 
 
 if __name__ == "__main__":

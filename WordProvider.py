@@ -2,14 +2,23 @@ import random
 
 import requests
 from bs4 import BeautifulSoup
+from enum import Enum
 
+
+class Difficulty(Enum):
+    EASY = 1
+    NORMAL = 2
+    HARD = 3
 
 class WordProvider():
-    def __init__(self, url='https://www.ef.edu/english-resources/english-vocabulary/top-3000-words/'):
-        self.headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
+    def __init__(self, url='https://www.ef.edu/english-resources/english-vocabulary/top-3000-words/',
+                 difficulty: Difficulty = Difficulty.EASY):
+        self.headers = {
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+        }
         self.word_list = []
         self.Get_html(url)
-        self.selected_word_list: list[str] = []
+        self.difficulty: Difficulty = difficulty
 
     def Get_html(self, url):
         response = requests.get(url, headers=self.headers)
@@ -40,24 +49,42 @@ class WordProvider():
 
     def getEasyWordRandom(self):
         words = self.get_easy()
+        if len(words) == 0:
+            return "SAMPLE"
         return random.choice(words)
 
     def getMediumWordRandom(self):
         words = self.get_median()
+        if len(words) == 0:
+            return "SAMPLE"
         return random.choice(words)
 
     def getHardWordRandom(self):
         words = self.get_hard()
+        if len(words) == 0:
+            return "SAMPLE"
         return random.choice(words)
 
-    def setSelectedWordsList(self, words_list: list[str]):
-        self.selected_word_list = words_list
+    def setDifficulty(self, difficulty: Difficulty):
+        self.difficulty = difficulty
 
-    def getSelectedWordsList(self):
-        return self.selected_word_list
+    def getRandomWord(self):
+        return self.getRandomWordByDifficulty(self.difficulty)
 
-    def getWordFromSelectedListRandom(self):
-        return random.choice(self.selected_word_list)
+    def getRandomWordByDifficulty(self, difficulty: Difficulty):
+        if difficulty == Difficulty.EASY:
+            return self.getEasyWordRandom()
+        elif difficulty == Difficulty.NORMAL:
+            return self.getMediumWordRandom()
+        elif difficulty == Difficulty.HARD:
+            return self.getHardWordRandom()
+        else:
+            return "SAMPLE"
+
+    def setWordList(self, words_list: list[str]):
+        self.word_list = words_list
+
+
 
 if __name__ == '__main__':
     wp = WordProvider()

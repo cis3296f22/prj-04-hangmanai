@@ -13,6 +13,7 @@ from Display.WordBox import WordBox
 
 # Global value for the windows status
 from Score import Score
+from WordProvider import Difficulty
 
 WINDOW_SIZE = 0
 
@@ -21,24 +22,24 @@ class MainFrame(QtWidgets.QMainWindow):
     def __init__(self,
                  parent=None,
                  keyboard_handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
-                 difficulty_handler: callable(str) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 difficulty_handler: callable(str) = lambda x: print(x),
                  assets_dir: str = "../assets"):
 
         super(MainFrame, self).__init__(parent)
-        self.assets_dir = assets_dir
-        self.game: hangman = None
+        self.assets_dir: str = assets_dir
+        self.game = None
         # TODO Word API needed to pass word to guess to hangman
         # self.ui = Ui(assets_dir=assets_dir)
         # self.setCentralWidget(self.ui)
-        self.ui = Ui(assets_dir=self.assets_dir)
+        self.ui: Ui = Ui(assets_dir=self.assets_dir)
         self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
-        self.home = Home(buttonHandler=self.transitMainGame, assets_dir=assets_dir)
+        self.home: Home = Home(buttonHandler=self.transitMainGame, assets_dir=assets_dir)
         self.setCentralWidget(self.home)
 
-        self.keyboard_handler = keyboard_handler
+        self.keyboard_handler: callable = keyboard_handler
         self.ui.keyboard.setKeyboardListner(keyboard_handler)
 
-        self.difficultyHandler: callable(str) = lambda x: print(x)
+        self.difficultyHandler: callable(str) = difficulty_handler
 
         self.show()
         self.windowInit()
@@ -132,6 +133,12 @@ class MainFrame(QtWidgets.QMainWindow):
     def showCharAt(self, index):
         self.ui.wordBox.showCharAt(index)
 
+    def wrongChars(self):
+        self.ui.wordBox.wrongChars()
+
+    def wrongCharAt(self, index):
+        self.ui.wordBox.wrongCharAt(index)
+
     def setWord(self, word, hide=False):
         self.ui.wordBox.setWord(word, hide)
 
@@ -179,6 +186,10 @@ class MainFrame(QtWidgets.QMainWindow):
 
     def detachScoreHandler(self):
         self.ui.scoreDisplay.detachHandler()
+
+    def setDifficultyHandler(self, handler: callable(Difficulty)):
+        self.difficultyHandler = lambda x:   [handler(x), self.ui.difficultyLabel.setText(x.name)]
+
 
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
