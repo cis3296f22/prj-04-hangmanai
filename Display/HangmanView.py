@@ -10,6 +10,8 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon
 from PyQt6.QtMultimedia import QSoundEffect
 
+from Score import Score
+
 SOUND_FILE = "sound/knife.wav"
 
 
@@ -46,6 +48,7 @@ class HangmanView(QtWidgets.QWidget):
         self.debug_anim: bool = debug_anim
         self.reply_handler = reply_handler
         self.home_handler = home_handler
+        self.score_feed: list[Score] = []
 
         self.drawings = [
             self.drawBase,
@@ -68,6 +71,10 @@ class HangmanView(QtWidgets.QWidget):
         self.overlayTimer = QTimer()
         self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
         # self.showReplayButton(5)
+
+    def updateScoreFeed(self):
+        print("Update score feed")
+
 
     def showReplayButton(self, duration: int = 5) -> None:
         self.overlayTimer.start(duration)
@@ -193,12 +200,20 @@ class HangmanView(QtWidgets.QWidget):
         rect = QRectF(left, top, width32, height32)
         return rect
 
+    def getScoreFeedRect(self, hangmanRect: QRectF) -> QRectF:
+        width: int = self.width()
+        leftSpacingWidth = int((width - hangmanRect.width()) / 2)
+
+        return QRectF(self.width() // 2 + int(hangmanRect.width() / 2), 0, leftSpacingWidth, self.height())
+
+
     def paintEvent(self, e) -> None:
         qp = QtGui.QPainter()
         qp.begin(self)
         qp.setRenderHint(QPainter.RenderHint.Antialiasing)
         regionRect: QRectF = self.getHangmanRect()
 
+        self.drawScoreFeed(qp, regionRect)
         self.thickness = int(self.thicknessRatio * regionRect.width())
 
         qp.setBrush(QColor(29, 27, 24))
@@ -231,13 +246,33 @@ class HangmanView(QtWidgets.QWidget):
         self.drawHomeButton(qp, QColor(66, 205, 82), rect.left(), rect.top(), rect.width(), rect.height())
         qp.end()
 
-    def getHomeRect(self, left: int, top: int, width: int, height: int) -> QRectF:
-        center = QPointF(left + 0.5 * width, top + 0.7 * height)
-        size = QPointF(width * 0.8, height * 0.2)
+    def drawScoreFeed(self, painter: QPainter, hangmanRect: QRectF) -> None:
+        painter.setBrush(QColor(255, 27, 24))
+        socreFeedRect = self.getScoreFeedRect(hangmanRect)
+
+        painter.drawRect(socreFeedRect.toRect())
+
+        for i in range(0, 5):
+            rect = self.getButtonRect(socreFeedRect.left(),
+                                      socreFeedRect.top(),
+                                      socreFeedRect.width(),
+                                      socreFeedRect.height(), 0.8, 0.05, (i + 1) * socreFeedRect.height() * 0.08)
+
+            length = rect.height() if rect.height() < rect.width() else rect.width()
+            corner_radius = int(length) / 2
+            painter.drawRoundedRect(rect, corner_radius, corner_radius)
+
+    def getButtonRect(self, left: int, top: int, width: int, height: int,
+                      width_ratio: float, height_ratio: float, shift_y: float) -> QRectF:
+        center = QPointF(left + 0.5 * width, top + shift_y)
+        size = QPointF(width * width_ratio, height * height_ratio)
         return QRectF(
             (center - size / 2),
             (center + size / 2)
         )
+
+    def getHomeRect(self, left: int, top: int, width: int, height: int) -> QRectF:
+        return self.getButtonRect(left, top, width, height, 0.8, 0.2, 0.7 * height)
 
     def drawHomeButton(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
         color.setAlpha(int(255 * ((1 - self.overlay) * 2)))
@@ -280,12 +315,7 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawRect(rect)
 
     def getReplyButtonRect(self, left: int, top: int, width: int, height: int) -> QRectF:
-        center = QPointF(left + 0.5 * width, top + 0.3 * height)
-        size = QPointF(width * 0.8, height * 0.2)
-        return QRectF(
-            (center - size / 2),
-            (center + size / 2)
-        )
+        return self.getButtonRect(left, top, width, height, 0.8, 0.2, 0.3 * height)
 
     def getReplyButtonPosition(self, left: int, top: int, width: int, height: int) -> QPointF:
         return self.getReplyButtonRect(left, top, width, height).center()
