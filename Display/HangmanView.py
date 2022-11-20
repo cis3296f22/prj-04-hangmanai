@@ -1,3 +1,5 @@
+import math
+
 from PyQt6 import uic
 import sys
 
@@ -7,7 +9,7 @@ from PyQt6.QtCore import (QPoint, QRect,
                           QTimer, QUrl)
 from PyQt6.QtCore import QPointF, QRectF
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon
+from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon, QFont, QFontMetrics
 from PyQt6.QtMultimedia import QSoundEffect
 
 from Score import Score
@@ -256,11 +258,78 @@ class HangmanView(QtWidgets.QWidget):
             rect = self.getButtonRect(socreFeedRect.left(),
                                       socreFeedRect.top(),
                                       socreFeedRect.width(),
-                                      socreFeedRect.height(), 0.8, 0.05, (i + 1) * socreFeedRect.height() * 0.08)
+                                      socreFeedRect.height(), 0.5, 0.1, (i + 1) * socreFeedRect.height() * 0.12)
 
             length = rect.height() if rect.height() < rect.width() else rect.width()
             corner_radius = int(length) / 2
             painter.drawRoundedRect(rect, corner_radius, corner_radius)
+            # fm = painter.fontMetrics()
+            # fm = QFontMetrics(QFont("Consolas", 1))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 2))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 4))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 8))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 16))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 32))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 64))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 128))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 256))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 512))
+            # print(fm.boundingRect("123").width())
+            # fm = QFontMetrics(QFont("Consolas", 1024))
+            # print(fm.boundingRect("123").width())
+            #
+            # word = "12345"
+            # fontSize = 45
+            # fm = QFontMetrics(QFont("Consolas", fontSize))
+            # print("actual width -> " + str(fm.boundingRect(word).width()))
+            # print("calcul width -> " + str(self.wordWidth(word, fontSize)))
+            #
+            # word = "12345"
+            # width = 250
+            # fontSize = self.fontSizeForWidth(word, width)
+            # fm = QFontMetrics(QFont("Consolas", fontSize))
+            # print("actual width -> " + str(fm.boundingRect(word).width()))
+            # print("calcul width -> " + str(self.wordWidth(word, fontSize)))
+            #
+            #
+            # # for power in range(10):
+            # #     print("Pow" + str(math.pow(2, power)))
+            # #     fm = QFontMetrics(QFont("Consolas", math.pow(2, power)))
+            # #     for i in range(20):
+            # #         print(fm.boundingRect("".join([str(x % 10) for x in range(i + 1)])).width())
+            #
+
+
+
+            painter.setFont(QFont("Consolas", int(self.fontSize(rect.width(), rect.height(), "Sample"))))
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, "Sample")
+            font = painter.font()
+            ps = font
+            # print(str(ps.toString()))
+
+            # print(painter.fontMetrics().height())
+    def wordWidth(self, word, fontSize):
+        slope = 0.7331 * fontSize - 0.0438
+        intercept = -0.0729 * fontSize + 0.1588
+        return len(word) * slope + intercept
+
+    def fontSize(self, availableWidth, availableHeight, word):
+        widthForHeight = self.wordWidth(word, availableHeight * 3 / 4)
+        if widthForHeight > availableWidth:
+            return self.fontSizeForWidth(word, availableWidth)
+        return availableHeight * 3 / 4
+
+    def fontSizeForWidth(self, word, width):
+        return (width + 0.0438 * len(word) - 0.1588) / (len(word) * 0.7331 - 0.1) # 0.0729
 
     def getButtonRect(self, left: int, top: int, width: int, height: int,
                       width_ratio: float, height_ratio: float, shift_y: float) -> QRectF:
