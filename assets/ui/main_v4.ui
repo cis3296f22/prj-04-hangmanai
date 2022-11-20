@@ -437,6 +437,38 @@ QPushButton:pressed {
                     <property name="frameShadow">
                      <enum>QFrame::Raised</enum>
                     </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_3">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="difficultyLabel">
+                       <property name="styleSheet">
+                        <string notr="true">color: white;
+font-size: 10pt;
+font-weight: bold;</string>
+                       </property>
+                       <property name="text">
+                        <string>Difficulty</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </widget>
                   </item>
                   <item>
