@@ -163,12 +163,12 @@ class MainFrame(QtWidgets.QMainWindow):
 
     def win(self):
         self.ui.hangmanDisplay.showReplayButton()
-        self.ui.scoreDisplay.addScore(Score.WIN())
+        self.ui.scoreDisplay.addScore(Score.WIN)
         self.ui.scoreDisplay.confirmScore()
 
     def lose(self):
         self.ui.hangmanDisplay.showReplayButton()
-        self.ui.scoreDisplay.addScore(Score.LOSE())
+        self.ui.scoreDisplay.addScore(Score.LOSE)
         self.ui.scoreDisplay.confirmScore()
 
     def updateScore(self, char: str, used_chars: list[str], word: str):
