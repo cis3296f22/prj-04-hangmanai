@@ -13,6 +13,7 @@ from Display.WordBox import WordBox
 
 # Global value for the windows status
 from Score import Score
+from WordProvider import Difficulty
 
 WINDOW_SIZE = 0
 
@@ -180,8 +181,9 @@ class MainFrame(QtWidgets.QMainWindow):
     def detachScoreHandler(self):
         self.ui.scoreDisplay.detachHandler()
 
-    def setDifficultyHandler(self, handler: callable(str)):
-        self.difficultyHandler = handler
+    def setDifficultyHandler(self, handler: callable(Difficulty)):
+        self.difficultyHandler = lambda x:   [handler(x), self.ui.difficultyLabel.setText(x.name)]
+
 
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
