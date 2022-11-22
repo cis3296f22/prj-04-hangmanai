@@ -63,6 +63,7 @@ class Hangman():
         else:
             self.display.wrongGuess()
 
+        self.display.repaint()
         self.updateUI()
         # self.display.updateScore(char, used_chars, self.word)
 

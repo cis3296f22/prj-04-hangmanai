@@ -4,14 +4,26 @@ from PyQt6.QtGui import QColor, QPen
 
 
 class Score:
-    def __init__(self, value: int = 0, name: str = "NONE", bg: QColor = QColor(0, 0, 0), pen: QPen = QPen(QColor(255, 255, 255))):
-        self.bg = bg
+    def __init__(self, value: int = 0, name: str = "NONE", bgColor: QColor = QColor(0, 0, 0), pen: QPen = QPen(QColor(255, 255, 255))):
+        self.bgColor = bgColor
         self.value = value
         self.name = name
         self.pen = pen
 
     def __str__(self):
         return self.name + " +" + str(self.value)
+
+    def getPen(self, alpha: int = 255):
+        color = self.pen.color()
+        color.setAlpha(alpha)
+        pen = QPen(self.pen)
+        pen.setColor(color)
+        return pen
+
+    def getBGColor(self, alpha: int = 255):
+        color = self.bgColor
+        color.setAlpha(alpha)
+        return color
 
     @staticmethod
     def CORRECT(duplicate=1):

@@ -268,12 +268,14 @@ class HangmanView(QtWidgets.QWidget):
 
             length = rect.height() if rect.height() < rect.width() else rect.width()
             corner_radius = int(length) / 2
-            painter.setPen(score.pen)
-            painter.setBrush(score.bg)
+
+            painter.setPen(score.getPen(int(255 * (5 - i) / 5)))
+            painter.setBrush(score.getBGColor(int(255 * (5 - i) / 5)))
+
             painter.drawRoundedRect(rect, corner_radius, corner_radius)
 
             painter.setFont(QFont("Consolas", self.fontSize(str(score), rect.width(), rect.height(), 0.65)))
-            painter.setPen(QPen(QColor(255, 255, 255), 0))
+            painter.setPen(QPen(QColor(255, 255, 255, int(255 * (5 - i) / 5)), 0))
             painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, str(score))
 
     def wordWidth(self, word: str, fontSize: float) -> float:
