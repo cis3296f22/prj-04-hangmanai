@@ -4,7 +4,7 @@ from PIL import Image
 import numpy as np
 
 
-class Webcam_Access():
+class Webcam_Access:
 
     cam_id = -1
 
@@ -12,7 +12,7 @@ class Webcam_Access():
         self.cam_id = 0
 
     # takes a picture from the webcam with the id == 0
-    def take_pic(frame):
+    def take_pic(self, frame):
         saved = cv2.imwrite('capture_frame.jpg', frame)
         return saved
 
@@ -88,12 +88,13 @@ class Webcam_Access():
         cap.release()
         cv2.destroyAllWindows()
 
-# if __name__ == '__main__':
-#   start_capture(0)
+if __name__ == '__main__':
+    cam = Webcam_Access()
+    cam.take_pic(0)
 # captures a frame from the camera with the id == 0
 # should loop to see which camera the user wants to use?
 # capture = cv2.VideoCapture(0)
-
+#
 # ret is a boolean if a frame was captured
 # frame data from the webcam
 # ret, frame = capture.read()
