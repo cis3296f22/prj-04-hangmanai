@@ -85,7 +85,11 @@ class WordProvider():
         self.word_list = words_list
 
 
-
 if __name__ == '__main__':
     wp = WordProvider()
     print(wp.getHardWordRandom())
+
+
+
+
+
