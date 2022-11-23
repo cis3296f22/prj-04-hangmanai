@@ -4,6 +4,7 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import (Qt)
 
+from Display.CameraThread import CameraThread
 from Display.HangmanView import HangmanView
 from Display.Home import Home
 from Display.Keyboard import Keyboard
@@ -40,6 +41,9 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyboardListner(keyboard_handler)
 
         self.difficultyHandler: callable(str) = difficulty_handler
+        self.Worker1 = CameraThread(self.ui.cameraView)
+
+        self.Worker1.start()
 
         self.show()
         self.windowInit()

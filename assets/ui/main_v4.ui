@@ -277,6 +277,12 @@ QPushButton:pressed {
       </item>
       <item>
        <widget class="QFrame" name="mainContainer">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(29, 27, 24);</string>
         </property>
@@ -297,7 +303,7 @@ QPushButton:pressed {
            </property>
            <property name="minimumSize">
             <size>
-             <width>250</width>
+             <width>700</width>
              <height>0</height>
             </size>
            </property>
@@ -530,7 +536,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="cameraView">
+             <widget class="QLabel" name="cameraView">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>1</horstretch>
@@ -540,11 +546,8 @@ font-weight: bold;</string>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 85, 127);</string>
               </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+              <property name="text">
+               <string/>
               </property>
              </widget>
             </item>
