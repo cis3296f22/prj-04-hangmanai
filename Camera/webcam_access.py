@@ -41,7 +41,7 @@ class Webcam_Access():
         myconfig = r"--psm 9 --oem 3"
         # psm: 8, 9!, 10
         # for executable install tesseract-ocr-data python package
-        pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+        pytesseract.pytesseract.tesseract_cmd = 'C:/Users/fes77/AppData/Local/Programs/Tesseract-OCR/tesseract.exe'
 
         cap = cv2.VideoCapture(0)
         count = 0

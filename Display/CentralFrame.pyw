@@ -19,14 +19,14 @@ from WordProvider import Difficulty
 WINDOW_SIZE = 0
 
 
-class MainFrame(QtWidgets.QMainWindow):
+class CentralFrame(QtWidgets.QMainWindow):
     def __init__(self,
                  parent=None,
                  keyboard_handler = lambda x, y: print("[" + x + "] -> " + str(y)),
                  difficulty_handler: callable(str) = lambda x: print(x),
                  assets_dir: str = "../assets"):
 
-        super(MainFrame, self).__init__(parent)
+        super(CentralFrame, self).__init__(parent)
         self.assets_dir: str = assets_dir
         self.game = None
         # TODO Word API needed to pass word to guess to hangman
@@ -232,5 +232,5 @@ class Ui(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    widget = MainFrame()
+    widget = CentralFrame()
     app.exec()

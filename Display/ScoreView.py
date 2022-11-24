@@ -15,8 +15,8 @@ class TestWindow(QtWidgets.QMainWindow):
         self.setStyleSheet("""background-color: black""")
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
-        self.form_widget.addScore(Score.CORRECT)
-        self.form_widget.addScore(Score.CORRECT)
+        self.form_widget.addScore(Score.CORRECT())
+        self.form_widget.addScore(Score.CORRECT())
         self.show()
 
 

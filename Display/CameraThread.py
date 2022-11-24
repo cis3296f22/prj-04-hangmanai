@@ -46,10 +46,17 @@ class CameraThread(QThread):
         Capture = cv2.VideoCapture(0)
         while self.ThreadActive:
             ret, frame = Capture.read()
+            ## Modify from here
+
             if ret:
+
+
+
+                # Keep of bit modify
                 Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 # FlippedImage = cv2.flip(Image, 1)
                 # ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0], QImage.Format.Format_RGB888)
+
                 ConvertToQtFormat = QImage(Image.data, Image.shape[1], Image.shape[0], QImage.Format.Format_RGB888)
                 Pic = ConvertToQtFormat.scaled(self.width, self.height, Qt.AspectRatioMode.KeepAspectRatio)
                 self.ImageUpdate.emit(Pic)
