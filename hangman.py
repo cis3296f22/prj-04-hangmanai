@@ -6,6 +6,8 @@ import sys
 from PyQt6 import QtWidgets
 
 from Display.MainFrame import MainFrame
+
+from Score import Score
 from WordProvider import WordProvider
 
 class Hangman():
@@ -30,7 +32,6 @@ class Hangman():
         self.display.setMaxAttempts(self.max_attempts)
         self.display.setReplayHandler(self.reset)
         self.display.setHomeHandler(self.reset)
-        self.display.attachScoreHandler()
 
     def reset(self):
         self.setUpDisplay()
@@ -47,6 +48,7 @@ class Hangman():
             else:
                 self.display.hideCharAt(i)
 
+
     def guess(self, char: str, used_chars: list[str]):
         if char.upper() in self.already_guessed:
             print("You cannot guess the same letter twice")
@@ -55,8 +57,16 @@ class Hangman():
         if char.upper() not in self.word.upper():
             self.attempts = self.attempts + 1
 
+        if char in self.word.upper():
+            self.display.correctGuess(sum([char == x for x in self.word.upper()]))
+        else:
+            self.display.wrongGuess()
+
+        self.display.repaint()
         self.updateUI()
-        self.display.updateScore(char, used_chars, self.word)
+        # self.display.updateScore(char, used_chars, self.word)
+
+
 
         self.finishGameCondition()
 
@@ -65,12 +75,12 @@ class Hangman():
         if self.max_attempts - self.attempts > 0 and all_match:
             self.display.win()
             self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
-            self.display.detachScoreHandler()
+            self.display.repaint()
         elif self.attempts >= self.max_attempts:
             self.display.lose()
             self.display.wrongChars()
             self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
-            self.display.detachScoreHandler()
+            self.display.repaint()
         else:
             return
 

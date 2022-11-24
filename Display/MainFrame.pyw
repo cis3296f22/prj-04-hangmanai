@@ -4,6 +4,7 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import (Qt)
 
+from Display.CameraThread import CameraThread
 from Display.HangmanView import HangmanView
 from Display.Home import Home
 from Display.Keyboard import Keyboard
@@ -40,6 +41,9 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyboardListner(keyboard_handler)
 
         self.difficultyHandler: callable(str) = difficulty_handler
+        self.Worker1 = CameraThread(self.ui.cameraView)
+
+        self.Worker1.start()
 
         self.show()
         self.windowInit()
@@ -171,25 +175,19 @@ class MainFrame(QtWidgets.QMainWindow):
     def win(self):
         self.ui.hangmanDisplay.showReplayButton()
         self.ui.scoreDisplay.addScore(Score.WIN())
-        self.ui.scoreDisplay.confirmScore()
 
     def lose(self):
         self.ui.hangmanDisplay.showReplayButton()
         self.ui.scoreDisplay.addScore(Score.LOSE())
-        self.ui.scoreDisplay.confirmScore()
 
-    def updateScore(self, char: str, used_chars: list[str], word: str):
-        self.ui.scoreDisplay.scoreHandler(char, used_chars, word)
+    def correctGuess(self, duplicate=1):
+        self.ui.scoreDisplay.addScore(Score.CORRECT(duplicate))
 
-    def attachScoreHandler(self):
-        self.ui.scoreDisplay.attachHandler()
-
-    def detachScoreHandler(self):
-        self.ui.scoreDisplay.detachHandler()
+    def wrongGuess(self):
+        self.ui.scoreDisplay.addScore(Score.WRONG())
 
     def setDifficultyHandler(self, handler: callable(Difficulty)):
         self.difficultyHandler = lambda x:   [handler(x), self.ui.difficultyLabel.setText(x.name)]
-
 
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
@@ -216,14 +214,19 @@ class Ui(QtWidgets.QWidget):
         self.hangmanDisplay.setReplayHandler(lambda: [self.keyboard.reset(),
                                                       self.wordBox.reset(),
                                                       self.lifeBox.reset(),
+                                                      self.scoreDisplay.confirmScore(),
                                                       self.hangmanDisplay.reset()])
         self.hangmanDisplay.setHomeHandler(lambda: [self.keyboard.reset(),
                                                       self.wordBox.reset(),
                                                       self.lifeBox.reset(),
+                                                      self.scoreDisplay.confirmScore(),
                                                       self.hangmanDisplay.reset()])
         self.scoreView.setLayout(QtWidgets.QHBoxLayout())
         self.scoreView.layout().setContentsMargins(0, 0, 0, 0)
         self.scoreView.layout().addWidget(self.scoreDisplay)
+
+        self.hangmanDisplay.setScoreView(self.scoreDisplay)
+
         # self.lifeBox.setMaxAttempts(7)
 
 
