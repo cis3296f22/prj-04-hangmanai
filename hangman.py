@@ -1,167 +1,96 @@
-import random
-import time
+# from medianwords_list import medianlist
+# from hardwords_list import hardlist
 
-#welcome user the game
-print("\nWelcome to Hangman game\n")
-#ask player for their name
-name = input("Enter your name: ")
-#wait for the game to start
-print("Hello " + name + ", welcome to Hangman Extra!")
-time.sleep(2)
-print("The game is about to start!\n Let's play Hangman!")
-time.sleep(3)
+import sys
 
+from PyQt6 import QtWidgets
 
-#main function
-def main():
-    #variables for the game
-    global count
-    global display
-    global word
-    global already_guessed
-    global length
-    global play_game
-    #test of the words, later will be placed
-    words_to_guess = ["one","two","three","four","five","six","sevent","eight","nine","ten"
-                   ,"zero"]
-    #varibale word to set a randomly picked word as the word to guess
-    word = random.choice(words_to_guess)
-    #set the length of the guessing word to the length of the picked word
-    length = len(word)
-    #initalize count as 0
-    count = 0
-    #dispaly the word the underline will show how many letter are in the word.
-    display = '_' * length
-    already_guessed = []
-    play_game = ""
+from Display.MainFrame import MainFrame
 
-#loop the game, as user if he or she wants to restart the game
-def play_loop():
-    global play_game
-    #prompt user if he or she wants to play the game again
-    play_game = input("Do You want to play again? y = yes, n = no \n")
-    #accepted inputs are y,Y,n,N
-    while play_game not in ["y", "n","Y","N"]:
-        #if not them prompt the user again
-        play_game = input("Please use valid input? y = yes, n = no \n")
-    #if yes execute the main method again
-    if play_game == "y":
-        main()
-    #if no then exit the game
-    elif play_game == "n":
-        print("Thanks For Playing! We expect you back again!")
-        exit()
+from Score import Score
+from WordProvider import WordProvider
 
-#hangman method with each stage of the hangman
-def hangman():
-    global count
-    global display
-    global word
-    global already_guessed
-    global play_game
-    #set lives
-    limit = 5
-    guess = input("This is the Hangman Word: " + display + " Enter your guess: \n")
-    guess = guess.strip()
-    #invalid input
-    if len(guess.strip()) == 0 or len(guess.strip()) >= 2 or guess <= "9":
-        print("Please enter a letter\n")
-        hangman()
+class Hangman():
+    def __init__(self, main_frame: MainFrame, word: str = "Dichlorodifluoromethane", max_attempts: int = 6):
 
-    #if guessed letter is correct
-    elif guess in word:
-        #add an index when letter correctly guessed
-        already_guessed.extend([guess])
-        index = word.find(guess)
-        word = word[:index] + "_" + word[index + 1:]
-        display = display[:index] + guess + display[index + 1:]
-        print(display + "\n")
+        self.word: str = word.upper()
+        self.attempts: int = 0
+        self.max_attempts: int = max_attempts
+        self.display: MainFrame = main_frame
+        self.wordProvider: WordProvider = WordProvider()
 
-    #ask user to guess another guess
-    elif guess in already_guessed:
-        print("Try another letter.\n")
+        self.already_guessed = []
 
-    #lost 1 live count +1
-    else:
-        count += 1
+        self.name = "Unknown"
+        self.setUpDisplay()
+        self.updateUI()
 
-        if count == 1:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "__|__\n")
-            print("Wrong guess. " + str(limit - count) + " guesses remaining\n")
+    def setUpDisplay(self):
+        self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
+        self.display.setDifficultyHandler(lambda x: [self.wordProvider.setDifficulty(x), print(str(x), self.setWord(self.wordProvider.getRandomWord()))])
+        self.setWord(self.wordProvider.getRandomWord())
+        self.display.setMaxAttempts(self.max_attempts)
+        self.display.setReplayHandler(self.reset)
+        self.display.setHomeHandler(self.reset)
 
-        #lost 2 lives count +2
-        elif count == 2:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |     | \n"
-                  "  |     |\n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "__|__\n")
-            print("Wrong guess. " + str(limit - count) + " guesses remaining\n")
+    def reset(self):
+        self.setUpDisplay()
+        self.attempts: int = 0
+        self.already_guessed = []
+        self.updateUI()
 
-        #lost 3 lives count +3
-        elif count == 3:
-           time.sleep(1)
-           print("   _____ \n"
-                 "  |     | \n"
-                 "  |     |\n"
-                 "  |     | \n"
-                 "  |      \n"
-                 "  |      \n"
-                 "  |      \n"
-                 "__|__\n")
-           print("Wrong guess. " + str(limit - count) + " guesses remaining\n")
+    def updateUI(self):
+        self.display.setLife(self.max_attempts - self.attempts)
 
-        #lost 4 lives count +4
-        elif count == 4:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |     | \n"
-                  "  |     |\n"
-                  "  |     | \n"
-                  "  |     O \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "__|__\n")
-            print("Wrong guess. " + str(limit - count) + " last guess remaining\n")
-
-        #lost 5 lives count +5
-        elif count == 5:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |     | \n"
-                  "  |     |\n"
-                  "  |     | \n"
-                  "  |     O \n"
-                  "  |    /|\ \n"
-                  "  |    / \ \n"
-                  "__|__\n")
-            #show the word if the user failed to guess the word and lost all lives.
-            print("Wrong guess. You are hanged!!!\n")
-            print("The word was:",already_guessed,word)
-            play_loop()
-
-    #when guessed word equal to length
-    if word == '_' * length:
-        print("You won the game.")
-        play_loop()
-
-    elif count != limit:
-        hangman()
+        for i in range(len(self.word)):
+            if self.word.upper()[i] in self.already_guessed:
+                self.display.showCharAt(i)
+            else:
+                self.display.hideCharAt(i)
 
 
-main()
+    def guess(self, char: str, used_chars: list[str]):
+        if char.upper() in self.already_guessed:
+            print("You cannot guess the same letter twice")
+        self.already_guessed = used_chars
+
+        if char.upper() not in self.word.upper():
+            self.attempts = self.attempts + 1
+
+        if char in self.word.upper():
+            self.display.correctGuess(sum([char == x for x in self.word.upper()]))
+        else:
+            self.display.wrongGuess()
+
+        self.display.repaint()
+        self.updateUI()
+        # self.display.updateScore(char, used_chars, self.word)
 
 
-hangman()
+
+        self.finishGameCondition()
+
+    def finishGameCondition(self):
+        all_match = all([(x in self.already_guessed) for x in self.word.upper()])
+        if self.max_attempts - self.attempts > 0 and all_match:
+            self.display.win()
+            self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
+            self.display.repaint()
+        elif self.attempts >= self.max_attempts:
+            self.display.lose()
+            self.display.wrongChars()
+            self.display.setKeyboardListner(lambda x, y: print("[" + x + "] -> " + str(y)))
+            self.display.repaint()
+        else:
+            return
+
+    def setWord(self, word: str):
+        self.word = word.upper()
+        self.display.setWord(self.word, True)
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    main_frame = MainFrame(assets_dir="assets")
+    game = Hangman(main_frame)
+
+    app.exec()

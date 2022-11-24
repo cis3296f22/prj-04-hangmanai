@@ -1,6 +1,9 @@
-from PyQt6 import QtWidgets, uic
 import sys
-from Keytop import KeyTop
+
+from PyQt6 import QtWidgets, uic
+
+from Display.Keytop import KeyTop
+
 
 class TestWindow(QtWidgets.QMainWindow):
 
@@ -10,52 +13,59 @@ class TestWindow(QtWidgets.QMainWindow):
         self.form_widget = Keyboard()
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
-        # self.setFixedHeight(500)
-        # self.setFixedWidth(500)
         self.show()
 
 
 class Keyboard(QtWidgets.QWidget):
-    def __init__(self, handler=lambda x: print("Keyboard handler [" + x + "]")):
-        super(Keyboard, self).__init__()
-        uic.loadUi('../assets/ui/keyboard.ui', self)
-        # self.text(text)
+    def __init__(self,
+                 handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 assets_dir: str = "../assets"):
 
+        super(Keyboard, self).__init__()
+        uic.loadUi(assets_dir + '/ui/keyboard.ui', self)
+
+        self.assets_dir:str = assets_dir
         keyRowsMap = {self.keyboardFirstRowView: "qwertyuiop",
                       self.keyboardSecondRowView: "asdfghjkl",
                       self.keyboardThirdRowView: "zxcvbnm"}
 
-        self.keyMap = {}
-
-        # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
+        self.keyMap: dict[str, KeyTop] = {}
 
         for key in keyRowsMap:
             key.setLayout(QtWidgets.QHBoxLayout())
             for letter in keyRowsMap[key]:
-                keyTop = KeyTop(letter)
+                keyTop = KeyTop(letter, assets_dir=self.assets_dir)
                 self.keyMap[letter] = keyTop
                 key.layout().addWidget(keyTop)
 
         self.setKeyboardListner(handler)
 
-    def setKeyListner(self, key, handler, append=False):
-        self.keyMap[key].setKeyListner(handler, append)
-
-    def setKeyboardListner(self, handler, append=False):
+    def getToggleKeys(self) -> list[str]:
+        keys = []
         for key in self.keyMap:
-            self.keyMap[key].setKeyListner(handler, append)
+            if self.keyMap[key].isDisabled():
+                keys.append(key.upper())
+        return keys
 
-    def reset(self):
+    def setKeyListner(self, key: str, handler: callable([str, list[str]]), append: bool = False) -> None:
+        self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
+
+    def setKeyboardListner(self, handler: callable([str, list[str]]), append: bool = False) -> None:
+        for key in self.keyMap:
+            self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
+
+    def reset(self) -> None:
         for key in self.keyMap:
             self.keyMap[key].reset()
 
-    def disableAll(self):
+    def disableAll(self) -> None:
         for key in self.keyMap:
             self.keyMap[key].setDisabled(True)
 
-    def enableAll(self):
+    def enableAll(self) -> None:
         for key in self.keyMap:
             self.keyMap[key].setEnabled(True)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
