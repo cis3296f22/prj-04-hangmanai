@@ -1,3 +1,5 @@
+import math
+
 from PyQt6 import uic
 import sys
 
@@ -7,8 +9,11 @@ from PyQt6.QtCore import (QPoint, QRect,
                           QTimer, QUrl)
 from PyQt6.QtCore import QPointF, QRectF
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon
+from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon, QFont, QFontMetrics
 from PyQt6.QtMultimedia import QSoundEffect
+
+from Display.ScoreView import ScoreView
+from Score import Score
 
 SOUND_FILE = "sound/knife.wav"
 
@@ -46,6 +51,7 @@ class HangmanView(QtWidgets.QWidget):
         self.debug_anim: bool = debug_anim
         self.reply_handler = reply_handler
         self.home_handler = home_handler
+        self.score_feed: list[Score] = []
 
         self.drawings = [
             self.drawBase,
@@ -67,7 +73,12 @@ class HangmanView(QtWidgets.QWidget):
         self.overlay: float = 1
         self.overlayTimer = QTimer()
         self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
+
+        self.scoreView: ScoreView  = None
         # self.showReplayButton(5)
+
+    def setScoreView(self, scoreView: ScoreView) -> None:
+        self.scoreView = scoreView
 
     def showReplayButton(self, duration: int = 5) -> None:
         self.overlayTimer.start(duration)
@@ -193,12 +204,21 @@ class HangmanView(QtWidgets.QWidget):
         rect = QRectF(left, top, width32, height32)
         return rect
 
+    def getScoreFeedRect(self, hangmanRect: QRectF) -> QRectF:
+        width: int = self.width()
+        leftSpacingWidth = int((width - hangmanRect.width()) / 2)
+
+        return QRectF(self.width() // 2 + int(hangmanRect.width() / 2), 0, leftSpacingWidth, self.height())
+
+
     def paintEvent(self, e) -> None:
         qp = QtGui.QPainter()
         qp.begin(self)
         qp.setRenderHint(QPainter.RenderHint.Antialiasing)
         regionRect: QRectF = self.getHangmanRect()
 
+        if self.scoreView is not None:
+            self.drawScoreFeed(qp, regionRect)
         self.thickness = int(self.thicknessRatio * regionRect.width())
 
         qp.setBrush(QColor(29, 27, 24))
@@ -231,13 +251,58 @@ class HangmanView(QtWidgets.QWidget):
         self.drawHomeButton(qp, QColor(66, 205, 82), rect.left(), rect.top(), rect.width(), rect.height())
         qp.end()
 
-    def getHomeRect(self, left: int, top: int, width: int, height: int) -> QRectF:
-        center = QPointF(left + 0.5 * width, top + 0.7 * height)
-        size = QPointF(width * 0.8, height * 0.2)
+    def drawScoreFeed(self, painter: QPainter, hangmanRect: QRectF) -> None:
+        painter.setBrush(QColor(255, 27, 24))
+        socreFeedRect = self.getScoreFeedRect(hangmanRect)
+
+        # painter.drawRect(socreFeedRect.toRect())
+
+
+        score_feed = self.scoreView.getFeed()
+        for i in range(0, len(score_feed)):
+            score = score_feed[i]
+            rect = self.getButtonRect(socreFeedRect.left(),
+                                      socreFeedRect.top(),
+                                      socreFeedRect.width(),
+                                      socreFeedRect.height(), 0.5, 0.1, (i + 1) * socreFeedRect.height() * 0.12)
+
+            length = rect.height() if rect.height() < rect.width() else rect.width()
+            corner_radius = int(length) / 2
+
+            painter.setPen(score.getPen(int(255 * (5 - i) / 5)))
+            painter.setBrush(score.getBGColor(int(255 * (5 - i) / 5)))
+
+            painter.drawRoundedRect(rect, corner_radius, corner_radius)
+
+            painter.setFont(QFont("Consolas", self.fontSize(str(score), rect.width(), rect.height(), 0.65)))
+            painter.setPen(QPen(QColor(255, 255, 255, int(255 * (5 - i) / 5)), 0))
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, str(score))
+
+    def wordWidth(self, word: str, fontSize: float) -> float:
+        slope = 0.7331 * fontSize - 0.0438
+        intercept = -0.0729 * fontSize + 0.1588
+        return len(word) * slope + intercept
+
+    def fontSize(self, word: str, availableWidth: float, availableHeight: float, marginRatio: float = 1) -> int:
+        widthForHeight = self.wordWidth(word, availableHeight * marginRatio * 3 / 4)
+        if widthForHeight > availableWidth * marginRatio:
+            return int(self.fontSizeForWidth(word, availableWidth * marginRatio))
+        return int(availableHeight * marginRatio * 3 / 4)
+
+    def fontSizeForWidth(self, word: str, width: float) -> int:
+        return int((width + 0.0438 * len(word) - 0.1588) / (len(word) * 0.7331 - 0.1)) # 0.0729
+
+    def getButtonRect(self, left: int, top: int, width: int, height: int,
+                      width_ratio: float, height_ratio: float, shift_y: float) -> QRectF:
+        center = QPointF(left + 0.5 * width, top + shift_y)
+        size = QPointF(width * width_ratio, height * height_ratio)
         return QRectF(
             (center - size / 2),
             (center + size / 2)
         )
+
+    def getHomeRect(self, left: int, top: int, width: int, height: int) -> QRectF:
+        return self.getButtonRect(left, top, width, height, 0.8, 0.2, 0.7 * height)
 
     def drawHomeButton(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
         color.setAlpha(int(255 * ((1 - self.overlay) * 2)))
@@ -280,12 +345,7 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawRect(rect)
 
     def getReplyButtonRect(self, left: int, top: int, width: int, height: int) -> QRectF:
-        center = QPointF(left + 0.5 * width, top + 0.3 * height)
-        size = QPointF(width * 0.8, height * 0.2)
-        return QRectF(
-            (center - size / 2),
-            (center + size / 2)
-        )
+        return self.getButtonRect(left, top, width, height, 0.8, 0.2, 0.3 * height)
 
     def getReplyButtonPosition(self, left: int, top: int, width: int, height: int) -> QPointF:
         return self.getReplyButtonRect(left, top, width, height).center()
