@@ -1,15 +1,15 @@
 import sys
 from unittest import TestCase
 
-import cv2
 from PyQt6 import QtWidgets
 
 from Display.CharacterBox import CharacterBox
-from Display.HangmanView import HangmanView
-from Display.Keyboard import Keyboard
+from Display.LifeBox import LifeBox
+from Display.ScoreView import ScoreView
+from Display.WordBox import WordBox
+from WordProvider import WordProvider
 from hangman import Hangman
 from Display.MainFrame import MainFrame
-from Camera.webcam_access import Webcam_Access
 
 
 class TestHangman(TestCase):
@@ -73,104 +73,131 @@ class TestHangman(TestCase):
         charBox.hideChar()
         self.assertTrue(charBox.isShown() == False)
 
-    def test_HangmanView_show_replay_button(self):
+    def test_LifeBox_set_life(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.showReplayButton()
-        self.assertTrue(True)
+        widget = LifeBox(assets_dir="assets")
+        widget.setLife(2)
+        self.assertTrue(widget.getLife() == 2)
 
-    def test_HangmanView_hide_replay_button(self):
+    def test_LifeBox_is_zero(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.hideReplayButton()
-        self.assertTrue(True)
+        widget = LifeBox(assets_dir="assets")
+        widget.setLife(0)
+        self.assertTrue(widget.isZero())
 
-    def test_HangmanView_take_damage(self):
+    def test_LifeBox_set_max_attempts(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        print(hangmanView.attempts)
-        hangmanView.attempts = 5
-        hangmanView.takeDamage()
-        self.assertTrue(hangmanView.attempts == 4)
+        widget = LifeBox(assets_dir="assets")
+        widget.setMaxAttempts(6)
+        self.assertTrue(widget.max_attempts == 6)
 
-    def test_HangmanView_set_replay_handler(self):
+    def test_LifeBox_take_life(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.setReplayHandler(lambda: print("Reply Handler"))
-        self.assertTrue(True)
+        widget = LifeBox(assets_dir="assets")
+        widget.takeLife(None)
+        self.assertTrue(widget.getLife() == 4)
 
-    def test_HangmanView_set_home_handler(self):
+    def test_LifeBox_reset(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.setHomeHandler(lambda: print("Home Handler"))
-        self.assertTrue(True)
+        widget = LifeBox(assets_dir="assets")
+        widget.setLife(0)
+        widget.reset()
+        self.assertTrue(widget.getLife() == 5)
 
-    def test_HangmanView_set_stage_progress(self):
+    def test_WordBox_set_word(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.setStageProgress(0.5)
-        self.assertTrue(hangmanView.progress_percentage == 0.5)
+        widget = WordBox(assets_dir="assets")
+        widget.setWord("Test")
+        self.assertTrue(widget.word == "Test".upper())
 
-    def test_HangmanView_set_max_attempts(self):
+    def test_WordBox_set_character_at(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.setMaxAttempts(5)
-        self.assertTrue(hangmanView.max_attempts == 5)
+        widget = WordBox(assets_dir="assets")
+        widget.setWord("Test")
+        widget.setCharacterAt(2, "X")
+        self.assertTrue(widget.word == "TEXT")
 
-    def test_HangmanView_reset(self):
+    def test_WordBox_show_word(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.setMaxAttempts(5)
-        hangmanView.attempts = 0
-        hangmanView.reset()
-        self.assertTrue(hangmanView.max_attempts == 5)
+        widget = WordBox(assets_dir="assets")
+        widget.setWord("Test")
+        widget.showWord()
+        self.assertTrue(all([x.isEnabled() for x in widget.characterBoxList]))
 
-    def test_HangmanView_drawings(self):
+    def test_WordBox_show_char_at(self):
         app = QtWidgets.QApplication(sys.argv)
-        hangmanView = HangmanView(assets_dir="assets")
-        hangmanView.setStageProgress(1)
-        hangmanView.repaint()
-        self.assertTrue(True)
+        widget = WordBox(assets_dir="assets")
+        widget.setWord("Test")
+        widget.hideWord()
+        widget.showCharAt(1)
+        self.assertTrue(widget.characterBoxList[1].isEnabled())
 
-    def test_Keyboard_HangmanView_get_toggle_keys(self):
+    def test_WordBox_hide_word(self):
         app = QtWidgets.QApplication(sys.argv)
-        keyboard = Keyboard(assets_dir="assets")
-        keyboard.disableAll()
-        disabledKeys = keyboard.getToggleKeys()
-        keyboard.enableAll()
-        enabledKeys = keyboard.getToggleKeys()
-        b = len(disabledKeys)
-        self.assertTrue("".join(disabledKeys) == "QWERTYUIOPASDFGHJKLZXCVBNM" and len(enabledKeys) == 0)
+        widget = WordBox(assets_dir="assets")
+        widget.setWord("Test")
+        widget.hideWord()
+        self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))
 
-    def test_Keyboard_set_keyboard_listner(self):
+    def test_WordBox_hide_char_at(self):
         app = QtWidgets.QApplication(sys.argv)
-        keyboard = Keyboard(assets_dir="assets")
-        keyboard.disableAll()
-        keyboard.setKeyboardListner(lambda: print("Keyboard listener"))
+        widget = WordBox(assets_dir="assets")
+        widget.setWord("Test")
+        widget.showWord()
+        widget.hideCharAt(1)
+        self.assertTrue(not widget.characterBoxList[1].isEnabled())
 
-    def test_determine_camera(self):
-        webcam = Webcam_Access()
-        cam_found = webcam.determine_camera()
-        if cam_found > -1:
-            assert True
-        else:
-            assert False
+    def test_WordBox_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir="assets")
+        widget.setWord("Test")
+        widget.reset()
+        self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))
 
-    def test_take_pic(self):
-        webcam = Webcam_Access()
-        cam_id = webcam.determine_camera()
-        print(cam_id)
-        cap = cv2.VideoCapture(cam_id)
-        ret, frame = cap.read()
-        if ret == False:
-            assert False
-        result = Webcam_Access.take_pic(frame)
-        if result == True:
-            assert True
+    def test_ScoreView_detach_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir="assets")
+        widget.detachHandler()
+        self.assertTrue(widget.scoreHandler == widget.offHandler)
 
-    # def test_start_capture(self):
-    #     webcam = Webcam_Access()
-    #     webcam.start_capture()
-    #     assert True
+    def test_ScoreView_attach_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir="assets")
+        widget.attachHandler()
+        self.assertTrue(widget.scoreHandler == widget.onHandler)
 
+    def test_ScoreView_add_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir="assets")
+        widget.setScore(100)
+        widget.addScore(200)
+        self.assertTrue(widget.score == 300)
 
+    def test_ScoreView_set_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir="assets")
+        widget.setScore(100)
+        self.assertTrue(widget.score == 100)
+
+    def test_ScoreView_confirm_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir="assets")
+        widget.setScore(100)
+        widget.confirmScore()
+        self.assertTrue(widget.confirmed_score == 100)
+
+    def test_ScoreView_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir="assets")
+        widget.setScore(100)
+        widget.confirmScore()
+        self.assertTrue(widget.confirmed_score == 100 and widget.score == 0)
+
+    def test_get_easy_word_random(self):
+        self.assertTrue(0 < len(WordProvider().getEasyWordRandom()) < 4)
+
+    def test_get_medium_word_random(self):
+        self.assertTrue(4 < len(WordProvider().getMediumWordRandom()) < 8)
+
+    def test_get_hard_word_random(self):
+        self.assertTrue(8 < len(WordProvider().getHardWordRandom()))

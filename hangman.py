@@ -39,7 +39,6 @@ class Hangman():
         self.updateUI()
 
     def updateUI(self):
-        print(self.max_attempts - self.attempts)
         self.display.setLife(self.max_attempts - self.attempts)
 
         for i in range(len(self.word)):
