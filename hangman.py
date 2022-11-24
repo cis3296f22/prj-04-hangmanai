@@ -5,16 +5,17 @@ import sys
 
 from PyQt6 import QtWidgets
 
-from Display.CentralFrame import CentralFrame
+from Display.MainFrame import MainFrame
 from WordProvider import WordProvider
 
+
 class Hangman():
-    def __init__(self, main_frame: CentralFrame, word: str = "Dichlorodifluoromethane", max_attempts: int = 6):
+    def __init__(self, main_frame: MainFrame, word: str = "Dichlorodifluoromethane", max_attempts: int = 6):
 
         self.word: str = word.upper()
         self.attempts: int = 0
         self.max_attempts: int = max_attempts
-        self.display: CentralFrame = main_frame
+        self.display: MainFrame = main_frame
         self.wordProvider: WordProvider = WordProvider()
 
         self.already_guessed = []
@@ -88,7 +89,7 @@ class Hangman():
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    main_frame = CentralFrame(assets_dir="assets")
+    main_frame = MainFrame(assets_dir="assets")
     game = Hangman(main_frame)
 
     app.exec()

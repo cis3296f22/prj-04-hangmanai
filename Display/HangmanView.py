@@ -1,6 +1,3 @@
-import math
-
-from PyQt6 import uic
 import sys
 
 from PyQt6 import QtGui, QtWidgets
@@ -9,7 +6,7 @@ from PyQt6.QtCore import (QPoint, QRect,
                           QTimer, QUrl)
 from PyQt6.QtCore import QPointF, QRectF
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon, QFont, QFontMetrics
+from PyQt6.QtGui import QPainter, QColor, QPen, QPolygon, QFont
 from PyQt6.QtMultimedia import QSoundEffect
 
 from Display.ScoreView import ScoreView
