@@ -26,10 +26,10 @@ class ScoreView(QtWidgets.QWidget):
         uic.loadUi(assets_dir + '/ui/scoreView.ui', self)
 
         self.confirmed_score = 0
-        self.score_feed: list[Score] = []
+        self.score_feed = []
         self.updateUI()
 
-    def getFeed(self, limit: int = 5) -> list[Score]:
+    def getFeed(self, limit: int = 5) :
         return self.score_feed if len(self.score_feed) < limit else self.score_feed[: limit]
 
     def updateUI(self):

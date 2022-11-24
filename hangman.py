@@ -49,7 +49,7 @@ class Hangman():
                 self.display.hideCharAt(i)
 
 
-    def guess(self, char: str, used_chars: list[str]):
+    def guess(self, char: str, used_chars):
         if char.upper() in self.already_guessed:
             print("You cannot guess the same letter twice")
         self.already_guessed = used_chars

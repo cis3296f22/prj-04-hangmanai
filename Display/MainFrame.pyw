@@ -22,7 +22,7 @@ WINDOW_SIZE = 0
 class MainFrame(QtWidgets.QMainWindow):
     def __init__(self,
                  parent=None,
-                 keyboard_handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 keyboard_handler = lambda x, y: print("[" + x + "] -> " + str(y)),
                  difficulty_handler: callable(str) = lambda x: print(x),
                  assets_dir: str = "../assets"):
 

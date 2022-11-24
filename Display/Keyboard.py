@@ -18,7 +18,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class Keyboard(QtWidgets.QWidget):
     def __init__(self,
-                 handler: callable([str, list[str]]) = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 handler = lambda x, y: print("[" + x + "] -> " + str(y)),
                  assets_dir: str = "../assets"):
 
         super(Keyboard, self).__init__()
@@ -40,17 +40,17 @@ class Keyboard(QtWidgets.QWidget):
 
         self.setKeyboardListner(handler)
 
-    def getToggleKeys(self) -> list[str]:
+    def getToggleKeys(self) :
         keys = []
         for key in self.keyMap:
             if self.keyMap[key].isDisabled():
                 keys.append(key.upper())
         return keys
 
-    def setKeyListner(self, key: str, handler: callable([str, list[str]]), append: bool = False) -> None:
+    def setKeyListner(self, key: str, handler, append: bool = False) -> None:
         self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
 
-    def setKeyboardListner(self, handler: callable([str, list[str]]), append: bool = False) -> None:
+    def setKeyboardListner(self, handler, append: bool = False) -> None:
         for key in self.keyMap:
             self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
 
