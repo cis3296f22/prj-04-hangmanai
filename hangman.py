@@ -29,8 +29,8 @@ class Hangman():
         self.display.setDifficultyHandler(lambda x: [self.wordProvider.setDifficulty(x), print(str(x), self.setWord(self.wordProvider.getRandomWord()))])
         self.setWord(self.wordProvider.getRandomWord())
         self.display.setMaxAttempts(self.max_attempts)
-        self.display.setReplayHandler(self.reset)
-        self.display.setHomeHandler(self.reset)
+        self.display.setReplayHandler(lambda : [self.reset(), print("Reply Handler"), self.display.reset()], False)
+        self.display.setHomeHandler(lambda : [self.reset(), print("Home Handler"), self.display.transitHome(), self.display.reset()], False)
 
     def reset(self):
         self.setUpDisplay()

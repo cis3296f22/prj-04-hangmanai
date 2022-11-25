@@ -122,8 +122,7 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyboardListner(handler, append)
 
     def reset(self):
-        self.ui.keyboard.reset()
-        self.ui.wordBox.reset()
+        self.ui.reset()
 
     def hideWord(self):
         self.ui.wordBox.hideWord()
@@ -211,16 +210,7 @@ class Ui(QtWidgets.QWidget):
         self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
         self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
         self.hangmanView.layout().addWidget(self.hangmanDisplay)
-        self.hangmanDisplay.setReplayHandler(lambda: [self.keyboard.reset(),
-                                                      self.wordBox.reset(),
-                                                      self.lifeBox.reset(),
-                                                      self.scoreDisplay.confirmScore(),
-                                                      self.hangmanDisplay.reset()])
-        self.hangmanDisplay.setHomeHandler(lambda: [self.keyboard.reset(),
-                                                      self.wordBox.reset(),
-                                                      self.lifeBox.reset(),
-                                                      self.scoreDisplay.confirmScore(),
-                                                      self.hangmanDisplay.reset()])
+
         self.scoreView.setLayout(QtWidgets.QHBoxLayout())
         self.scoreView.layout().setContentsMargins(0, 0, 0, 0)
         self.scoreView.layout().addWidget(self.scoreDisplay)
@@ -228,6 +218,14 @@ class Ui(QtWidgets.QWidget):
         self.hangmanDisplay.setScoreView(self.scoreDisplay)
 
         # self.lifeBox.setMaxAttempts(7)
+
+    def reset(self):
+        self.keyboard.reset()
+        self.wordBox.reset()
+        self.lifeBox.reset()
+        self.scoreDisplay.confirmScore()
+        self.hangmanDisplay.reset()
+
 
 
 if __name__ == "__main__":
