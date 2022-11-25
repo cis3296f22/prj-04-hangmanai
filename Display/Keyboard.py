@@ -1,6 +1,8 @@
 import sys
+import typing
 
-from PyQt6 import QtWidgets, uic
+from PyQt6 import QtWidgets, uic, QtGui
+from PyQt6.QtCore import QThread, QObject, QEvent
 
 from Display.Keytop import KeyTop
 
@@ -15,6 +17,13 @@ class TestWindow(QtWidgets.QMainWindow):
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
 
+    def keyPressEvent(self, e: QtGui.QKeyEvent) -> None:
+        if not e.isAutoRepeat():
+            print(e.text().upper() )
+
+    def keyReleaseEvent(self, e: QtGui.QKeyEvent) -> None:
+        if not e.isAutoRepeat():
+            self.form_widget.trigger(e.text())
 
 class Keyboard(QtWidgets.QWidget):
     def __init__(self,
@@ -25,9 +34,9 @@ class Keyboard(QtWidgets.QWidget):
         uic.loadUi(assets_dir + '/ui/keyboard.ui', self)
 
         self.assets_dir:str = assets_dir
-        keyRowsMap = {self.keyboardFirstRowView: "qwertyuiop",
-                      self.keyboardSecondRowView: "asdfghjkl",
-                      self.keyboardThirdRowView: "zxcvbnm"}
+        keyRowsMap = {self.keyboardFirstRowView: "qwertyuiop".upper(),
+                      self.keyboardSecondRowView: "asdfghjkl".upper(),
+                      self.keyboardThirdRowView: "zxcvbnm".upper()}
 
         self.keyMap: dict[str, KeyTop] = {}
 
@@ -47,9 +56,6 @@ class Keyboard(QtWidgets.QWidget):
                 keys.append(key.upper())
         return keys
 
-    def setKeyListner(self, key: str, handler, append: bool = False) -> None:
-        self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
-
     def setKeyboardListner(self, handler, append: bool = False) -> None:
         for key in self.keyMap:
             self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
@@ -65,6 +71,12 @@ class Keyboard(QtWidgets.QWidget):
     def enableAll(self) -> None:
         for key in self.keyMap:
             self.keyMap[key].setEnabled(True)
+
+    def trigger(self, key):
+        key = key.upper()
+        if key not in self.keyMap.keys():
+            return
+        self.keyMap[key].trigger()
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import sys
 
-from PyQt6 import QtCore, QtWidgets
+from PyQt6 import QtCore, QtWidgets, QtGui
 from PyQt6 import uic
 from PyQt6.QtCore import (Qt)
 
@@ -78,6 +78,10 @@ class MainFrame(QtWidgets.QMainWindow):
         # Show window
         self.show()
 
+    def keyReleaseEvent(self, e: QtGui.QKeyEvent) -> None:
+        if not e.isAutoRepeat():
+            self.ui.keyboard.trigger(e.text())
+
     def setDifficultyHandler(self, handler: callable(str)):
         self.difficultyHandler = handler
 
@@ -114,9 +118,6 @@ class MainFrame(QtWidgets.QMainWindow):
             self.showNormal()
             # Update button icon
             # self.ui.restoreButton.setIcon(QtGui.QIcon(u":/icons/icons/cil-window-restore.png"))  # Show minized icon
-
-    def setKeyListner(self, key, handler, append=False):
-        self.ui.keyboard.setKeyListner(key, handler, append)
 
     def setKeyboardListner(self, handler, append=False):
         self.ui.keyboard.setKeyboardListner(handler, append)
