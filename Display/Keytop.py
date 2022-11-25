@@ -1,16 +1,22 @@
 from PyQt6 import QtWidgets, uic, QtCore
 import sys
 
+from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QPushButton
+
 
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
 
         super(TestWindow, self).__init__(parent)
-        self.form_widget = KeyTop(toggle=False)
+        self.form_widget = KeyTop(toggle=True)
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
         self.show()
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.form_widget.trigger)
+        self.timer.start(1000)
 
 
 class KeyTop(QtWidgets.QWidget):
@@ -52,6 +58,11 @@ class KeyTop(QtWidgets.QWidget):
             lambda: [self.mouseReleaseEvent(None), handler(self.text().upper())]
         )
 
+    def trigger(self):
+        if self.isDisabled():
+            return
+        # self.mouseReleaseEvent(None)
+        self.button.click()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
