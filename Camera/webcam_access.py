@@ -21,15 +21,23 @@ class Webcam_Access():
 
     # finds the preferred camera the user wants
     # figure it out later
-    def determine_camera(self):
-        cam_id = self.cam_id
-        while(cam_id <= 10):
-            cv2.namedWindow("Webcam #" + str(cam_id))
-            cv2.createButton("Use this webcam?",)
+    def print_camera_list(self):
 
-            cam_id += 1
 
-        return cam_id
+        graph = FilterGraph()
+
+        print(graph.get_input_devices())  # list of camera device
+        cam_list = graph.get_input_devices()
+
+        #try:
+         #   device = graph.get_input_devices().index("name camera that I want to use it ")
+
+        #except ValueError as e:
+
+         #   device = graph.get_input_devices().index("Integrated Webcam")
+
+        return cam_list
+    #return list of cameras
 
     # def set_camera(cam_id):
 
@@ -51,18 +59,6 @@ class Webcam_Access():
         while (True):
 
             ret, frame = cap.read()
-
-            # make image grayscale
-            #img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-            # preform dialation and erosion to remove excess noise
-            #kernel = np.ones((1, 1), np.uint8)
-            #img = cv2.dilate(img, kernel, iterations=30)
-            #img = cv2.erode(img, kernel, iterations=30)
-            # adds gaussian blur for easier processing
-            #img = cv2.adaptiveThreshold(img, 300, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
-            # shows all effects applied
-            #cv2.imshow("img", img)
 
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
             msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255 ,80]))
@@ -90,9 +86,9 @@ class Webcam_Access():
                     if (curr_frequency > counter):
                         counter = curr_frequency
                         cha = i
+                # prints out the most common letter
                 print("the character " + cha)
                 stack.clear()
-            #print(stack)
 
             cv2.imshow("Hangman Webcam", frame)
             cv2.waitKey(1)
