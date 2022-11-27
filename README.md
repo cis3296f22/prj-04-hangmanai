@@ -80,18 +80,21 @@ The player is an actor in the system and who starts the game. The player interac
 
 # Personas
 Persona: James, a elementary school teacher: Timothy
+
 James is a 33 year old elementary school teacher that lives in Abington, PA. He teaches
 Second grade students at Copper Beech elementary school. He was born and raised in Philadelphia and went to Temple University for his teaching degree. Eventually he moved out of the city with his wife to try and start a family in the suburbs. One of his hobbies is playing table-top games. Every weekend James and his friends get together 
 to play these games. 
 
 James likes to use games to help teach his second grade students. It keeps the students engaged with the material and it is fun for everyone involved. During the pandemic it became more difficult to employ these games over a zoom meeting. James wants to keep using games to teach his students since the kids are having more trouble focusing at home. One day he comes across a hangman game that uses handwriting recognition to play. James is not the most experienced with technology but wants to try this game, Hangman Extra, with his students. James thinks this will be a good way for his students to better their spelling skills. Also, since this is a piece of software James hopes that his students will play Hangman Extra in their free time with each other. 
 
-Persona: Kevin McGibler, a 7 year old first grader: Mingjie 
+Persona: Kevin McGibler, a 7 year old first grader: Mingjie
+
 Kevin McGibler, age 7, he is a first grade student lives in Philadelphia, PA, Kevin goes to Ethan Allen elementary school. Growing up Kevin had many friends to play with, he loves American football, basketball and baseball. Kevin is a very energetic kid who loves physical activities and he is very good at it, he never found computer or video games to be interesting, so growing up Kevin isn’t good with technology especially computers, the only technology he knows how to use is the TV, he uses the TV remote to watch his favorite cartoon films and sport channels.
 
 One day Kevin walked into the classroom and saw many of his classmates were playing a game called Hangman Extra. Kevin wasn’t interested at first because he doesn’t like to play computer games but as time passed by more and more people joined the game and it seems like everybody is enjoying the game. Now Kevin wants to play the game but he is worried that people will laugh at him because he doesn’t know how to use a computer. As Kevin stands there his friends saw him and ask him if he wants to play the game or not, Kevin explains his worry to his friends and they told Kevin not to worry, he can play the game without any knowledge of computer because the game Hangman Extra was built on the famous Hangman game with extra features. The game can recognize text and images and take them as commands to play the game, all he has to do is write down a letter and then show it to the camera. Kevin doesn’t even have to touch the computer to participate in the game.
 
  Persona: Bryon Hopkins, a 19 year old college student : Keita
+ 
 Bryon Hopkins, age 19, is a college student in Halmstad, a large coastal city in sweden. He grew up in Stensjö, a village located north from Halmstad. From childhood, he loved to play with his grandparents who lived together with his parents and his grandparents were very caring with him and loved spending time with him. He entered Halmstad University when he was 18 years old with an eagerness to learn business and acquire a bachelor degree in the field. 
 
 As he entered university in Halmstad, he started to live in a dormitory with his roommates and he misses the time he spent with his grandparents. He returned to his hometown every holiday between semesters but he wished to meet grandparents every month to see they are doing fine. During his second semester, he found an online game Hangman Extra, which has an ability to play famous game hangman over the internet with a camera so that players do not need to type letters but only show letters to camera to play the game. He uses this game every weekend to share time with his grandparents. This game was best for him to play with his parents with a given situation, where they live far away and they are not good at computers from their ages. They can play games together without worrying about computer technology and he is very thankful to modern AI technology.
