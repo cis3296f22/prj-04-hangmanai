@@ -31,6 +31,9 @@ pip install opencv-python
 ```
 pip install pip install pytesseract
 ```
+```
+pip install pip install pygrabber
+```
 
 - Move to the project folder and on the command line run with
 ```
