@@ -47,18 +47,18 @@ python main.pyw
 ## How to build
 1. Install PyCharm from here (https://www.jetbrains.com/pycharm/download/)
   - Select community version for free access.
-- Install Python from here (https://www.python.org/downloads/)
+1. Install Python from here (https://www.python.org/downloads/)
   - Make sure to tick the term "Add Python 3.9 to PATH" to run Python from console.
-- Do a git clone command to download our project from our repository  
+1. Do a git clone command to download our project from our repository  
 ```
 https://github.com/cis3296f22/prj-04-hangmanai.git
 ```
-- To run our project you will first need to check that your python version is at least 3.9
-- Before you run the project make sure you installed all the Python libraries listed above in installation 
-- When installing pytesseract onto your computer you need to use the link provided. Locate where the executable is located. Get the full path to the executable and copy it into the CameraThread.py file. Specifically look for pytesseract.pytesseract.tesseract_cmd = ‘Paste full path here’ also in the virtual environment install pytesseract
-- Default_word_list contains words for offline play, you can add more to it if you like, other words are generated from an online dictionary by word scrape.
-- Right click hangman.py to run our game, make sure you have your camera on.
-- Enjoy!
+1. To run our project you will first need to check that your python version is at least 3.9
+1. Before you run the project make sure you installed all the Python libraries listed above in installation 
+1. When installing pytesseract onto your computer you need to use the link provided. Locate where the executable is located. Get the full path to the executable and copy it into the CameraThread.py file. Specifically look for pytesseract.pytesseract.tesseract_cmd = ‘Paste full path here’ also in the virtual environment install pytesseract
+1. Default_word_list contains words for offline play, you can add more to it if you like, other words are generated from an online dictionary by word scrape.
+1. Right click hangman.py to run our game, make sure you have your camera on.
+1. Enjoy!
 
 ```
 pip install pyqt6
