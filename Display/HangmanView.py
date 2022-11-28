@@ -184,17 +184,12 @@ class HangmanView(QtWidgets.QWidget):
             self.takeDamage()
             self.attempts = self.max_attempts
             self.progress_percentage = 1
-        rect = self.getHangmanRect()
 
         # Reply
-        if self.reply_button.isActive() and self.reply_button.rect.contains(event.position()):
-            if self.reply_handler is not None:
-                self.reply_handler()
+        self.reply_button.eventHandle(event, self.reply_handler)
 
         # Home button
-        if self.home_button.isActive() and self.home_button.rect.contains(event.position()):
-            if self.home_handler is not None:
-                self.home_handler()
+        self.home_button.eventHandle(event, self.home_handler)
 
     def getHangmanRect(self) -> QRectF:
         width = self.width()

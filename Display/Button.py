@@ -40,8 +40,10 @@ class Button:
     def hide(self):
         self.opacity = 0
 
-    def eventHandle(self, event: QMouseEvent):
-        print("aaa")
+    def eventHandle(self, event: QMouseEvent, handler=lambda: print("Default handler")):
+        if handler is not None:
+            if self.isActive() and self.rect.contains(event.position()):
+                handler()
 
     def wordWidth(self, word: str, fontSize: float) -> float:
         slope = 0.7331 * fontSize - 0.0438
