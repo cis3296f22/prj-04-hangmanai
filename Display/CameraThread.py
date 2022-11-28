@@ -23,12 +23,16 @@ class MainWindow(QWidget):
 
         self.Worker1.start()
 
+
         self.setLayout(self.VBL)
 
 
 
     def CancelFeed(self):
-        self.Worker1.stop()
+        self.Worker1.cameraNo = self.Worker1.cameraNo + 1
+        self.Worker1.changeCamera(self.Worker1.cameraNo)
+
+
 
 class CameraThread(QThread):
     ImageUpdate = pyqtSignal(QImage)
@@ -39,18 +43,28 @@ class CameraThread(QThread):
         self.ImageUpdate.connect(self.ImageUpdateSlot)
         self.width = 320
         self.height = 240
+        self.cameraNo = 0
+
+    def updateContainer(self, container: QLabel):
+        self.container = container
 
     def ImageUpdateSlot(self, Image):
         self.container.setPixmap(QPixmap.fromImage(Image))
 
+    def changeCamera(self, no):
+        self.sleep(2)
+        self.cameraNo = no
+        self.Capture = cv2.VideoCapture(self.cameraNo)
+
+
     def run(self):
         self.ThreadActive = True
-        Capture = cv2.VideoCapture(1)
+        self.Capture = cv2.VideoCapture(self.cameraNo)
         count = 0
         stack = []
         pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
         while self.ThreadActive:
-            ret, frame = Capture.read()
+            ret, frame = self.Capture.read()
             ## Modify from here
 
             if ret:
@@ -90,6 +104,8 @@ class CameraThread(QThread):
                 ConvertToQtFormat = QImage(Image.data, Image.shape[1], Image.shape[0], QImage.Format.Format_RGB888)
                 Pic = ConvertToQtFormat.scaled(self.width, self.height, Qt.AspectRatioMode.KeepAspectRatio)
                 self.ImageUpdate.emit(Pic)
+        print("Finished")
+
     def stop(self):
         self.ThreadActive = False
         self.quit()
