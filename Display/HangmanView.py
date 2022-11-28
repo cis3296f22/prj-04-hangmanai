@@ -163,15 +163,12 @@ class HangmanView(QtWidgets.QWidget):
                                    bg_color=QColor(66, 205, 82))
         self.setOverlay(self.overlay)
 
-
     def overlayAnim(self) -> None:
         if self.overlay < 0.5:
             self.overlayTimer.stop()
         else:
             self.setOverlay(self.overlay - 0.01)
-            # self.overlay -= 0.01
             self.repaint()
-
 
     def damageAnim(self):
         if self.damageAnimValue <= 0:
@@ -190,12 +187,12 @@ class HangmanView(QtWidgets.QWidget):
         rect = self.getHangmanRect()
 
         # Reply
-        if self.reply_button is not None and self.reply_button.rect.contains(event.position()):
+        if self.reply_button.isActive() and self.reply_button.rect.contains(event.position()):
             if self.reply_handler is not None:
                 self.reply_handler()
 
         # Home button
-        if self.home_button is not None and self.home_button.rect.contains(event.position()):
+        if self.home_button.isActive() and self.home_button.rect.contains(event.position()):
             if self.home_handler is not None:
                 self.home_handler()
 
@@ -228,7 +225,6 @@ class HangmanView(QtWidgets.QWidget):
         leftSpacingWidth = int((width - hangmanRect.width()) / 2)
 
         return QRectF(self.width() // 2 + int(hangmanRect.width() / 2), 0, leftSpacingWidth, self.height())
-
 
     def paintEvent(self, e) -> None:
         qp = QtGui.QPainter()
@@ -268,7 +264,6 @@ class HangmanView(QtWidgets.QWidget):
         # self.overlay = 0.5
 
         if self.reply_button.isActive():
-            print(self.overlay)
             self.drawReplayButton(qp, QColor(66, 205, 82), self.reply_button)
         if self.home_button.isActive():
             self.drawHomeButton(qp, QColor(66, 205, 82), self.home_button)
