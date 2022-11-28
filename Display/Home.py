@@ -23,7 +23,7 @@ class Home(QtWidgets.QWidget):
 
     def __init__(self, buttonHandler: callable(str) = lambda x: print(x), assets_dir: str = "../assets"):
         super(Home, self).__init__()
-        uic.loadUi(assets_dir + '/ui/home_v2.ui', self)
+        uic.loadUi(assets_dir + '/ui/home_v3.ui', self)
         self.assets_dir = assets_dir
 
         self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
