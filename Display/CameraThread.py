@@ -34,13 +34,14 @@ class MainWindow(QWidget):
 class CameraThread(QThread):
     ImageUpdate = pyqtSignal(QImage)
 
-    def __init__(self, container: QLabel, parent=None):
+    def __init__(self, container: QLabel, recognition_callback= lambda x: print(x), parent=None):
         super().__init__(parent)
         self.container = container
         self.ImageUpdate.connect(self.ImageUpdateSlot)
         self.width = 320
         self.height = 240
         self.cameraNo = 0
+        self.recognition_callback = recognition_callback
 
     def updateContainer(self, container: QLabel):
         self.container = container
@@ -91,6 +92,7 @@ class CameraThread(QThread):
                             cha = i
                     # prints out the most common letter
                     print("the character " + cha)
+                    self.recognition_callback(cha)
                     stack.clear()
 
                 # Keep of bit modify
