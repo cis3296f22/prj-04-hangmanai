@@ -42,7 +42,7 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.keyboard.setKeyboardListner(keyboard_handler)
 
         self.difficultyHandler: callable(str) = difficulty_handler
-        self.worker = CameraThread(self.ui.cameraView)
+        self.worker = CameraThread(self.ui.cameraView, recognition_callback=self.ui.keyboard.trigger)
 
         self.home.cameraSwitchView.setLayout(QtWidgets.QHBoxLayout())
         self.home.cameraSwitchView.layout().setContentsMargins(0, 0, 0, 0)
