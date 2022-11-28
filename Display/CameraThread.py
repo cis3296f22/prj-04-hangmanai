@@ -26,12 +26,9 @@ class MainWindow(QWidget):
 
         self.setLayout(self.VBL)
 
-
-
     def CancelFeed(self):
         self.Worker1.cameraNo = self.Worker1.cameraNo + 1
         self.Worker1.changeCamera(self.Worker1.cameraNo)
-
 
 
 class CameraThread(QThread):

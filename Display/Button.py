@@ -32,6 +32,7 @@ class Button:
         if opacity < 0 or opacity > 255:
             print("Opacity should be between 0 and 255")
             return
+        print("Change opacity")
         self.opacity = opacity
         self.border_color.setAlpha(self.opacity)
         self.bg_color.setAlpha(self.opacity)
@@ -40,8 +41,10 @@ class Button:
     def hide(self):
         self.opacity = 0
 
-    def eventHandle(self, event: QMouseEvent, handler=lambda: print("Default handler")):
+    def eventHandle(self, event: QMouseEvent, handler=lambda: print("Default handler"),
+                    pre_handler= lambda: print("prehandler")):
         if handler is not None:
+            pre_handler()
             if self.isActive() and self.rect.contains(event.position()):
                 handler()
 
