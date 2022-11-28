@@ -13,14 +13,14 @@ class Score:
     def __str__(self):
         return self.name + " +" + str(self.value)
 
-    def getPen(self, alpha: int = 255):
+    def getPen(self, alpha: int = 255) -> QPen:
         color = self.pen.color()
         color.setAlpha(alpha)
         pen = QPen(self.pen)
         pen.setColor(color)
         return pen
 
-    def getBGColor(self, alpha: int = 255):
+    def getBGColor(self, alpha: int = 255) -> QColor:
         color = self.bgColor
         color.setAlpha(alpha)
         return color
