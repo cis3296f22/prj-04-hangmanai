@@ -113,6 +113,7 @@ class CameraThread(QThread):
                     cha = i
             # prints out the most common letter
             print("the character " + cha)
+            print(self.stack)
             self.recognition_callback(cha)
             self.stack.clear()
 
