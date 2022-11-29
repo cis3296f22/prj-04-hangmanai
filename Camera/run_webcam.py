@@ -4,6 +4,6 @@ from Camera.webcam_access import Webcam_Access
 
 webcam = Webcam_Access()
 
-# Webcam_Access.start_capture(0)
+Webcam_Access.start_capture(0)
 
 print(webcam.print_camera_list())

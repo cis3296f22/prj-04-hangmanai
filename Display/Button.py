@@ -32,7 +32,7 @@ class Button:
         if opacity < 0 or opacity > 255:
             print("Opacity should be between 0 and 255")
             return
-        print("Change opacity")
+        #print("Change opacity")
         self.opacity = opacity
         self.border_color.setAlpha(self.opacity)
         self.bg_color.setAlpha(self.opacity)

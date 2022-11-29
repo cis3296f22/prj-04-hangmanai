@@ -43,7 +43,7 @@ class Webcam_Access():
 
     # starts webcam capture video
     def start_capture(cam_id):
-        capture = cv2.VideoCapture(cam_id)
+        #capture = cv2.VideoCapture(0)
         cv2.namedWindow("Hangman Webcam")
 
         # https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
@@ -53,7 +53,7 @@ class Webcam_Access():
         pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
 
-        cap = cv2.VideoCapture(cam_id)
+        cap = cv2.VideoCapture(0)
         count = 0
         stack = []
         while (True):
@@ -88,6 +88,7 @@ class Webcam_Access():
                         cha = i
                 # prints out the most common letter
                 print("the character " + cha)
+                print(stack)
                 stack.clear()
 
             cv2.imshow("Hangman Webcam", frame)
@@ -96,8 +97,8 @@ class Webcam_Access():
         cap.release()
         cv2.destroyAllWindows()
 
-# if __name__ == '__main__':
-#   start_capture(0)
+if __name__ == '__main__':
+   Webcam_Access.start_capture(1)
 # captures a frame from the camera with the id == 0
 # should loop to see which camera the user wants to use?
 # capture = cv2.VideoCapture(0)
