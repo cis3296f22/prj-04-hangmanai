@@ -6,6 +6,7 @@ import cv2
 import pytesseract
 from numpy import array
 
+import threading
 class MainWindow(QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -64,7 +65,9 @@ class CameraThread(QThread):
         self.Capture = cv2.VideoCapture(self.cameraNo)
         count = 0
         pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-        analyzing_thread = TesseractThread(lambda: print("analyzing thread ready"))
+        analyzing_thread1 = TesseractThread(lambda: print("analyzing thread ready"))
+        analyzing_thread2 = TesseractThread(lambda: print("analyzing thread ready"))
+        lock = threading.Lock()
 
         while self.ThreadActive:
             ret, frame = self.Capture.read()
@@ -72,9 +75,13 @@ class CameraThread(QThread):
 
             if ret:
 
-                if not analyzing_thread.isRunning():
-                    analyzing_thread = TesseractThread(lambda: self.analyze(frame))
-                    analyzing_thread.start()
+                if not analyzing_thread1.isRunning():
+                    analyzing_thread1 = TesseractThread(lambda: self.analyze(frame, lock))
+                    analyzing_thread1.start()
+                elif not analyzing_thread2.isRunning():
+                    # a = 1
+                    analyzing_thread2 = TesseractThread(lambda: self.analyze(frame, lock))
+                    analyzing_thread2.start()
 
                 # Keep of bit modify
                 Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -86,7 +93,7 @@ class CameraThread(QThread):
                 self.ImageUpdate.emit(Pic)
         print("Finished")
 
-    def analyze(self, frame):
+    def analyze(self, frame, lock):
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255, 80]))
         krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
@@ -97,9 +104,11 @@ class CameraThread(QThread):
                                              config=' --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 
         # checks if the pytesseract passes a ''
+        lock.acquire()
         if (len(string) > 0):
             # if string is not empty takes the first letter and adds to stack
             self.stack.append(string[:1])
+
 
         # if stack is length 10 checks most common letter
         if (len(self.stack) > 10):
@@ -116,6 +125,7 @@ class CameraThread(QThread):
             print(self.stack)
             self.recognition_callback(cha)
             self.stack.clear()
+        lock.release()
 
 
     def stop(self):
