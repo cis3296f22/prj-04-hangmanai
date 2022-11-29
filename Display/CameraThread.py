@@ -31,6 +31,9 @@ class MainWindow(QWidget):
         self.Worker1.changeCamera(self.Worker1.cameraNo)
 
 
+
+
+
 class CameraThread(QThread):
     ImageUpdate = pyqtSignal(QImage)
 
@@ -42,6 +45,7 @@ class CameraThread(QThread):
         self.height = 240
         self.cameraNo = 0
         self.recognition_callback = recognition_callback
+        self.stack = []
 
     def updateContainer(self, container: QLabel):
         self.container = container
@@ -59,41 +63,18 @@ class CameraThread(QThread):
         self.ThreadActive = True
         self.Capture = cv2.VideoCapture(self.cameraNo)
         count = 0
-        stack = []
         pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+        analyzing_thread = TesseractThread(lambda: print("analyzing thread ready"))
+
         while self.ThreadActive:
             ret, frame = self.Capture.read()
             ## Modify from here
 
             if ret:
-                hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-                msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255, 80]))
-                krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
-                dlt = cv2.dilate(msk, krn, iterations=1)
-                thr = 255 - cv2.bitwise_and(dlt, msk)
 
-                string = pytesseract.image_to_string(thr, lang='eng',
-                                                     config=' --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-
-                # checks if the pytesseract passes a ''
-                if (len(string) > 0):
-                    # if string is not empty takes the first letter and adds to stack
-                    stack.append(string[:1])
-
-                # if stack is length 10 checks most common letter
-                if (len(stack) > 10):
-                    counter = 0
-                    cha = stack[0]
-
-                    for i in stack:
-                        curr_frequency = stack.count(i)
-                        if (curr_frequency > counter):
-                            counter = curr_frequency
-                            cha = i
-                    # prints out the most common letter
-                    print("the character " + cha)
-                    self.recognition_callback(cha)
-                    stack.clear()
+                if not analyzing_thread.isRunning():
+                    analyzing_thread = TesseractThread(lambda: self.analyze(frame))
+                    analyzing_thread.start()
 
                 # Keep of bit modify
                 Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -105,9 +86,49 @@ class CameraThread(QThread):
                 self.ImageUpdate.emit(Pic)
         print("Finished")
 
+    def analyze(self, frame):
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255, 80]))
+        krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
+        dlt = cv2.dilate(msk, krn, iterations=1)
+        thr = 255 - cv2.bitwise_and(dlt, msk)
+
+        string = pytesseract.image_to_string(thr, lang='eng',
+                                             config=' --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+        # checks if the pytesseract passes a ''
+        if (len(string) > 0):
+            # if string is not empty takes the first letter and adds to stack
+            self.stack.append(string[:1])
+
+        # if stack is length 10 checks most common letter
+        if (len(self.stack) > 10):
+            counter = 0
+            cha = self.stack[0]
+
+            for i in self.stack:
+                curr_frequency = self.stack.count(i)
+                if (curr_frequency > counter):
+                    counter = curr_frequency
+                    cha = i
+            # prints out the most common letter
+            print("the character " + cha)
+            self.recognition_callback(cha)
+            self.stack.clear()
+
+
     def stop(self):
         self.ThreadActive = False
         self.quit()
+
+
+class TesseractThread(QThread):
+    def __init__(self, handler: lambda : print("Handler"), parent = None):
+        super().__init__(parent)
+        self.handler = handler
+
+    def run(self):
+        self.handler()
 
 if __name__ == "__main__":
     App = QApplication(sys.argv)
