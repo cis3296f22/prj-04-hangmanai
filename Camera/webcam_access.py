@@ -43,6 +43,20 @@ class Webcam_Access():
 
     # starts webcam capture video
     def start_capture(cam_id):
+        """
+    Summary line.
+
+    Extended description of function.
+
+    Parameters:
+    arg1 (int): Description of arg1
+
+    Returns:
+    int: Description of return value
+
+    """
+
+
         #capture = cv2.VideoCapture(0)
         cv2.namedWindow("Hangman Webcam")
 
