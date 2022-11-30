@@ -89,6 +89,18 @@ class WordBox(QtWidgets.QWidget):
         self.word = self.word[:index] + char + self.word[index + 1:]
         self.setWord(self.word)
 
+    def showWord(self) -> None:
+        """
+            Show all characters
+
+            Returns:
+            None
+
+        """
+
+        for charBox in self.characterBoxList:
+            charBox.showChar()
+
     def showCharAt(self, index: int) -> None:
         """
             Show character at an index
