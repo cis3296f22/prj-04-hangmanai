@@ -2,7 +2,7 @@ import time
 import sys
 from subprocess import call
 import cv2
-
+"""Simple script to test if webcam can capture an image"""
 cam = cv2.VideoCapture()
 
 while True:

@@ -43,18 +43,9 @@ class Webcam_Access():
 
     # starts webcam capture video
     def start_capture(cam_id):
-        """
-    Summary line.
+        """Starts the video capture based on the cam_id which is an int
 
-    Extended description of function.
-
-    Parameters:
-    arg1 (int): Description of arg1
-
-    Returns:
-    int: Description of return value
-
-    """
+        that the machine recognizes as a device connected to it"""
 
 
         #capture = cv2.VideoCapture(0)
@@ -65,7 +56,7 @@ class Webcam_Access():
         # psm: 8, 9!, 10
         # for executable install tesseract-ocr-data python package
         pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-
+        """ pytesseract needs path to the executable"""
 
         cap = cv2.VideoCapture(1)
         count = 0
@@ -84,7 +75,13 @@ class Webcam_Access():
 
             #string = pytesseract.image_to_string(img)
             string = pytesseract.image_to_string(thr,lang='eng',config=' --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-
+            """
+            Converts image to a string with specific configurations
+            
+            Check tesseract documentation for more details
+            
+            https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
+            """
             # checks if the pytesseract passes a ''
             if(len(string) > 0):
                 # if string is not empty takes the first letter and adds to stack
