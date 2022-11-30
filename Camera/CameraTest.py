@@ -11,3 +11,4 @@ while True:
     cv2.imwrite("current.jpeg",image[1])
     print("aaaa")
     time.sleep(10)
+    break
