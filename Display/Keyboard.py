@@ -1,8 +1,6 @@
 import sys
-import typing
 
 from PyQt6 import QtWidgets, uic, QtGui
-from PyQt6.QtCore import QThread, QObject, QEvent
 
 from Display.Keytop import KeyTop
 
@@ -29,9 +27,7 @@ class TestWindow(QtWidgets.QMainWindow):
 class Keyboard(QtWidgets.QWidget):
 
     """
-        Simple Button Class for the Hangman game UI.
-
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        Virtual keyboard in Main Game UI and is used to choose alphabet and show the availability of the characters
 
     """
     def __init__(self,
@@ -60,6 +56,13 @@ class Keyboard(QtWidgets.QWidget):
         self.setKeyboardListner(handler)
 
     def getToggleKeys(self):
+        """
+            Returns the list of the toggled keys in the keyboard
+
+            Returns:
+            list[str]: List of the selected or toggled key in char
+
+        """
         keys = []
         for key in self.keyMap:
             if self.keyMap[key].isDisabled():
@@ -67,22 +70,42 @@ class Keyboard(QtWidgets.QWidget):
         return keys
 
     def setKeyboardListner(self, handler, append: bool = False) -> None:
+        """
+            Sets the callback function to each keyboard keys
+
+            Parameters:
+            handler (callable): Callback function that will be executed when the specified key is clicked
+            append (bool): Handler will be appended to the existing handler
+
+            Returns:
+            None
+
+        """
         for key in self.keyMap:
             self.keyMap[key].setKeyListner(lambda x: handler(x, self.getToggleKeys()), append)
 
     def reset(self) -> None:
+        """
+            Resets the all toggled keys
+
+            Returns:
+            None
+
+        """
         for key in self.keyMap:
             self.keyMap[key].reset()
 
-    def disableAll(self) -> None:
-        for key in self.keyMap:
-            self.keyMap[key].setDisabled(True)
+    def trigger(self, key) -> None:
+        """
+            Trigger the click of the specified key
 
-    def enableAll(self) -> None:
-        for key in self.keyMap:
-            self.keyMap[key].setEnabled(True)
+            Parameters:
+            key (str): Key in a keyboard that you want to trigger
 
-    def trigger(self, key):
+            Returns:
+            None
+
+        """
         key = key.upper()
         if key not in self.keyMap.keys():
             return
