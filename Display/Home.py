@@ -38,21 +38,20 @@ class Home(QtWidgets.QWidget):
 
         self.setDifficultyAction(buttonHandler)
 
-    def setDifficultyAction(self, handler):
+    def setDifficultyAction(self, handler) -> None:
+        """
+            Sets the callback function to the difficulty button in Home UI
+
+            Parameters:
+            handler (callable): Callback function attached to the difficulty button
+
+            Returns:
+            None
+
+        """
         self.easyButton.clicked.connect(lambda: handler(Difficulty.EASY))
         self.normalButton.clicked.connect(lambda: handler(Difficulty.NORMAL))
         self.hardButton.clicked.connect(lambda: handler(Difficulty.HARD))
-
-    def setDifficultyActionByDifficulty(self, handler, difficulty: Difficulty):
-        if difficulty == Difficulty.EASY:
-            self.easyButton.clicked.connect(handler)
-        elif difficulty == Difficulty.NORMAL:
-            self.normalButton.clicked.connect(handler)
-        elif difficulty == Difficulty.HARD:
-            self.hardButton.clicked.connect(handler)
-
-    def reset(self) -> None:
-        self.setEnabled(True)
 
 
 if __name__ == "__main__":
