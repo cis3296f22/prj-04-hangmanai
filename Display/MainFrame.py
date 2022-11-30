@@ -136,14 +136,8 @@ class MainFrame(QtWidgets.QMainWindow):
     def reset(self):
         self.ui.reset()
 
-    def hideWord(self):
-        self.ui.wordBox.hideWord()
-
     def hideCharAt(self, index):
         self.ui.wordBox.hideCharAt(index)
-
-    def showWord(self):
-        self.ui.wordBox.showWord()
 
     def showCharAt(self, index):
         self.ui.wordBox.showCharAt(index)
@@ -151,14 +145,8 @@ class MainFrame(QtWidgets.QMainWindow):
     def wrongChars(self):
         self.ui.wordBox.wrongChars()
 
-    def wrongCharAt(self, index):
-        self.ui.wordBox.wrongCharAt(index)
-
     def setWord(self, word, hide=False):
         self.ui.wordBox.setWord(word, hide)
-
-    def setCharacterAt(self, index, char):
-        self.ui.wordBox.setCharacterAt(index, char)
 
     def setMaxAttempts(self, max_attempts):
         self.ui.lifeBox.setMaxAttempts(max_attempts)
@@ -169,13 +157,6 @@ class MainFrame(QtWidgets.QMainWindow):
         self.ui.lifeBox.setLife(number)
         if life > number:
             self.ui.hangmanDisplay.takeDamage()
-
-    def takeLife(self, zeroHandler):
-
-        life = self.ui.lifeBox.getLife()
-        if life > 0:
-            self.ui.hangmanDisplay.takeDamage()
-        self.ui.lifeBox.takeLife(zeroHandler)
 
     def setReplayHandler(self, handler, append: bool = True):
         self.ui.hangmanDisplay.setReplayHandler(handler, append)

@@ -22,9 +22,9 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class ScoreView(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
+        ScoreView will keep the current socre and show it to the user.
 
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        This will keep the list of score in a match together with the sum of the score earned before the current game.
 
     """
     def __init__(self, assets_dir: str = "../assets"):
@@ -38,25 +38,73 @@ class ScoreView(QtWidgets.QWidget):
 
         self.updateUI()
 
-    def getFeed(self, limit: int = 5) :
+    def getFeed(self, limit: int = 5):
+        """
+            Returns the list of score feed
+
+            Returns:
+            The list of score feed
+
+        """
         return self.score_feed if len(self.score_feed) < limit else self.score_feed[: limit]
 
-    def updateUI(self):
+    def updateUI(self) -> None:
+        """
+            Update the score text
+
+            Returns:
+            None
+
+        """
         self.scoreNum.setText(str(self.getTotalScore()))
 
-    def getTotalScore(self):
+    def getTotalScore(self) -> int:
+        """
+            Get the total score
+
+            Parameters:
+            text (str): New text in character box
+
+            Returns:
+            int: sum of the score from the match and previous matches
+
+        """
         return self.confirmed_score + sum([x.value for x in self.score_feed])
 
-    def addScore(self, score: Score):
+    def addScore(self, score: Score) -> None:
+        """
+            Add score to the score feed list
+
+            Parameters:
+            score (Score): Score to be added to the list
+
+            Returns:
+            None
+
+        """
         self.score_feed.insert(0, score)
         self.updateUI()
 
-    def confirmScore(self):
+    def confirmScore(self) -> None:
+        """
+            Override the confirmed_score with the sum of the current total score and empty the list of score feed
+
+            Returns:
+            None
+
+        """
         self.confirmed_score = self.getTotalScore()
         self.score_feed = []
         self.updateUI()
 
     def reset(self) -> None:
+        """
+            Empties the list of score feed
+
+            Returns:
+            None
+
+        """
         self.score_feed = []
 
 

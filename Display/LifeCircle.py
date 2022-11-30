@@ -16,9 +16,9 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class LifeCircle(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
+        Life Cirle is an icon for the life or remaining attempt in a game .
 
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        One circle of life is counted as one remaining attempt.
 
     """
     def __init__(self, assets_dir: str = "../assets"):

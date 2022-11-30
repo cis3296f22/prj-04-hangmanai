@@ -117,13 +117,6 @@ class TestHangman(TestCase):
         widget.setCharacterAt(2, "X")
         self.assertTrue(widget.word == "TEXT")
 
-    def test_WordBox_show_word(self):
-        app = QtWidgets.QApplication(sys.argv)
-        widget = WordBox(assets_dir="assets")
-        widget.setWord("Test")
-        widget.showWord()
-        self.assertTrue(all([x.isEnabled() for x in widget.characterBoxList]))
-
     def test_WordBox_show_char_at(self):
         app = QtWidgets.QApplication(sys.argv)
         widget = WordBox(assets_dir="assets")
@@ -143,7 +136,6 @@ class TestHangman(TestCase):
         app = QtWidgets.QApplication(sys.argv)
         widget = WordBox(assets_dir="assets")
         widget.setWord("Test")
-        widget.showWord()
         widget.hideCharAt(1)
         self.assertTrue(not widget.characterBoxList[1].isEnabled())
 

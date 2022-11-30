@@ -8,7 +8,6 @@ from Display.CharacterBox import CharacterBox
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
-
         super(TestWindow, self).__init__(parent)
         self.form_widget = WordBox()
         self.setCentralWidget(self.form_widget)
@@ -23,11 +22,12 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class WordBox(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
+        Word box of the word that is used for the hangman guess.
 
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        Characters in the word box can be show and hidden with a command
 
     """
+
     def __init__(self, word: str = "Sample", assets_dir: str = "../assets"):
         super(WordBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/wordBox.ui', self)
@@ -42,6 +42,16 @@ class WordBox(QtWidgets.QWidget):
         self.setWord(word)
 
     def setWord(self, word: str, hide: bool = False) -> None:
+        """
+            Setter for the word in the word box
+
+            Parameters:
+            text (str): New word in word box
+
+            Returns:
+            None
+
+        """
         self.word = word.upper()
         for char_box in self.characterBoxList:
             self.wordFrame.layout().removeWidget(char_box)
@@ -62,38 +72,81 @@ class WordBox(QtWidgets.QWidget):
             self.showWord()
 
     def setCharacterAt(self, index: int, char: str) -> None:
+        """
+            Set the character of the letter at the specific index of the word
+
+            Parameters:
+            index (int): Index of char to be updated
+            char (str): New char
+
+            Returns:
+            None
+
+        """
         if index >= len(self.word):
             print("Character index should not be over the length of word set in word box")
             return
         self.word = self.word[:index] + char + self.word[index + 1:]
         self.setWord(self.word)
 
-
-    def showWord(self) -> None:
-        for charBox in self.characterBoxList:
-            charBox.showChar()
-
     def showCharAt(self, index: int) -> None:
+        """
+            Show character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to show
+
+            Returns:
+            None
+
+        """
         self.characterBoxList[index].showChar()
 
     def hideWord(self) -> None:
+        """
+            Hide all of characters
+
+            Returns:
+            None
+
+        """
         for charBox in self.characterBoxList:
             charBox.hideChar()
 
     def hideCharAt(self, index: int) -> None:
+        """
+            Hide character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to hide
+
+            Returns:
+            None
+
+        """
         self.characterBoxList[index].hideChar()
 
     def wrongChars(self) -> None:
+        """
+            Show the hidden character as wrong guessed char
+
+            Returns:
+            None
+
+        """
         for charBox in self.characterBoxList:
             if not charBox.isShown():
                 charBox.wrongChar()
 
-    def wrongCharAt(self, index: int) -> None:
-        self.characterBoxList[index].wrongChar()
-
     def reset(self) -> None:
-        self.hideWord()
+        """
+            Resets the word box by hiding all of letters
 
+            Returns:
+            None
+
+        """
+        self.hideWord()
 
 
 if __name__ == "__main__":
