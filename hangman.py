@@ -10,6 +10,14 @@ from WordProvider import WordProvider
 
 
 class Hangman():
+
+    """
+        Hangman class is the main executable for the whole program
+
+        GUI display and words
+
+    """
+
     def __init__(self, main_frame: MainFrame, word: str = "Dichlorodifluoromethane", max_attempts: int = 6):
 
         self.word: str = word.upper()
@@ -25,6 +33,18 @@ class Hangman():
         self.updateUI()
 
     def setUpDisplay(self):
+
+        """
+            Set up the display for the GUI
+
+            Parameters:
+            self
+
+            Returns:
+            None
+
+        """
+
         self.display.setKeyboardListner(lambda x, y: self.guess(x, y))
         self.display.setDifficultyHandler(lambda x: [self.wordProvider.setDifficulty(x), print(str(x), self.setWord(self.wordProvider.getRandomWord()))])
         self.setWord(self.wordProvider.getRandomWord())
@@ -33,12 +53,36 @@ class Hangman():
         self.display.setHomeHandler(lambda : [self.reset(), print("Home Handler"), self.display.transitHome(), self.display.reset()], False)
 
     def reset(self):
+
+        """
+            reset the game
+
+            Parameters:
+            self
+
+            Returns:
+            None
+
+        """
+
         self.setUpDisplay()
         self.attempts: int = 0
         self.already_guessed = []
         self.updateUI()
 
     def updateUI(self):
+
+        """
+            update the UI
+
+            Parameters:
+            self
+
+            Returns:
+            None
+
+        """
+
         self.display.setLife(self.max_attempts - self.attempts)
 
         for i in range(len(self.word)):
@@ -49,6 +93,19 @@ class Hangman():
 
 
     def guess(self, char: str, used_chars):
+
+        """
+            display the letters and used letter in the GUI
+
+            Parameters:
+            char: letter
+            uesd_chars: show the already guessed letters
+
+            Returns:
+            None
+
+        """
+
         if char.upper() in self.already_guessed:
             print("You cannot guess the same letter twice")
         self.already_guessed = used_chars
@@ -66,10 +123,21 @@ class Hangman():
         # self.display.updateScore(char, used_chars, self.word)
 
 
-
         self.finishGameCondition()
 
     def finishGameCondition(self):
+
+        """
+            display all the condition for finish game
+
+            Parameters:
+            self
+
+            Returns:
+            None
+
+        """
+
         all_match = all([(x in self.already_guessed) for x in self.word.upper()])
         if self.max_attempts - self.attempts > 0 and all_match:
             self.display.win()
@@ -84,6 +152,18 @@ class Hangman():
             return
 
     def setWord(self, word: str):
+
+        """
+            set word function
+
+            Parameters:
+            word: set the word for the GUI display
+
+            Returns:
+            None
+
+        """
+
         self.word = word.upper()
         self.display.setWord(self.word, True)
 
