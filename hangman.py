@@ -10,23 +10,20 @@ from WordProvider import WordProvider
 
 
 class Hangman():
-
-    """
-        Hangman class is the main executable for the whole program
-
-        GUI display and words
-
-    """
-
     def __init__(self, main_frame: MainFrame, word: str = "Dichlorodifluoromethane", max_attempts: int = 6):
 
         self.word: str = word.upper()
+        """word to guess"""
         self.attempts: int = 0
+        """remaining attempts"""
         self.max_attempts: int = max_attempts
+        """Maximum attempts that hangman game has"""
         self.display: MainFrame = main_frame
+        """Reference to the MainFrame"""
         self.wordProvider: WordProvider = WordProvider()
-
+        """Instantiated word provider"""
         self.already_guessed = []
+        """List of already guessed letters"""
 
         self.name = "Unknown"
         self.setUpDisplay()
@@ -121,6 +118,7 @@ class Hangman():
         self.display.repaint()
         self.updateUI()
         # self.display.updateScore(char, used_chars, self.word)
+
 
 
         self.finishGameCondition()
