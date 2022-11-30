@@ -159,16 +159,10 @@ class Button:
 
     def getButtonRect(self) -> QRectF:
         """
-            Create the
-
-            Parameters:
-            word (str): Word in string
-            availableWidth (float): Available width for the word in float pixel
-            availableHeight (float): Available height for the word in float pixel
-            marginRatio (float): Margin ratio to the either width or height.
+            Create the bounding rectangle for the button box
 
             Returns:
-            float: Font size of the word
+            QRectF: Rectangle of the dimension occupied by the button
 
         """
         center = QPointF(self.left + 0.5 * self.width, self.top)
@@ -179,22 +173,66 @@ class Button:
         )
 
     def getTop(self) -> float:
+        """
+            Getter for the top field
+
+            Returns:
+            float: top class variable
+
+        """
         return self.rect.top()
 
     def getLeft(self) -> float:
+        """
+            Getter for the left field
+
+            Returns:
+            float: left class variable
+
+        """
         return self.rect.left()
 
     def getWidth(self) -> float:
+        """
+            Getter for the width field
+
+            Returns:
+            float: width class variable
+
+        """
         return self.rect.width()
 
     def getHeight(self) -> float:
+        """
+            Getter for the height field
+
+            Returns:
+            float: height class variable
+
+        """
         return self.rect.height()
 
     def getLength(self) -> float:
+        """
+            Returns the longer length of either width or height
+
+            Returns:
+            float: the longer length of either width or height
+
+        """
         return self.rect.height() if self.rect.height() < self.rect.width() else self.rect.width()
 
     def drawButton(self, painter: QPainter) -> None:
+        """
+            Draws the button using the given painter.
 
+            Parameters:
+            painter (QPainter): painter from the parent paintEvent
+
+            Returns:
+            None
+
+        """
         length = self.getLength()
         corner_radius = int(length) / 2
         painter.setPen(self.border_color)
