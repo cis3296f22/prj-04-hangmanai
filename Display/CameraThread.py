@@ -7,6 +7,8 @@ import pytesseract
 from numpy import array
 
 import threading
+
+
 class MainWindow(QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -24,7 +26,6 @@ class MainWindow(QWidget):
 
         self.Worker1.start()
 
-
         self.setLayout(self.VBL)
 
     def CancelFeed(self):
@@ -32,21 +33,26 @@ class MainWindow(QWidget):
         self.Worker1.changeCamera(self.Worker1.cameraNo)
 
 
-
-
-
 class CameraThread(QThread):
     ImageUpdate = pyqtSignal(QImage)
+    """ """
 
-    def __init__(self, container: QLabel, recognition_callback= lambda x: print(x), parent=None):
+    def __init__(self, container: QLabel, recognition_callback=lambda x: print(x), parent=None):
         super().__init__(parent)
         self.container = container
-        self.ImageUpdate.connect(self.ImageUpdateSlot)
-        self.width = 320
-        self.height = 240
+        """ Container QLabel of the camera image"""
+        self.width: int = 320
+        """ Width of the camera image"""
+        self.height: int = 240
+        """ Height of the camera image"""
         self.cameraNo = 0
+        """ Camera number used for the image capture"""
         self.recognition_callback = recognition_callback
+        """ Callback function for the successful image recognition"""
         self.stack = []
+        """ Stack for stack analyzer"""
+
+        self.ImageUpdate.connect(self.ImageUpdateSlot)
 
     def updateContainer(self, container: QLabel):
         self.container = container
@@ -58,7 +64,6 @@ class CameraThread(QThread):
         self.sleep(2)
         self.cameraNo = no
         self.Capture = cv2.VideoCapture(self.cameraNo)
-
 
     def run(self):
         self.ThreadActive = True
@@ -109,7 +114,6 @@ class CameraThread(QThread):
             # if string is not empty takes the first letter and adds to stack
             self.stack.append(string[:1])
 
-
         # if stack is length 10 checks most common letter
         if (len(self.stack) > 10):
             counter = 0
@@ -127,19 +131,20 @@ class CameraThread(QThread):
             self.stack.clear()
         lock.release()
 
-
     def stop(self):
         self.ThreadActive = False
         self.quit()
 
 
 class TesseractThread(QThread):
-    def __init__(self, handler: lambda : print("Handler"), parent = None):
+    def __init__(self, handler: lambda: print("Handler"), parent=None):
         super().__init__(parent)
         self.handler = handler
+        """ Function to execute when in run()"""
 
     def run(self):
         self.handler()
+
 
 if __name__ == "__main__":
     App = QApplication(sys.argv)

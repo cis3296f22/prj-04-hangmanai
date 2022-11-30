@@ -26,7 +26,10 @@ class ScoreView(QtWidgets.QWidget):
         uic.loadUi(assets_dir + '/ui/scoreView.ui', self)
 
         self.confirmed_score = 0
+        """ Confirmed score from the previous matches"""
         self.score_feed = []
+        """ Life of score feed added to the ScoreView"""
+
         self.updateUI()
 
     def getFeed(self, limit: int = 5) :

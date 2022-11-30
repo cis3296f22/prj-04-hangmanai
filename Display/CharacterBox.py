@@ -1,8 +1,6 @@
 import sys
 
 from PyQt6 import QtWidgets, uic, QtCore
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont, QPalette, QColor
 
 
 class TestWindow(QtWidgets.QMainWindow):
@@ -34,21 +32,15 @@ class CharacterBox(QtWidgets.QWidget):
     def setText(self, text: str) -> None:
         self.label.setText(text.upper())
 
-    # def mousePressEvent(self, a0):
-    #     print("Mouse clicked")
-    #     # self.keyBackFrame.setStylesheet()
-
     def wrongChar(self):
         self.setDisabled(True)
         self.label.show()
 
     def showChar(self) -> None:
-        # print("Show")
         self.setDisabled(False)
         self.label.show()
 
     def hideChar(self) -> None:
-        # print("Hide")
         self.setDisabled(True)
         self.label.hide()
 

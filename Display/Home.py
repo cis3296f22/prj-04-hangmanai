@@ -25,6 +25,7 @@ class Home(QtWidgets.QWidget):
         super(Home, self).__init__()
         uic.loadUi(assets_dir + '/ui/home_v3.ui', self)
         self.assets_dir = assets_dir
+        """ Path to asset directory"""
 
         self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
         self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)

@@ -29,24 +29,24 @@ class MainFrame(QtWidgets.QMainWindow):
 
         super(MainFrame, self).__init__(parent)
         self.assets_dir: str = assets_dir
-        self.game = None
-        # TODO Word API needed to pass word to guess to hangman
-        # self.ui = Ui(assets_dir=assets_dir)
-        # self.setCentralWidget(self.ui)
-        self.ui: Ui = Ui(assets_dir=self.assets_dir)
-        self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
-        self.home: Home = Home(buttonHandler=self.transitMainGame, assets_dir=assets_dir)
-        self.setCentralWidget(self.home)
+        """ Path to asset directory"""
 
+        self.ui: Ui = Ui(assets_dir=self.assets_dir)
+        """ Hangman UI. Main game UI"""
+        self.home: Home = Home(buttonHandler=self.transitMainGame, assets_dir=assets_dir)
+        """ Home UI"""
+        self.worker = CameraThread(self.ui.cameraView, recognition_callback=self.ui.keyboard.trigger)
+        """ Worker thread for smooth camera feed"""
+
+        self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
+        self.setCentralWidget(self.home)
         self.keyboard_handler: callable = keyboard_handler
         self.ui.keyboard.setKeyboardListner(keyboard_handler)
-
         self.difficultyHandler: callable(str) = difficulty_handler
-        self.worker = CameraThread(self.ui.cameraView, recognition_callback=self.ui.keyboard.trigger)
 
         self.home.cameraSwitchView.setLayout(QtWidgets.QHBoxLayout())
         self.home.cameraSwitchView.layout().setContentsMargins(0, 0, 0, 0)
-        self.home.cameraSwitchView.layout().addWidget(CameraSwitchView(self.worker, assets_dir=self.assets_dir))
+        self.home.cameraSwitchView.layout().addWidget(CameraSwitchView(self.worker))
 
         self.worker.start()
 

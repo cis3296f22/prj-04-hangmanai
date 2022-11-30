@@ -30,13 +30,22 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class CameraSwitchView(QtWidgets.QWidget):
-    def __init__(self, camera_thread: CameraThread, assets_dir: str = "../assets"):
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
+
+    def __init__(self, camera_thread: CameraThread):
         super(CameraSwitchView, self).__init__()
 
-        self.assets_dir: str = assets_dir
-        self.camera_thread = camera_thread
-        self.selected_index = 0
+        self.camera_thread: CameraThread = camera_thread
+        """ Camera thread that is used to send the image to"""
+        self.selected_index: int = 0
+        """ Selected index of the camera"""
         self.buttons = []
+        """ List of camera buttons """
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         width = self.width()

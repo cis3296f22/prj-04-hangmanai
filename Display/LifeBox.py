@@ -25,12 +25,15 @@ class LifeBox(QtWidgets.QWidget):
         super(LifeBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/lifeBox.ui', self)
         self.assets_dir: str = assets_dir
+        """ Path to asset directory"""
         self.max_attempts: int = max_attempts
+        """ Max attempts or maximum life circle can be displayed in the LifeBox"""
         self.life: int = max_attempts
+        """ Remaining life"""
         self.lifeCircleList: list[LifeCircle] = []
+        """ List of the LifeCircle in LifeBox"""
 
         self.lifeFrame.setLayout(QtWidgets.QHBoxLayout())
-        # self.lifeFrame.layout().setSpacing(15)
         self.setLife(self.max_attempts)
 
     def setLife(self, number: int) -> None:

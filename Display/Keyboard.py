@@ -34,11 +34,13 @@ class Keyboard(QtWidgets.QWidget):
         uic.loadUi(assets_dir + '/ui/keyboard.ui', self)
 
         self.assets_dir:str = assets_dir
+        """ Path to asset directory"""
+        self.keyMap: dict[str, KeyTop] = {}
+        """ Map of string alphabet to the corresponding Keptop object"""
+
         keyRowsMap = {self.keyboardFirstRowView: "qwertyuiop".upper(),
                       self.keyboardSecondRowView: "asdfghjkl".upper(),
                       self.keyboardThirdRowView: "zxcvbnm".upper()}
-
-        self.keyMap: dict[str, KeyTop] = {}
 
         for key in keyRowsMap:
             key.setLayout(QtWidgets.QHBoxLayout())

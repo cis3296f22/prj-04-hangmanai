@@ -26,11 +26,13 @@ class WordBox(QtWidgets.QWidget):
         super(WordBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/wordBox.ui', self)
         self.assets_dir: str = assets_dir
+        """ Path to asset directory"""
+        self.word: str = word
+        """ Word that is displayed in the WordBox"""
+        self.characterBoxList: list[CharacterBox] = []
+        """ List of CharacterBox that contains the each characters of word"""
 
         self.wordFrame.setLayout(QtWidgets.QHBoxLayout())
-        # self.wordFrame.layout().setSpacing(30)
-        self.word: str = word
-        self.characterBoxList: list[CharacterBox] = []
         self.setWord(word)
 
     def getWord(self):

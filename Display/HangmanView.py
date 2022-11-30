@@ -40,16 +40,26 @@ class HangmanView(QtWidgets.QWidget):
 
         uic.loadUi(assets_dir + '/ui/hangmanView.ui', self)
         self.assets_dir: str = assets_dir
+        """ Path to asset directory"""
 
         self.thicknessRatio: float = 0.05
+        """ Thickness ration for the pen to the width"""
         self.thickness: int = 1
+        """ Thickness of pen"""
         self.progress_percentage: float = progress
+        """ Progress of the hangman drawing"""
         self.max_attempts: int = max_attempts
+        """ Max attempts of the hangman"""
         self.attempts: int = self.max_attempts
+        """ Remaining attempts"""
         self.debug_anim: bool = debug_anim
+        """ Debug flag"""
         self.reply_handler = reply_handler
+        """ Reply callback function for the reply button click"""
         self.home_handler = home_handler
+        """ Home callback function for the home button click"""
         self.score_feed: list[Score] = []
+        """ List of the score feed show in the left of the hangman view"""
 
         self.drawings = [
             self.drawBase,
@@ -65,18 +75,26 @@ class HangmanView(QtWidgets.QWidget):
             self.drawRightLeg
         ]
         self.damageAnimValue: float = 0
-        self.damageTimer = QTimer()
-        self.damageTimer.timeout.connect(lambda: self.damageAnim())
-        self.effect = None
+        """ Animation progress integer used to keep track of the progress of the damage animation"""
+        self.damageTimer: QTimer = QTimer()
+        """ Damage animation timer used to create the damage animation"""
         self.overlay: float = 1
-        self.overlayTimer = QTimer()
-        self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
+        """ Animation progress integer used to keep track of the progress of the overlay animation"""
+        self.overlayTimer: QTimer = QTimer()
+        """ Overlay animation timer used to create the overlay animation"""
 
+        self.effect: QSoundEffect = None
+        """ Sound effect played for the wrong guesses"""
         self.home_button: Button = None
+        """ Home button """
         self.reply_button: Button = None
+        """ Reply button """
 
         self.scoreView: ScoreView = None
-        # self.showReplayButton(5)
+        """ Score view that contains the feed of scores"""
+
+        self.damageTimer.timeout.connect(lambda: self.damageAnim())
+        self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
 
     def setScoreView(self, scoreView: ScoreView) -> None:
         self.scoreView = scoreView

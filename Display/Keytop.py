@@ -28,9 +28,12 @@ class KeyTop(QtWidgets.QWidget):
 
         super(KeyTop, self).__init__()
         uic.loadUi(assets_dir + '/ui/keytop_modern_v2.ui', self)
-        self.setText(text)
+
         self.char: str = text
+        """ Single letter text printed on the Keytop"""
         self.toggle: bool = toggle
+        """ Toggle boolean. True will toggle the Keytop"""
+        self.setText(text)
         self.setKeyListner(handler)
 
     def text(self) -> str:
