@@ -20,9 +20,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class KeyTop(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
-
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        Virtual Keytop key that is used in the Virtual Keyboard
 
     """
     def __init__(self,
@@ -42,24 +40,65 @@ class KeyTop(QtWidgets.QWidget):
         self.setKeyListner(handler)
 
     def text(self) -> str:
+        """
+            Getter for the text in the key top
+
+            Returns:
+            str: Text in key top
+
+        """
         return self.char
 
     def setText(self, text: str) -> None:
+        """
+            Setter for the text in the key top
+
+            Parameters:
+            text (str): New text in key top
+
+            Returns:
+            None
+
+        """
         self.char = text
         self.button.setText(text.upper())
 
     def mouseReleaseEvent(self, a0):
-        # print(self.text())
         if self.toggle:
             self.setDisabled(True)
 
     def isDisabled(self) -> bool:
+        """
+            Checks if the key is toggled
+
+            Returns:
+            bool: True if key is toggled
+
+        """
         return not self.button.isEnabled()
 
     def reset(self):
+        """
+            Resets the toggle of the key
+
+            Returns:
+            None
+
+        """
         self.setEnabled(True)
 
     def setKeyListner(self, handler: callable(str), append: bool = False) -> None:
+        """
+            Sets the callback function to the key
+
+            Parameters:
+            handler (callable): Callback function that will be executed when the key is clicked
+            append (bool): Handler will be appended to the existing handler
+
+            Returns:
+            None
+
+        """
         if not append:
             self.button.disconnect()
         self.button.clicked.connect(
@@ -67,9 +106,15 @@ class KeyTop(QtWidgets.QWidget):
         )
 
     def trigger(self):
+        """
+            Trigger the click of the key and invoke the callback function attached to it
+
+            Returns:
+            None
+
+        """
         if self.isDisabled():
             return
-        # self.mouseReleaseEvent(None)
         self.button.click()
 
 
