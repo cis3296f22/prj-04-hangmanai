@@ -52,7 +52,10 @@ https://github.com/cis3296f22/prj-04-hangmanai.git
 ```
 1. To run our project you will first need to check that your python version is at least 3.9
 1. Before you run the project make sure you installed all the Python libraries listed above in installation 
-1. When installing pytesseract onto your computer you need to use the link provided. Locate where the executable is located. Get the full path to the executable and copy it into the CameraThread.py file. Specifically look for pytesseract.pytesseract.tesseract_cmd = ‘Paste full path here’ also in the virtual environment install pytesseract
+1. When installing pytesseract onto your computer you need to use the link provided. Locate where the executable is. Get the full path to the executable and copy it into the CameraThread.py file in the Display folder. Specifically look for pytesseract.pytesseract.tesseract_cmd = ‘Paste full path here’ also in the virtual environment install pytesseract
+![tesseract_example_cmd](https://user-images.githubusercontent.com/97564191/204888115-a91cdf56-3f80-4e59-ba82-c728e99273b2.PNG)
+This is the default path for Windows, but if you are using another operating system make sure to update the path.
+
 1. Default_word_list contains words for offline play, you can add more to it if you like, other words are generated from an online dictionary by word scrape.
 1. Right click hangman.py to run our game, make sure you have your camera on.
 1. Enjoy!
