@@ -20,9 +20,9 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class Home(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
+        Home UI that is used to select the difficulty and camera used in the game.
 
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        This is default UI that user will see when game is opened
 
     """
 
