@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>prj-04-hangmanai.test_hangman API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>prj-04-hangmanai.test_hangman</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import sys
+from unittest import TestCase
+
+from PyQt6 import QtWidgets
+
+from Display.CharacterBox import CharacterBox
+from Display.LifeBox import LifeBox
+from Display.ScoreView import ScoreView
+from Display.WordBox import WordBox
+from WordProvider import WordProvider
+from hangman import Hangman
+from Display.MainFrame import MainFrame
+
+
+class TestHangman(TestCase):
+
+    def test_set_up_display(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.setUpDisplay()
+        self.assertTrue(True)
+
+    def test_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.reset()
+        self.assertTrue(True)
+
+    def test_update_ui(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.updateUI()
+        self.assertTrue(True)
+
+    def test_guess(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.guess(&#34;A&#34;, [&#34;A&#34;, &#34;B&#34;])
+        self.assertTrue(True)
+
+    def test_finish_game_condition(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.finishGameCondition()
+        self.assertTrue(True)
+
+    def test_CharacterBox_text(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(text=&#34;B&#34;, assets_dir=&#34;assets&#34;)
+        self.assertTrue(charBox.text() == &#34;B&#34;)
+
+    def test_CharacterBox_set_text(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(text=&#34;B&#34;, assets_dir=&#34;assets&#34;)
+        charBox.setText(&#34;C&#34;)
+        self.assertTrue(charBox.text() == &#34;C&#34;)
+
+    def test_CharacterBox_show_char(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(assets_dir=&#34;assets&#34;)
+        charBox.hideChar()
+        charBox.showChar()
+        self.assertTrue(charBox.isShown() == True)
+
+    def test_CharacterBox_hide_char(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(assets_dir=&#34;assets&#34;)
+        charBox.hideChar()
+        self.assertTrue(charBox.isShown() == False)
+
+    def test_LifeBox_set_life(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setLife(2)
+        self.assertTrue(widget.getLife() == 2)
+
+    def test_LifeBox_is_zero(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setLife(0)
+        self.assertTrue(widget.isZero())
+
+    def test_LifeBox_set_max_attempts(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setMaxAttempts(6)
+        self.assertTrue(widget.max_attempts == 6)
+
+    def test_LifeBox_take_life(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.takeLife(None)
+        self.assertTrue(widget.getLife() == 4)
+
+    def test_LifeBox_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setLife(0)
+        widget.reset()
+        self.assertTrue(widget.getLife() == 5)
+
+    def test_WordBox_set_word(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        self.assertTrue(widget.word == &#34;Test&#34;.upper())
+
+    def test_WordBox_set_character_at(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.setCharacterAt(2, &#34;X&#34;)
+        self.assertTrue(widget.word == &#34;TEXT&#34;)
+
+    def test_WordBox_show_char_at(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.hideWord()
+        widget.showCharAt(1)
+        self.assertTrue(widget.characterBoxList[1].isEnabled())
+
+    def test_WordBox_hide_word(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.hideWord()
+        self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))
+
+    def test_WordBox_hide_char_at(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.hideCharAt(1)
+        self.assertTrue(not widget.characterBoxList[1].isEnabled())
+
+    def test_WordBox_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.reset()
+        self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))
+
+    def test_ScoreView_detach_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.detachHandler()
+        self.assertTrue(widget.scoreHandler == widget.offHandler)
+
+    def test_ScoreView_attach_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.attachHandler()
+        self.assertTrue(widget.scoreHandler == widget.onHandler)
+
+    def test_ScoreView_add_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        widget.addScore(200)
+        self.assertTrue(widget.score == 300)
+
+    def test_ScoreView_set_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        self.assertTrue(widget.score == 100)
+
+    def test_ScoreView_confirm_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        widget.confirmScore()
+        self.assertTrue(widget.confirmed_score == 100)
+
+    def test_ScoreView_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        widget.confirmScore()
+        self.assertTrue(widget.confirmed_score == 100 and widget.score == 0)
+
+    def test_get_easy_word_random(self):
+        self.assertTrue(0 &lt; len(WordProvider().getEasyWordRandom()) &lt; 4)
+
+    def test_get_medium_word_random(self):
+        self.assertTrue(4 &lt; len(WordProvider().getMediumWordRandom()) &lt; 8)
+
+    def test_get_hard_word_random(self):
+        self.assertTrue(8 &lt; len(WordProvider().getHardWordRandom()))</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman"><code class="flex name class">
+<span>class <span class="ident">TestHangman</span></span>
+<span>(</span><span>methodName='runTest')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class whose instances are single test cases.</p>
+<p>By default, the test code itself should be placed in a method named
+'runTest'.</p>
+<p>If the fixture may be used for many test cases, create as
+many test methods as are needed. When instantiating such a TestCase
+subclass, specify in the constructor arguments the name of the test method
+that the instance is to execute.</p>
+<p>Test authors should subclass TestCase for their own tests. Construction
+and deconstruction of the test's environment ('fixture') can be
+implemented by overriding the 'setUp' and 'tearDown' methods respectively.</p>
+<p>If it is necessary to override the <strong>init</strong> method, the base class
+<strong>init</strong> method must always be called. It is important that subclasses
+should not change the signature of their <strong>init</strong> method, since instances
+of the classes are instantiated automatically by parts of the framework
+in order to be run.</p>
+<p>When subclassing TestCase, you can set these attributes:
+* failureException: determines which exception will be raised when
+the instance's assertion methods fail; test methods raising this
+exception will be deemed to have 'failed' rather than 'errored'.
+* longMessage: determines whether long messages (including repr of
+objects used in assert methods) will be printed on failure in <em>addition</em>
+to any explicit message passed.
+* maxDiff: sets the maximum length of a diff in failure messages
+by assert methods using difflib. It is looked up as an instance
+attribute so can be configured by individual tests if required.</p>
+<p>Create an instance of the class that will use the named test
+method when executed. Raises a ValueError if the instance does
+not have a method with the specified name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TestHangman(TestCase):
+
+    def test_set_up_display(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.setUpDisplay()
+        self.assertTrue(True)
+
+    def test_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.reset()
+        self.assertTrue(True)
+
+    def test_update_ui(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.updateUI()
+        self.assertTrue(True)
+
+    def test_guess(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.guess(&#34;A&#34;, [&#34;A&#34;, &#34;B&#34;])
+        self.assertTrue(True)
+
+    def test_finish_game_condition(self):
+        app = QtWidgets.QApplication(sys.argv)
+        main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+        game = Hangman(main_frame)
+        game.finishGameCondition()
+        self.assertTrue(True)
+
+    def test_CharacterBox_text(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(text=&#34;B&#34;, assets_dir=&#34;assets&#34;)
+        self.assertTrue(charBox.text() == &#34;B&#34;)
+
+    def test_CharacterBox_set_text(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(text=&#34;B&#34;, assets_dir=&#34;assets&#34;)
+        charBox.setText(&#34;C&#34;)
+        self.assertTrue(charBox.text() == &#34;C&#34;)
+
+    def test_CharacterBox_show_char(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(assets_dir=&#34;assets&#34;)
+        charBox.hideChar()
+        charBox.showChar()
+        self.assertTrue(charBox.isShown() == True)
+
+    def test_CharacterBox_hide_char(self):
+        app = QtWidgets.QApplication(sys.argv)
+        charBox = CharacterBox(assets_dir=&#34;assets&#34;)
+        charBox.hideChar()
+        self.assertTrue(charBox.isShown() == False)
+
+    def test_LifeBox_set_life(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setLife(2)
+        self.assertTrue(widget.getLife() == 2)
+
+    def test_LifeBox_is_zero(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setLife(0)
+        self.assertTrue(widget.isZero())
+
+    def test_LifeBox_set_max_attempts(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setMaxAttempts(6)
+        self.assertTrue(widget.max_attempts == 6)
+
+    def test_LifeBox_take_life(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.takeLife(None)
+        self.assertTrue(widget.getLife() == 4)
+
+    def test_LifeBox_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = LifeBox(assets_dir=&#34;assets&#34;)
+        widget.setLife(0)
+        widget.reset()
+        self.assertTrue(widget.getLife() == 5)
+
+    def test_WordBox_set_word(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        self.assertTrue(widget.word == &#34;Test&#34;.upper())
+
+    def test_WordBox_set_character_at(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.setCharacterAt(2, &#34;X&#34;)
+        self.assertTrue(widget.word == &#34;TEXT&#34;)
+
+    def test_WordBox_show_char_at(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.hideWord()
+        widget.showCharAt(1)
+        self.assertTrue(widget.characterBoxList[1].isEnabled())
+
+    def test_WordBox_hide_word(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.hideWord()
+        self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))
+
+    def test_WordBox_hide_char_at(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.hideCharAt(1)
+        self.assertTrue(not widget.characterBoxList[1].isEnabled())
+
+    def test_WordBox_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = WordBox(assets_dir=&#34;assets&#34;)
+        widget.setWord(&#34;Test&#34;)
+        widget.reset()
+        self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))
+
+    def test_ScoreView_detach_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.detachHandler()
+        self.assertTrue(widget.scoreHandler == widget.offHandler)
+
+    def test_ScoreView_attach_handler(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.attachHandler()
+        self.assertTrue(widget.scoreHandler == widget.onHandler)
+
+    def test_ScoreView_add_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        widget.addScore(200)
+        self.assertTrue(widget.score == 300)
+
+    def test_ScoreView_set_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        self.assertTrue(widget.score == 100)
+
+    def test_ScoreView_confirm_score(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        widget.confirmScore()
+        self.assertTrue(widget.confirmed_score == 100)
+
+    def test_ScoreView_reset(self):
+        app = QtWidgets.QApplication(sys.argv)
+        widget = ScoreView(assets_dir=&#34;assets&#34;)
+        widget.setScore(100)
+        widget.confirmScore()
+        self.assertTrue(widget.confirmed_score == 100 and widget.score == 0)
+
+    def test_get_easy_word_random(self):
+        self.assertTrue(0 &lt; len(WordProvider().getEasyWordRandom()) &lt; 4)
+
+    def test_get_medium_word_random(self):
+        self.assertTrue(4 &lt; len(WordProvider().getMediumWordRandom()) &lt; 8)
+
+    def test_get_hard_word_random(self):
+        self.assertTrue(8 &lt; len(WordProvider().getHardWordRandom()))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>unittest.case.TestCase</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_hide_char"><code class="name flex">
+<span>def <span class="ident">test_CharacterBox_hide_char</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_CharacterBox_hide_char(self):
+    app = QtWidgets.QApplication(sys.argv)
+    charBox = CharacterBox(assets_dir=&#34;assets&#34;)
+    charBox.hideChar()
+    self.assertTrue(charBox.isShown() == False)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_set_text"><code class="name flex">
+<span>def <span class="ident">test_CharacterBox_set_text</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_CharacterBox_set_text(self):
+    app = QtWidgets.QApplication(sys.argv)
+    charBox = CharacterBox(text=&#34;B&#34;, assets_dir=&#34;assets&#34;)
+    charBox.setText(&#34;C&#34;)
+    self.assertTrue(charBox.text() == &#34;C&#34;)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_show_char"><code class="name flex">
+<span>def <span class="ident">test_CharacterBox_show_char</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_CharacterBox_show_char(self):
+    app = QtWidgets.QApplication(sys.argv)
+    charBox = CharacterBox(assets_dir=&#34;assets&#34;)
+    charBox.hideChar()
+    charBox.showChar()
+    self.assertTrue(charBox.isShown() == True)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_text"><code class="name flex">
+<span>def <span class="ident">test_CharacterBox_text</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_CharacterBox_text(self):
+    app = QtWidgets.QApplication(sys.argv)
+    charBox = CharacterBox(text=&#34;B&#34;, assets_dir=&#34;assets&#34;)
+    self.assertTrue(charBox.text() == &#34;B&#34;)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_is_zero"><code class="name flex">
+<span>def <span class="ident">test_LifeBox_is_zero</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_LifeBox_is_zero(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = LifeBox(assets_dir=&#34;assets&#34;)
+    widget.setLife(0)
+    self.assertTrue(widget.isZero())</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_reset"><code class="name flex">
+<span>def <span class="ident">test_LifeBox_reset</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_LifeBox_reset(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = LifeBox(assets_dir=&#34;assets&#34;)
+    widget.setLife(0)
+    widget.reset()
+    self.assertTrue(widget.getLife() == 5)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_set_life"><code class="name flex">
+<span>def <span class="ident">test_LifeBox_set_life</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_LifeBox_set_life(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = LifeBox(assets_dir=&#34;assets&#34;)
+    widget.setLife(2)
+    self.assertTrue(widget.getLife() == 2)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_set_max_attempts"><code class="name flex">
+<span>def <span class="ident">test_LifeBox_set_max_attempts</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_LifeBox_set_max_attempts(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = LifeBox(assets_dir=&#34;assets&#34;)
+    widget.setMaxAttempts(6)
+    self.assertTrue(widget.max_attempts == 6)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_take_life"><code class="name flex">
+<span>def <span class="ident">test_LifeBox_take_life</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_LifeBox_take_life(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = LifeBox(assets_dir=&#34;assets&#34;)
+    widget.takeLife(None)
+    self.assertTrue(widget.getLife() == 4)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_add_score"><code class="name flex">
+<span>def <span class="ident">test_ScoreView_add_score</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_ScoreView_add_score(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = ScoreView(assets_dir=&#34;assets&#34;)
+    widget.setScore(100)
+    widget.addScore(200)
+    self.assertTrue(widget.score == 300)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_attach_handler"><code class="name flex">
+<span>def <span class="ident">test_ScoreView_attach_handler</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_ScoreView_attach_handler(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = ScoreView(assets_dir=&#34;assets&#34;)
+    widget.attachHandler()
+    self.assertTrue(widget.scoreHandler == widget.onHandler)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_confirm_score"><code class="name flex">
+<span>def <span class="ident">test_ScoreView_confirm_score</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_ScoreView_confirm_score(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = ScoreView(assets_dir=&#34;assets&#34;)
+    widget.setScore(100)
+    widget.confirmScore()
+    self.assertTrue(widget.confirmed_score == 100)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_detach_handler"><code class="name flex">
+<span>def <span class="ident">test_ScoreView_detach_handler</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_ScoreView_detach_handler(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = ScoreView(assets_dir=&#34;assets&#34;)
+    widget.detachHandler()
+    self.assertTrue(widget.scoreHandler == widget.offHandler)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_reset"><code class="name flex">
+<span>def <span class="ident">test_ScoreView_reset</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_ScoreView_reset(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = ScoreView(assets_dir=&#34;assets&#34;)
+    widget.setScore(100)
+    widget.confirmScore()
+    self.assertTrue(widget.confirmed_score == 100 and widget.score == 0)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_set_score"><code class="name flex">
+<span>def <span class="ident">test_ScoreView_set_score</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_ScoreView_set_score(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = ScoreView(assets_dir=&#34;assets&#34;)
+    widget.setScore(100)
+    self.assertTrue(widget.score == 100)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_hide_char_at"><code class="name flex">
+<span>def <span class="ident">test_WordBox_hide_char_at</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_WordBox_hide_char_at(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = WordBox(assets_dir=&#34;assets&#34;)
+    widget.setWord(&#34;Test&#34;)
+    widget.hideCharAt(1)
+    self.assertTrue(not widget.characterBoxList[1].isEnabled())</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_hide_word"><code class="name flex">
+<span>def <span class="ident">test_WordBox_hide_word</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_WordBox_hide_word(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = WordBox(assets_dir=&#34;assets&#34;)
+    widget.setWord(&#34;Test&#34;)
+    widget.hideWord()
+    self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_reset"><code class="name flex">
+<span>def <span class="ident">test_WordBox_reset</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_WordBox_reset(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = WordBox(assets_dir=&#34;assets&#34;)
+    widget.setWord(&#34;Test&#34;)
+    widget.reset()
+    self.assertTrue(all([not x.isEnabled() for x in widget.characterBoxList]))</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_set_character_at"><code class="name flex">
+<span>def <span class="ident">test_WordBox_set_character_at</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_WordBox_set_character_at(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = WordBox(assets_dir=&#34;assets&#34;)
+    widget.setWord(&#34;Test&#34;)
+    widget.setCharacterAt(2, &#34;X&#34;)
+    self.assertTrue(widget.word == &#34;TEXT&#34;)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_set_word"><code class="name flex">
+<span>def <span class="ident">test_WordBox_set_word</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_WordBox_set_word(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = WordBox(assets_dir=&#34;assets&#34;)
+    widget.setWord(&#34;Test&#34;)
+    self.assertTrue(widget.word == &#34;Test&#34;.upper())</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_show_char_at"><code class="name flex">
+<span>def <span class="ident">test_WordBox_show_char_at</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_WordBox_show_char_at(self):
+    app = QtWidgets.QApplication(sys.argv)
+    widget = WordBox(assets_dir=&#34;assets&#34;)
+    widget.setWord(&#34;Test&#34;)
+    widget.hideWord()
+    widget.showCharAt(1)
+    self.assertTrue(widget.characterBoxList[1].isEnabled())</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_finish_game_condition"><code class="name flex">
+<span>def <span class="ident">test_finish_game_condition</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_finish_game_condition(self):
+    app = QtWidgets.QApplication(sys.argv)
+    main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+    game = Hangman(main_frame)
+    game.finishGameCondition()
+    self.assertTrue(True)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_get_easy_word_random"><code class="name flex">
+<span>def <span class="ident">test_get_easy_word_random</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_easy_word_random(self):
+    self.assertTrue(0 &lt; len(WordProvider().getEasyWordRandom()) &lt; 4)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_get_hard_word_random"><code class="name flex">
+<span>def <span class="ident">test_get_hard_word_random</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_hard_word_random(self):
+    self.assertTrue(8 &lt; len(WordProvider().getHardWordRandom()))</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_get_medium_word_random"><code class="name flex">
+<span>def <span class="ident">test_get_medium_word_random</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_medium_word_random(self):
+    self.assertTrue(4 &lt; len(WordProvider().getMediumWordRandom()) &lt; 8)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_guess"><code class="name flex">
+<span>def <span class="ident">test_guess</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_guess(self):
+    app = QtWidgets.QApplication(sys.argv)
+    main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+    game = Hangman(main_frame)
+    game.guess(&#34;A&#34;, [&#34;A&#34;, &#34;B&#34;])
+    self.assertTrue(True)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_reset"><code class="name flex">
+<span>def <span class="ident">test_reset</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_reset(self):
+    app = QtWidgets.QApplication(sys.argv)
+    main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+    game = Hangman(main_frame)
+    game.reset()
+    self.assertTrue(True)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_set_up_display"><code class="name flex">
+<span>def <span class="ident">test_set_up_display</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_set_up_display(self):
+    app = QtWidgets.QApplication(sys.argv)
+    main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+    game = Hangman(main_frame)
+    game.setUpDisplay()
+    self.assertTrue(True)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.test_hangman.TestHangman.test_update_ui"><code class="name flex">
+<span>def <span class="ident">test_update_ui</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_update_ui(self):
+    app = QtWidgets.QApplication(sys.argv)
+    main_frame = MainFrame(assets_dir=&#34;assets&#34;)
+    game = Hangman(main_frame)
+    game.updateUI()
+    self.assertTrue(True)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="prj-04-hangmanai" href="index.html">prj-04-hangmanai</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="prj-04-hangmanai.test_hangman.TestHangman" href="#prj-04-hangmanai.test_hangman.TestHangman">TestHangman</a></code></h4>
+<ul class="">
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_hide_char" href="#prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_hide_char">test_CharacterBox_hide_char</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_set_text" href="#prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_set_text">test_CharacterBox_set_text</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_show_char" href="#prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_show_char">test_CharacterBox_show_char</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_text" href="#prj-04-hangmanai.test_hangman.TestHangman.test_CharacterBox_text">test_CharacterBox_text</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_is_zero" href="#prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_is_zero">test_LifeBox_is_zero</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_reset" href="#prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_reset">test_LifeBox_reset</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_set_life" href="#prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_set_life">test_LifeBox_set_life</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_set_max_attempts" href="#prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_set_max_attempts">test_LifeBox_set_max_attempts</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_take_life" href="#prj-04-hangmanai.test_hangman.TestHangman.test_LifeBox_take_life">test_LifeBox_take_life</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_add_score" href="#prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_add_score">test_ScoreView_add_score</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_attach_handler" href="#prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_attach_handler">test_ScoreView_attach_handler</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_confirm_score" href="#prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_confirm_score">test_ScoreView_confirm_score</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_detach_handler" href="#prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_detach_handler">test_ScoreView_detach_handler</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_reset" href="#prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_reset">test_ScoreView_reset</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_set_score" href="#prj-04-hangmanai.test_hangman.TestHangman.test_ScoreView_set_score">test_ScoreView_set_score</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_hide_char_at" href="#prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_hide_char_at">test_WordBox_hide_char_at</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_hide_word" href="#prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_hide_word">test_WordBox_hide_word</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_reset" href="#prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_reset">test_WordBox_reset</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_set_character_at" href="#prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_set_character_at">test_WordBox_set_character_at</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_set_word" href="#prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_set_word">test_WordBox_set_word</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_show_char_at" href="#prj-04-hangmanai.test_hangman.TestHangman.test_WordBox_show_char_at">test_WordBox_show_char_at</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_finish_game_condition" href="#prj-04-hangmanai.test_hangman.TestHangman.test_finish_game_condition">test_finish_game_condition</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_get_easy_word_random" href="#prj-04-hangmanai.test_hangman.TestHangman.test_get_easy_word_random">test_get_easy_word_random</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_get_hard_word_random" href="#prj-04-hangmanai.test_hangman.TestHangman.test_get_hard_word_random">test_get_hard_word_random</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_get_medium_word_random" href="#prj-04-hangmanai.test_hangman.TestHangman.test_get_medium_word_random">test_get_medium_word_random</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_guess" href="#prj-04-hangmanai.test_hangman.TestHangman.test_guess">test_guess</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_reset" href="#prj-04-hangmanai.test_hangman.TestHangman.test_reset">test_reset</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_set_up_display" href="#prj-04-hangmanai.test_hangman.TestHangman.test_set_up_display">test_set_up_display</a></code></li>
+<li><code><a title="prj-04-hangmanai.test_hangman.TestHangman.test_update_ui" href="#prj-04-hangmanai.test_hangman.TestHangman.test_update_ui">test_update_ui</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

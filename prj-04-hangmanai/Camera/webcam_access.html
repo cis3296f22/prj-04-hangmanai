@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>prj-04-hangmanai.Camera.webcam_access API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>prj-04-hangmanai.Camera.webcam_access</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import sys
+
+import cv2
+from numpy import array
+import pytesseract
+import numpy as np
+from pygrabber.dshow_graph import FilterGraph
+
+
+class Webcam_Access():
+    &#34;&#34;&#34;For the hangman GUI to access information related to the webcam like possible options&#34;&#34;&#34;
+    cam_id = 1
+    &#34;&#34;&#34;Integer value used for cv2.CaptureVideo(cam_id)&#34;&#34;&#34;
+
+    def __init__(self):
+        self.cam_id = 0
+
+    # takes a picture from the webcam with the id == 0
+    def take_pic(frame):
+        &#34;&#34;&#34;Takes a picture using a webcam that is currently running
+
+        Parameter:
+        frame = image from the camera capture
+
+        return: boolean (True if saved Flase if not)
+        &#34;&#34;&#34;
+        saved = cv2.imwrite(&#39;capture_frame.jpg&#39;, frame)
+        return saved
+
+    # finds the preferred camera the user wants
+    # figure it out later
+    def print_camera_list(self):
+        &#34;&#34;&#34;Returns a list of devices that will be options for the webcam
+
+        Parameter:
+        self
+
+        return:
+        List[bytes]: List of devices to be used
+        &#34;&#34;&#34;
+
+        graph = FilterGraph()
+
+        print(graph.get_input_devices())  # list of camera device
+        cam_list = graph.get_input_devices()
+
+        #try:
+         #   device = graph.get_input_devices().index(&#34;name camera that I want to use it &#34;)
+
+        #except ValueError as e:
+
+         #   device = graph.get_input_devices().index(&#34;Integrated Webcam&#34;)
+
+        return cam_list
+    #return list of cameras
+
+    # def set_camera(cam_id):
+
+    # starts webcam capture video
+    def start_capture(cam_id):
+        &#34;&#34;&#34;Starts the video capture based on the cam_id which is an int
+
+        that the machine recognizes as a device connected to it
+        
+        Parameter:
+        cam_id = identification number of device to use as webcam
+
+        pytesseract needs path to the executable
+
+        pytesseract.pytesseract.tesseract_cmd = Put your path here
+
+        Check tesseract documentation for more details
+
+        https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
+        &#34;&#34;&#34;
+
+
+        #capture = cv2.VideoCapture(0)
+        cv2.namedWindow(&#34;Hangman Webcam&#34;)
+
+        # https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
+        # myconfig = r&#34;--psm 9 --oem 3&#34;
+        # psm: 8, 9!, 10
+        # for executable install tesseract-ocr-data python package
+        pytesseract.pytesseract.tesseract_cmd = &#39;C:/Program Files/Tesseract-OCR/tesseract.exe&#39;
+        &#34;&#34;&#34; pytesseract needs path to the executable&#34;&#34;&#34;
+
+        cap = cv2.VideoCapture(1)
+        count = 0
+        stack = []
+        while (True):
+
+            ret, frame = cap.read()
+
+            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+            msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255 ,80]))
+            krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
+            dlt = cv2.dilate(msk, krn, iterations=1)
+            thr = 255 - cv2.bitwise_and(dlt, msk)
+
+            cv2.imshow(&#34;img&#34;, thr)
+
+            #string = pytesseract.image_to_string(img)
+            string = pytesseract.image_to_string(thr,lang=&#39;eng&#39;,config=&#39; --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;)
+        
+            # checks if the pytesseract passes a &#39;&#39;
+            if(len(string) &gt; 0):
+                # if string is not empty takes the first letter and adds to stack
+                stack.append(string[:1])
+
+            # if stack is length 10 checks most common letter
+            if(len(stack) &gt; 10):
+                counter = 0
+                cha = stack[0]
+
+                for i in stack:
+                    curr_frequency = stack.count(i)
+                    if (curr_frequency &gt; counter):
+                        counter = curr_frequency
+                        cha = i
+                # prints out the most common letter
+                print(&#34;the character &#34; + cha)
+                print(stack)
+                stack.clear()
+            if cv2.getWindowProperty(&#34;Hangman Webcam&#34;, cv2.WND_PROP_VISIBLE) &lt; 1:
+                break
+
+            cv2.imshow(&#34;Hangman Webcam&#34;, frame)
+            cv2.waitKey(1)
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+if __name__ == &#39;__main__&#39;:
+   Webcam_Access.start_capture(1)
+# captures a frame from the camera with the id == 0
+# should loop to see which camera the user wants to use?
+# capture = cv2.VideoCapture(0)
+
+# ret is a boolean if a frame was captured
+# frame data from the webcam
+# ret, frame = capture.read()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="prj-04-hangmanai.Camera.webcam_access.Webcam_Access"><code class="flex name class">
+<span>class <span class="ident">Webcam_Access</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>For the hangman GUI to access information related to the webcam like possible options</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Webcam_Access():
+    &#34;&#34;&#34;For the hangman GUI to access information related to the webcam like possible options&#34;&#34;&#34;
+    cam_id = 1
+    &#34;&#34;&#34;Integer value used for cv2.CaptureVideo(cam_id)&#34;&#34;&#34;
+
+    def __init__(self):
+        self.cam_id = 0
+
+    # takes a picture from the webcam with the id == 0
+    def take_pic(frame):
+        &#34;&#34;&#34;Takes a picture using a webcam that is currently running
+
+        Parameter:
+        frame = image from the camera capture
+
+        return: boolean (True if saved Flase if not)
+        &#34;&#34;&#34;
+        saved = cv2.imwrite(&#39;capture_frame.jpg&#39;, frame)
+        return saved
+
+    # finds the preferred camera the user wants
+    # figure it out later
+    def print_camera_list(self):
+        &#34;&#34;&#34;Returns a list of devices that will be options for the webcam
+
+        Parameter:
+        self
+
+        return:
+        List[bytes]: List of devices to be used
+        &#34;&#34;&#34;
+
+        graph = FilterGraph()
+
+        print(graph.get_input_devices())  # list of camera device
+        cam_list = graph.get_input_devices()
+
+        #try:
+         #   device = graph.get_input_devices().index(&#34;name camera that I want to use it &#34;)
+
+        #except ValueError as e:
+
+         #   device = graph.get_input_devices().index(&#34;Integrated Webcam&#34;)
+
+        return cam_list
+    #return list of cameras
+
+    # def set_camera(cam_id):
+
+    # starts webcam capture video
+    def start_capture(cam_id):
+        &#34;&#34;&#34;Starts the video capture based on the cam_id which is an int
+
+        that the machine recognizes as a device connected to it
+        
+        Parameter:
+        cam_id = identification number of device to use as webcam
+
+        pytesseract needs path to the executable
+
+        pytesseract.pytesseract.tesseract_cmd = Put your path here
+
+        Check tesseract documentation for more details
+
+        https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
+        &#34;&#34;&#34;
+
+
+        #capture = cv2.VideoCapture(0)
+        cv2.namedWindow(&#34;Hangman Webcam&#34;)
+
+        # https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
+        # myconfig = r&#34;--psm 9 --oem 3&#34;
+        # psm: 8, 9!, 10
+        # for executable install tesseract-ocr-data python package
+        pytesseract.pytesseract.tesseract_cmd = &#39;C:/Program Files/Tesseract-OCR/tesseract.exe&#39;
+        &#34;&#34;&#34; pytesseract needs path to the executable&#34;&#34;&#34;
+
+        cap = cv2.VideoCapture(1)
+        count = 0
+        stack = []
+        while (True):
+
+            ret, frame = cap.read()
+
+            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+            msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255 ,80]))
+            krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
+            dlt = cv2.dilate(msk, krn, iterations=1)
+            thr = 255 - cv2.bitwise_and(dlt, msk)
+
+            cv2.imshow(&#34;img&#34;, thr)
+
+            #string = pytesseract.image_to_string(img)
+            string = pytesseract.image_to_string(thr,lang=&#39;eng&#39;,config=&#39; --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;)
+        
+            # checks if the pytesseract passes a &#39;&#39;
+            if(len(string) &gt; 0):
+                # if string is not empty takes the first letter and adds to stack
+                stack.append(string[:1])
+
+            # if stack is length 10 checks most common letter
+            if(len(stack) &gt; 10):
+                counter = 0
+                cha = stack[0]
+
+                for i in stack:
+                    curr_frequency = stack.count(i)
+                    if (curr_frequency &gt; counter):
+                        counter = curr_frequency
+                        cha = i
+                # prints out the most common letter
+                print(&#34;the character &#34; + cha)
+                print(stack)
+                stack.clear()
+            if cv2.getWindowProperty(&#34;Hangman Webcam&#34;, cv2.WND_PROP_VISIBLE) &lt; 1:
+                break
+
+            cv2.imshow(&#34;Hangman Webcam&#34;, frame)
+            cv2.waitKey(1)
+
+        cap.release()
+        cv2.destroyAllWindows()</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.cam_id"><code class="name">var <span class="ident">cam_id</span></code></dt>
+<dd>
+<div class="desc"><p>Integer value used for cv2.CaptureVideo(cam_id)</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.print_camera_list"><code class="name flex">
+<span>def <span class="ident">print_camera_list</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a list of devices that will be options for the webcam</p>
+<p>Parameter:
+self</p>
+<p>return:
+List[bytes]: List of devices to be used</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_camera_list(self):
+    &#34;&#34;&#34;Returns a list of devices that will be options for the webcam
+
+    Parameter:
+    self
+
+    return:
+    List[bytes]: List of devices to be used
+    &#34;&#34;&#34;
+
+    graph = FilterGraph()
+
+    print(graph.get_input_devices())  # list of camera device
+    cam_list = graph.get_input_devices()
+
+    #try:
+     #   device = graph.get_input_devices().index(&#34;name camera that I want to use it &#34;)
+
+    #except ValueError as e:
+
+     #   device = graph.get_input_devices().index(&#34;Integrated Webcam&#34;)
+
+    return cam_list</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.start_capture"><code class="name flex">
+<span>def <span class="ident">start_capture</span></span>(<span>cam_id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Starts the video capture based on the cam_id which is an int</p>
+<p>that the machine recognizes as a device connected to it</p>
+<p>Parameter:
+cam_id = identification number of device to use as webcam</p>
+<p>pytesseract needs path to the executable</p>
+<p>pytesseract.pytesseract.tesseract_cmd = Put your path here</p>
+<p>Check tesseract documentation for more details</p>
+<p><a href="https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc">https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc</a></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_capture(cam_id):
+    &#34;&#34;&#34;Starts the video capture based on the cam_id which is an int
+
+    that the machine recognizes as a device connected to it
+    
+    Parameter:
+    cam_id = identification number of device to use as webcam
+
+    pytesseract needs path to the executable
+
+    pytesseract.pytesseract.tesseract_cmd = Put your path here
+
+    Check tesseract documentation for more details
+
+    https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
+    &#34;&#34;&#34;
+
+
+    #capture = cv2.VideoCapture(0)
+    cv2.namedWindow(&#34;Hangman Webcam&#34;)
+
+    # https://github.com/tesseract-ocr/tesseract/blob/main/doc/tesseract.1.asc
+    # myconfig = r&#34;--psm 9 --oem 3&#34;
+    # psm: 8, 9!, 10
+    # for executable install tesseract-ocr-data python package
+    pytesseract.pytesseract.tesseract_cmd = &#39;C:/Program Files/Tesseract-OCR/tesseract.exe&#39;
+    &#34;&#34;&#34; pytesseract needs path to the executable&#34;&#34;&#34;
+
+    cap = cv2.VideoCapture(1)
+    count = 0
+    stack = []
+    while (True):
+
+        ret, frame = cap.read()
+
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255 ,80]))
+        krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
+        dlt = cv2.dilate(msk, krn, iterations=1)
+        thr = 255 - cv2.bitwise_and(dlt, msk)
+
+        cv2.imshow(&#34;img&#34;, thr)
+
+        #string = pytesseract.image_to_string(img)
+        string = pytesseract.image_to_string(thr,lang=&#39;eng&#39;,config=&#39; --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;)
+    
+        # checks if the pytesseract passes a &#39;&#39;
+        if(len(string) &gt; 0):
+            # if string is not empty takes the first letter and adds to stack
+            stack.append(string[:1])
+
+        # if stack is length 10 checks most common letter
+        if(len(stack) &gt; 10):
+            counter = 0
+            cha = stack[0]
+
+            for i in stack:
+                curr_frequency = stack.count(i)
+                if (curr_frequency &gt; counter):
+                    counter = curr_frequency
+                    cha = i
+            # prints out the most common letter
+            print(&#34;the character &#34; + cha)
+            print(stack)
+            stack.clear()
+        if cv2.getWindowProperty(&#34;Hangman Webcam&#34;, cv2.WND_PROP_VISIBLE) &lt; 1:
+            break
+
+        cv2.imshow(&#34;Hangman Webcam&#34;, frame)
+        cv2.waitKey(1)
+
+    cap.release()
+    cv2.destroyAllWindows()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.take_pic"><code class="name flex">
+<span>def <span class="ident">take_pic</span></span>(<span>frame)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes a picture using a webcam that is currently running</p>
+<p>Parameter:
+frame = image from the camera capture</p>
+<p>return: boolean (True if saved Flase if not)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def take_pic(frame):
+    &#34;&#34;&#34;Takes a picture using a webcam that is currently running
+
+    Parameter:
+    frame = image from the camera capture
+
+    return: boolean (True if saved Flase if not)
+    &#34;&#34;&#34;
+    saved = cv2.imwrite(&#39;capture_frame.jpg&#39;, frame)
+    return saved</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="prj-04-hangmanai.Camera" href="index.html">prj-04-hangmanai.Camera</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="prj-04-hangmanai.Camera.webcam_access.Webcam_Access" href="#prj-04-hangmanai.Camera.webcam_access.Webcam_Access">Webcam_Access</a></code></h4>
+<ul class="">
+<li><code><a title="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.cam_id" href="#prj-04-hangmanai.Camera.webcam_access.Webcam_Access.cam_id">cam_id</a></code></li>
+<li><code><a title="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.print_camera_list" href="#prj-04-hangmanai.Camera.webcam_access.Webcam_Access.print_camera_list">print_camera_list</a></code></li>
+<li><code><a title="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.start_capture" href="#prj-04-hangmanai.Camera.webcam_access.Webcam_Access.start_capture">start_capture</a></code></li>
+<li><code><a title="prj-04-hangmanai.Camera.webcam_access.Webcam_Access.take_pic" href="#prj-04-hangmanai.Camera.webcam_access.Webcam_Access.take_pic">take_pic</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

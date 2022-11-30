@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>prj-04-hangmanai.Display.MainFrame API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>prj-04-hangmanai.Display.MainFrame</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import sys
+
+from PyQt6 import QtCore, QtWidgets, QtGui
+from PyQt6 import uic
+from PyQt6.QtCore import (Qt)
+
+from Display.CameraSwitchView import CameraSwitchView
+from Display.CameraThread import CameraThread
+from Display.HangmanView import HangmanView
+from Display.Home import Home
+from Display.Keyboard import Keyboard
+from Display.LifeBox import LifeBox
+from Display.ScoreView import ScoreView
+from Display.WordBox import WordBox
+
+from Score import Score
+from WordProvider import Difficulty
+
+WINDOW_SIZE = 0
+
+
+class MainFrame(QtWidgets.QMainWindow):
+    &#34;&#34;&#34;
+        Main Frame of the main hangman game.
+
+    &#34;&#34;&#34;
+
+    def __init__(self,
+                 parent=None,
+                 keyboard_handler=lambda x, y: print(&#34;[&#34; + x + &#34;] -&gt; &#34; + str(y)),
+                 difficulty_handler: callable(str) = lambda x: print(x),
+                 assets_dir: str = &#34;../assets&#34;):
+
+        super(MainFrame, self).__init__(parent)
+        self.assets_dir: str = assets_dir
+        &#34;&#34;&#34; Path to asset directory&#34;&#34;&#34;
+
+        self.ui: Ui = Ui(assets_dir=self.assets_dir)
+        &#34;&#34;&#34; Hangman UI. Main game UI&#34;&#34;&#34;
+        self.home: Home = Home(buttonHandler=self.transitMainGame, assets_dir=assets_dir)
+        &#34;&#34;&#34; Home UI&#34;&#34;&#34;
+        self.worker = CameraThread(self.ui.cameraView, recognition_callback=self.ui.keyboard.trigger)
+        &#34;&#34;&#34; Worker thread for smooth camera feed&#34;&#34;&#34;
+
+        self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
+        self.setCentralWidget(self.home)
+        self.keyboard_handler: callable = keyboard_handler
+        self.ui.keyboard.setKeyboardListner(keyboard_handler)
+        self.difficultyHandler: callable(str) = difficulty_handler
+
+        self.home.cameraSwitchView.setLayout(QtWidgets.QHBoxLayout())
+        self.home.cameraSwitchView.layout().setContentsMargins(0, 0, 0, 0)
+        self.home.cameraSwitchView.layout().addWidget(CameraSwitchView(self.worker))
+
+        self.worker.start()
+
+        self.show()
+        self.windowInit()
+
+        # self.ui.
+
+    def windowInit(self):
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        central_widget = self.centralWidget()
+        if hasattr(central_widget, &#34;minimizeButton&#34;):
+            central_widget.minimizeButton.clicked.connect(lambda: self.showMinimized())
+        # Close window
+        if hasattr(central_widget, &#34;closeButton&#34;):
+            central_widget.closeButton.clicked.connect(lambda: self.close())
+        # Restore/Maximize window
+        if hasattr(central_widget, &#34;restoreButton&#34;):
+            central_widget.restoreButton.clicked.connect(lambda: self.restore_or_maximize_window())
+
+        def moveWindow(event):
+            if event.buttons() == Qt.MouseButton.LeftButton:
+                self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos.toPoint())
+                self.dragPos = event.globalPosition()
+                event.accept()
+
+        if hasattr(central_widget, &#34;title_bar&#34;):
+            # Remove window tlttle bar
+            self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
+
+            # Set main background to transparent
+            self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
+            if hasattr(central_widget, &#34;title_bar&#34;):
+                central_widget.title_bar.mouseMoveEvent = moveWindow
+
+        # Show window
+        self.show()
+
+    def keyReleaseEvent(self, e: QtGui.QKeyEvent) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        if not e.isAutoRepeat():
+            self.ui.keyboard.trigger(e.text())
+
+    def setDifficultyHandler(self, handler: callable(str)) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.difficultyHandler = handler
+
+    def transitMainGame(self, args=None) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.difficultyHandler(args)
+        self.home = self.takeCentralWidget()
+        self.setCentralWidget(self.ui)
+        self.windowInit()
+
+    def transitHome(self, args=None) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.ui = self.takeCentralWidget()
+        self.setCentralWidget(self.home)
+        self.windowInit()
+
+    def mousePressEvent(self, event) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.dragPos = event.globalPosition()
+
+    # Restore or maximize your window
+    def restore_or_maximize_window(self) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+
+        # Global windows state
+        global WINDOW_SIZE  # The default value is zero to show that the size is not maximized
+        win_status = WINDOW_SIZE
+
+        if win_status == 0:
+            # If the window is not maximized
+            WINDOW_SIZE = 1  # Update value to show that the window has been maxmized
+            self.showMaximized()
+            # Update button icon
+            # self.ui.restoreButton.setIcon(QtGui.QIcon(u&#34;:/icons/icons/cil-window-maximize.png&#34;))  # Show maximized icon
+        else:
+            # If the window is on its default size
+            WINDOW_SIZE = 0  # Update value to show that the window has been minimized/set to normal size (which is 800 by 400)
+            self.showNormal()
+            # Update button icon
+            # self.ui.restoreButton.setIcon(QtGui.QIcon(u&#34;:/icons/icons/cil-window-restore.png&#34;))  # Show minized icon
+
+    def setKeyboardListner(self, handler, append=False) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.ui.keyboard.setKeyboardListner(handler, append)
+
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;
+            Resets the main frame
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.reset()
+
+    def hideCharAt(self, index) -&gt; None:
+        &#34;&#34;&#34;
+            Hide character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to hide
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.hideCharAt(index)
+
+    def showCharAt(self, index) -&gt; None:
+        &#34;&#34;&#34;
+            Show character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to show
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.showCharAt(index)
+
+    def wrongChars(self) -&gt; None:
+        &#34;&#34;&#34;
+            Show the hidden characters as wrong guessed chars
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.wrongChars()
+
+    def setWord(self, word, hide=False) -&gt; None:
+        &#34;&#34;&#34;
+            Setter for the word in the word box
+
+            Parameters:
+            text (str): New word in word box
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.setWord(word, hide)
+
+    def setMaxAttempts(self, max_attempts) -&gt; None:
+        &#34;&#34;&#34;
+            Setter for the max_attempts
+
+            Parameters:
+            max_attempts (str): New max_attempts
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.lifeBox.setMaxAttempts(max_attempts)
+        self.ui.hangmanDisplay.setMaxAttempts(max_attempts)
+
+    def setLife(self, number) -&gt; None:
+        &#34;&#34;&#34;
+            Sets the life in the LifeBox
+
+            Parameters:
+            number (int): New life in int
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        life = self.ui.lifeBox.getLife()
+        self.ui.lifeBox.setLife(number)
+        if life &gt; number:
+            self.ui.hangmanDisplay.takeDamage()
+
+    def setReplayHandler(self, handler, append: bool = True):
+        &#34;&#34;&#34;
+            Update replay button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.setReplayHandler(handler, append)
+
+    def setHomeHandler(self, handler, append: bool = True):
+        &#34;&#34;&#34;
+            Update home button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.setHomeHandler(handler, append)
+
+    def win(self) -&gt; None:
+        &#34;&#34;&#34;
+            Process when the user wins the game
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.WIN())
+
+    def lose(self) -&gt; None:
+        &#34;&#34;&#34;
+            Process when the user loses the game
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.LOSE())
+
+    def correctGuess(self, duplicate=1) -&gt; None:
+        &#34;&#34;&#34;
+            Process when user guess the character correctly. It changes the score
+
+            Parameters:
+            duplicate (int): Number of duplicate correct guesses
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.scoreDisplay.addScore(Score.CORRECT(duplicate))
+
+    def wrongGuess(self) -&gt; None:
+        &#34;&#34;&#34;
+            Process when user guess the character wrong. It changes the score
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.scoreDisplay.addScore(Score.WRONG())
+
+    def setDifficultyHandler(self, handler: callable(Difficulty)):
+        &#34;&#34;&#34;
+            Sets the callback function to the difficulty button in Home UI
+
+            Parameters:
+            handler (callable): Callback function attached to the difficulty button
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.difficultyHandler = lambda x: [handler(x), self.ui.difficultyLabel.setText(x.name)]
+
+
+class Ui(QtWidgets.QWidget):
+    def __init__(self, assets_dir=&#34;../assets&#34;):
+        super(Ui, self).__init__()
+        uic.loadUi(assets_dir + &#39;/ui/main_v4.ui&#39;, self)
+        # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
+        self.keyboard = Keyboard(assets_dir=assets_dir)
+        self.wordBox = WordBox(assets_dir=assets_dir)
+        self.lifeBox = LifeBox(assets_dir=assets_dir)
+        self.hangmanDisplay = HangmanView(assets_dir=assets_dir)
+        self.scoreDisplay = ScoreView(assets_dir=assets_dir)
+        self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
+        self.keyboardView.layout().addWidget(self.keyboard)
+        self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
+        self.wordInputView.layout().setContentsMargins(0, 0, 0, 0)
+        self.wordInputView.layout().addWidget(self.wordBox)
+        self.lifeView.setLayout(QtWidgets.QHBoxLayout())
+        self.lifeView.layout().setContentsMargins(0, 0, 0, 0)
+        self.lifeView.layout().addWidget(self.lifeBox)
+
+        self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
+        self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
+        self.hangmanView.layout().addWidget(self.hangmanDisplay)
+
+        self.scoreView.setLayout(QtWidgets.QHBoxLayout())
+        self.scoreView.layout().setContentsMargins(0, 0, 0, 0)
+        self.scoreView.layout().addWidget(self.scoreDisplay)
+
+        self.hangmanDisplay.setScoreView(self.scoreDisplay)
+
+        # self.lifeBox.setMaxAttempts(7)
+
+    def reset(self):
+        self.keyboard.reset()
+        self.wordBox.reset()
+        self.lifeBox.reset()
+        self.scoreDisplay.confirmScore()
+        self.hangmanDisplay.reset()
+
+
+if __name__ == &#34;__main__&#34;:
+    app = QtWidgets.QApplication(sys.argv)
+    widget = MainFrame()
+    app.exec()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame"><code class="flex name class">
+<span>class <span class="ident">MainFrame</span></span>
+<span>(</span><span>parent=None, keyboard_handler=&lt;function MainFrame.&lt;lambda&gt;&gt;, difficulty_handler: True = &lt;function MainFrame.&lt;lambda&gt;&gt;, assets_dir: str = '../assets')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Main Frame of the main hangman game.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MainFrame(QtWidgets.QMainWindow):
+    &#34;&#34;&#34;
+        Main Frame of the main hangman game.
+
+    &#34;&#34;&#34;
+
+    def __init__(self,
+                 parent=None,
+                 keyboard_handler=lambda x, y: print(&#34;[&#34; + x + &#34;] -&gt; &#34; + str(y)),
+                 difficulty_handler: callable(str) = lambda x: print(x),
+                 assets_dir: str = &#34;../assets&#34;):
+
+        super(MainFrame, self).__init__(parent)
+        self.assets_dir: str = assets_dir
+        &#34;&#34;&#34; Path to asset directory&#34;&#34;&#34;
+
+        self.ui: Ui = Ui(assets_dir=self.assets_dir)
+        &#34;&#34;&#34; Hangman UI. Main game UI&#34;&#34;&#34;
+        self.home: Home = Home(buttonHandler=self.transitMainGame, assets_dir=assets_dir)
+        &#34;&#34;&#34; Home UI&#34;&#34;&#34;
+        self.worker = CameraThread(self.ui.cameraView, recognition_callback=self.ui.keyboard.trigger)
+        &#34;&#34;&#34; Worker thread for smooth camera feed&#34;&#34;&#34;
+
+        self.ui.hangmanDisplay.setHomeHandler(self.transitHome)
+        self.setCentralWidget(self.home)
+        self.keyboard_handler: callable = keyboard_handler
+        self.ui.keyboard.setKeyboardListner(keyboard_handler)
+        self.difficultyHandler: callable(str) = difficulty_handler
+
+        self.home.cameraSwitchView.setLayout(QtWidgets.QHBoxLayout())
+        self.home.cameraSwitchView.layout().setContentsMargins(0, 0, 0, 0)
+        self.home.cameraSwitchView.layout().addWidget(CameraSwitchView(self.worker))
+
+        self.worker.start()
+
+        self.show()
+        self.windowInit()
+
+        # self.ui.
+
+    def windowInit(self):
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        central_widget = self.centralWidget()
+        if hasattr(central_widget, &#34;minimizeButton&#34;):
+            central_widget.minimizeButton.clicked.connect(lambda: self.showMinimized())
+        # Close window
+        if hasattr(central_widget, &#34;closeButton&#34;):
+            central_widget.closeButton.clicked.connect(lambda: self.close())
+        # Restore/Maximize window
+        if hasattr(central_widget, &#34;restoreButton&#34;):
+            central_widget.restoreButton.clicked.connect(lambda: self.restore_or_maximize_window())
+
+        def moveWindow(event):
+            if event.buttons() == Qt.MouseButton.LeftButton:
+                self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos.toPoint())
+                self.dragPos = event.globalPosition()
+                event.accept()
+
+        if hasattr(central_widget, &#34;title_bar&#34;):
+            # Remove window tlttle bar
+            self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
+
+            # Set main background to transparent
+            self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
+            if hasattr(central_widget, &#34;title_bar&#34;):
+                central_widget.title_bar.mouseMoveEvent = moveWindow
+
+        # Show window
+        self.show()
+
+    def keyReleaseEvent(self, e: QtGui.QKeyEvent) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        if not e.isAutoRepeat():
+            self.ui.keyboard.trigger(e.text())
+
+    def setDifficultyHandler(self, handler: callable(str)) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.difficultyHandler = handler
+
+    def transitMainGame(self, args=None) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.difficultyHandler(args)
+        self.home = self.takeCentralWidget()
+        self.setCentralWidget(self.ui)
+        self.windowInit()
+
+    def transitHome(self, args=None) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.ui = self.takeCentralWidget()
+        self.setCentralWidget(self.home)
+        self.windowInit()
+
+    def mousePressEvent(self, event) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.dragPos = event.globalPosition()
+
+    # Restore or maximize your window
+    def restore_or_maximize_window(self) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+
+        # Global windows state
+        global WINDOW_SIZE  # The default value is zero to show that the size is not maximized
+        win_status = WINDOW_SIZE
+
+        if win_status == 0:
+            # If the window is not maximized
+            WINDOW_SIZE = 1  # Update value to show that the window has been maxmized
+            self.showMaximized()
+            # Update button icon
+            # self.ui.restoreButton.setIcon(QtGui.QIcon(u&#34;:/icons/icons/cil-window-maximize.png&#34;))  # Show maximized icon
+        else:
+            # If the window is on its default size
+            WINDOW_SIZE = 0  # Update value to show that the window has been minimized/set to normal size (which is 800 by 400)
+            self.showNormal()
+            # Update button icon
+            # self.ui.restoreButton.setIcon(QtGui.QIcon(u&#34;:/icons/icons/cil-window-restore.png&#34;))  # Show minized icon
+
+    def setKeyboardListner(self, handler, append=False) -&gt; None:
+        &#34;&#34;&#34;
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.ui.keyboard.setKeyboardListner(handler, append)
+
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;
+            Resets the main frame
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.reset()
+
+    def hideCharAt(self, index) -&gt; None:
+        &#34;&#34;&#34;
+            Hide character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to hide
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.hideCharAt(index)
+
+    def showCharAt(self, index) -&gt; None:
+        &#34;&#34;&#34;
+            Show character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to show
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.showCharAt(index)
+
+    def wrongChars(self) -&gt; None:
+        &#34;&#34;&#34;
+            Show the hidden characters as wrong guessed chars
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.wrongChars()
+
+    def setWord(self, word, hide=False) -&gt; None:
+        &#34;&#34;&#34;
+            Setter for the word in the word box
+
+            Parameters:
+            text (str): New word in word box
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.wordBox.setWord(word, hide)
+
+    def setMaxAttempts(self, max_attempts) -&gt; None:
+        &#34;&#34;&#34;
+            Setter for the max_attempts
+
+            Parameters:
+            max_attempts (str): New max_attempts
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.lifeBox.setMaxAttempts(max_attempts)
+        self.ui.hangmanDisplay.setMaxAttempts(max_attempts)
+
+    def setLife(self, number) -&gt; None:
+        &#34;&#34;&#34;
+            Sets the life in the LifeBox
+
+            Parameters:
+            number (int): New life in int
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        life = self.ui.lifeBox.getLife()
+        self.ui.lifeBox.setLife(number)
+        if life &gt; number:
+            self.ui.hangmanDisplay.takeDamage()
+
+    def setReplayHandler(self, handler, append: bool = True):
+        &#34;&#34;&#34;
+            Update replay button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.setReplayHandler(handler, append)
+
+    def setHomeHandler(self, handler, append: bool = True):
+        &#34;&#34;&#34;
+            Update home button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.setHomeHandler(handler, append)
+
+    def win(self) -&gt; None:
+        &#34;&#34;&#34;
+            Process when the user wins the game
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.WIN())
+
+    def lose(self) -&gt; None:
+        &#34;&#34;&#34;
+            Process when the user loses the game
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.hangmanDisplay.showReplayButton()
+        self.ui.scoreDisplay.addScore(Score.LOSE())
+
+    def correctGuess(self, duplicate=1) -&gt; None:
+        &#34;&#34;&#34;
+            Process when user guess the character correctly. It changes the score
+
+            Parameters:
+            duplicate (int): Number of duplicate correct guesses
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.scoreDisplay.addScore(Score.CORRECT(duplicate))
+
+    def wrongGuess(self) -&gt; None:
+        &#34;&#34;&#34;
+            Process when user guess the character wrong. It changes the score
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.ui.scoreDisplay.addScore(Score.WRONG())
+
+    def setDifficultyHandler(self, handler: callable(Difficulty)):
+        &#34;&#34;&#34;
+            Sets the callback function to the difficulty button in Home UI
+
+            Parameters:
+            handler (callable): Callback function attached to the difficulty button
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.difficultyHandler = lambda x: [handler(x), self.ui.difficultyLabel.setText(x.name)]</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt6.QtWidgets.QMainWindow</li>
+<li>PyQt6.QtWidgets.QWidget</li>
+<li>PyQt6.QtCore.QObject</li>
+<li><a title="PyQt6.sip.wrapper" href="../../PyQt6/sip.html#PyQt6.sip.wrapper">wrapper</a></li>
+<li>PyQt6.QtGui.QPaintDevice</li>
+<li><a title="PyQt6.sip.simplewrapper" href="../../PyQt6/sip.html#PyQt6.sip.simplewrapper">simplewrapper</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.assets_dir"><code class="name">var <span class="ident">assets_dir</span></code></dt>
+<dd>
+<div class="desc"><p>Path to asset directory</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.home"><code class="name">var <span class="ident">home</span></code></dt>
+<dd>
+<div class="desc"><p>Home UI</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.ui"><code class="name">var <span class="ident">ui</span></code></dt>
+<dd>
+<div class="desc"><p>Hangman UI. Main game UI</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.worker"><code class="name">var <span class="ident">worker</span></code></dt>
+<dd>
+<div class="desc"><p>Worker thread for smooth camera feed</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.correctGuess"><code class="name flex">
+<span>def <span class="ident">correctGuess</span></span>(<span>self, duplicate=1) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Process when user guess the character correctly. It changes the score</p>
+<p>Parameters:
+duplicate (int): Number of duplicate correct guesses</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def correctGuess(self, duplicate=1) -&gt; None:
+    &#34;&#34;&#34;
+        Process when user guess the character correctly. It changes the score
+
+        Parameters:
+        duplicate (int): Number of duplicate correct guesses
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.scoreDisplay.addScore(Score.CORRECT(duplicate))</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.hideCharAt"><code class="name flex">
+<span>def <span class="ident">hideCharAt</span></span>(<span>self, index) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Hide character at an index</p>
+<p>Parameters:
+index (int): Index of character in a word that you want to hide</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hideCharAt(self, index) -&gt; None:
+    &#34;&#34;&#34;
+        Hide character at an index
+
+        Parameters:
+        index (int): Index of character in a word that you want to hide
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.wordBox.hideCharAt(index)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.keyReleaseEvent"><code class="name flex">
+<span>def <span class="ident">keyReleaseEvent</span></span>(<span>self, e: PyQt6.QtGui.QKeyEvent) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the width of the word given in the parameter with the specified font size</p>
+<p>Parameters:
+word (str): Word in string
+fontSize (int): Font size of the word</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keyReleaseEvent(self, e: QtGui.QKeyEvent) -&gt; None:
+    &#34;&#34;&#34;
+        Calculate the width of the word given in the parameter with the specified font size
+
+        Parameters:
+        word (str): Word in string
+        fontSize (int): Font size of the word
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+    if not e.isAutoRepeat():
+        self.ui.keyboard.trigger(e.text())</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.lose"><code class="name flex">
+<span>def <span class="ident">lose</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Process when the user loses the game</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lose(self) -&gt; None:
+    &#34;&#34;&#34;
+        Process when the user loses the game
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.hangmanDisplay.showReplayButton()
+    self.ui.scoreDisplay.addScore(Score.LOSE())</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.mousePressEvent"><code class="name flex">
+<span>def <span class="ident">mousePressEvent</span></span>(<span>self, event) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the width of the word given in the parameter with the specified font size</p>
+<p>Parameters:
+word (str): Word in string
+fontSize (int): Font size of the word</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mousePressEvent(self, event) -&gt; None:
+    &#34;&#34;&#34;
+        Calculate the width of the word given in the parameter with the specified font size
+
+        Parameters:
+        word (str): Word in string
+        fontSize (int): Font size of the word
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+    self.dragPos = event.globalPosition()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Resets the main frame</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset(self) -&gt; None:
+    &#34;&#34;&#34;
+        Resets the main frame
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.reset()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.restore_or_maximize_window"><code class="name flex">
+<span>def <span class="ident">restore_or_maximize_window</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the width of the word given in the parameter with the specified font size</p>
+<p>Parameters:
+word (str): Word in string
+fontSize (int): Font size of the word</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def restore_or_maximize_window(self) -&gt; None:
+    &#34;&#34;&#34;
+        Calculate the width of the word given in the parameter with the specified font size
+
+        Parameters:
+        word (str): Word in string
+        fontSize (int): Font size of the word
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+
+    # Global windows state
+    global WINDOW_SIZE  # The default value is zero to show that the size is not maximized
+    win_status = WINDOW_SIZE
+
+    if win_status == 0:
+        # If the window is not maximized
+        WINDOW_SIZE = 1  # Update value to show that the window has been maxmized
+        self.showMaximized()
+        # Update button icon
+        # self.ui.restoreButton.setIcon(QtGui.QIcon(u&#34;:/icons/icons/cil-window-maximize.png&#34;))  # Show maximized icon
+    else:
+        # If the window is on its default size
+        WINDOW_SIZE = 0  # Update value to show that the window has been minimized/set to normal size (which is 800 by 400)
+        self.showNormal()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.setDifficultyHandler"><code class="name flex">
+<span>def <span class="ident">setDifficultyHandler</span></span>(<span>self, handler: True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the callback function to the difficulty button in Home UI</p>
+<p>Parameters:
+handler (callable): Callback function attached to the difficulty button</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setDifficultyHandler(self, handler: callable(Difficulty)):
+    &#34;&#34;&#34;
+        Sets the callback function to the difficulty button in Home UI
+
+        Parameters:
+        handler (callable): Callback function attached to the difficulty button
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.difficultyHandler = lambda x: [handler(x), self.ui.difficultyLabel.setText(x.name)]</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.setHomeHandler"><code class="name flex">
+<span>def <span class="ident">setHomeHandler</span></span>(<span>self, handler, append: bool = True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update home button handler</p>
+<p>Parameters:
+handler (callable): New handler
+append (bool): True if appending the new handler to the existing handler</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setHomeHandler(self, handler, append: bool = True):
+    &#34;&#34;&#34;
+        Update home button handler
+
+        Parameters:
+        handler (callable): New handler
+        append (bool): True if appending the new handler to the existing handler
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.hangmanDisplay.setHomeHandler(handler, append)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.setKeyboardListner"><code class="name flex">
+<span>def <span class="ident">setKeyboardListner</span></span>(<span>self, handler, append=False) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the width of the word given in the parameter with the specified font size</p>
+<p>Parameters:
+word (str): Word in string
+fontSize (int): Font size of the word</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setKeyboardListner(self, handler, append=False) -&gt; None:
+    &#34;&#34;&#34;
+        Calculate the width of the word given in the parameter with the specified font size
+
+        Parameters:
+        word (str): Word in string
+        fontSize (int): Font size of the word
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+    self.ui.keyboard.setKeyboardListner(handler, append)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.setLife"><code class="name flex">
+<span>def <span class="ident">setLife</span></span>(<span>self, number) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the life in the LifeBox</p>
+<p>Parameters:
+number (int): New life in int</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setLife(self, number) -&gt; None:
+    &#34;&#34;&#34;
+        Sets the life in the LifeBox
+
+        Parameters:
+        number (int): New life in int
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    life = self.ui.lifeBox.getLife()
+    self.ui.lifeBox.setLife(number)
+    if life &gt; number:
+        self.ui.hangmanDisplay.takeDamage()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.setMaxAttempts"><code class="name flex">
+<span>def <span class="ident">setMaxAttempts</span></span>(<span>self, max_attempts) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Setter for the max_attempts</p>
+<p>Parameters:
+max_attempts (str): New max_attempts</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setMaxAttempts(self, max_attempts) -&gt; None:
+    &#34;&#34;&#34;
+        Setter for the max_attempts
+
+        Parameters:
+        max_attempts (str): New max_attempts
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.lifeBox.setMaxAttempts(max_attempts)
+    self.ui.hangmanDisplay.setMaxAttempts(max_attempts)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.setReplayHandler"><code class="name flex">
+<span>def <span class="ident">setReplayHandler</span></span>(<span>self, handler, append: bool = True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update replay button handler</p>
+<p>Parameters:
+handler (callable): New handler
+append (bool): True if appending the new handler to the existing handler</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setReplayHandler(self, handler, append: bool = True):
+    &#34;&#34;&#34;
+        Update replay button handler
+
+        Parameters:
+        handler (callable): New handler
+        append (bool): True if appending the new handler to the existing handler
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.hangmanDisplay.setReplayHandler(handler, append)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.setWord"><code class="name flex">
+<span>def <span class="ident">setWord</span></span>(<span>self, word, hide=False) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Setter for the word in the word box</p>
+<p>Parameters:
+text (str): New word in word box</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setWord(self, word, hide=False) -&gt; None:
+    &#34;&#34;&#34;
+        Setter for the word in the word box
+
+        Parameters:
+        text (str): New word in word box
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.wordBox.setWord(word, hide)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.showCharAt"><code class="name flex">
+<span>def <span class="ident">showCharAt</span></span>(<span>self, index) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Show character at an index</p>
+<p>Parameters:
+index (int): Index of character in a word that you want to show</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def showCharAt(self, index) -&gt; None:
+    &#34;&#34;&#34;
+        Show character at an index
+
+        Parameters:
+        index (int): Index of character in a word that you want to show
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.wordBox.showCharAt(index)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.transitHome"><code class="name flex">
+<span>def <span class="ident">transitHome</span></span>(<span>self, args=None) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the width of the word given in the parameter with the specified font size</p>
+<p>Parameters:
+word (str): Word in string
+fontSize (int): Font size of the word</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def transitHome(self, args=None) -&gt; None:
+    &#34;&#34;&#34;
+        Calculate the width of the word given in the parameter with the specified font size
+
+        Parameters:
+        word (str): Word in string
+        fontSize (int): Font size of the word
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+    self.ui = self.takeCentralWidget()
+    self.setCentralWidget(self.home)
+    self.windowInit()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.transitMainGame"><code class="name flex">
+<span>def <span class="ident">transitMainGame</span></span>(<span>self, args=None) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the width of the word given in the parameter with the specified font size</p>
+<p>Parameters:
+word (str): Word in string
+fontSize (int): Font size of the word</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def transitMainGame(self, args=None) -&gt; None:
+    &#34;&#34;&#34;
+        Calculate the width of the word given in the parameter with the specified font size
+
+        Parameters:
+        word (str): Word in string
+        fontSize (int): Font size of the word
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+    self.difficultyHandler(args)
+    self.home = self.takeCentralWidget()
+    self.setCentralWidget(self.ui)
+    self.windowInit()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.win"><code class="name flex">
+<span>def <span class="ident">win</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Process when the user wins the game</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def win(self) -&gt; None:
+    &#34;&#34;&#34;
+        Process when the user wins the game
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.hangmanDisplay.showReplayButton()
+    self.ui.scoreDisplay.addScore(Score.WIN())</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.windowInit"><code class="name flex">
+<span>def <span class="ident">windowInit</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the width of the word given in the parameter with the specified font size</p>
+<p>Parameters:
+word (str): Word in string
+fontSize (int): Font size of the word</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def windowInit(self):
+    &#34;&#34;&#34;
+        Calculate the width of the word given in the parameter with the specified font size
+
+        Parameters:
+        word (str): Word in string
+        fontSize (int): Font size of the word
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+    central_widget = self.centralWidget()
+    if hasattr(central_widget, &#34;minimizeButton&#34;):
+        central_widget.minimizeButton.clicked.connect(lambda: self.showMinimized())
+    # Close window
+    if hasattr(central_widget, &#34;closeButton&#34;):
+        central_widget.closeButton.clicked.connect(lambda: self.close())
+    # Restore/Maximize window
+    if hasattr(central_widget, &#34;restoreButton&#34;):
+        central_widget.restoreButton.clicked.connect(lambda: self.restore_or_maximize_window())
+
+    def moveWindow(event):
+        if event.buttons() == Qt.MouseButton.LeftButton:
+            self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos.toPoint())
+            self.dragPos = event.globalPosition()
+            event.accept()
+
+    if hasattr(central_widget, &#34;title_bar&#34;):
+        # Remove window tlttle bar
+        self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
+
+        # Set main background to transparent
+        self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
+        if hasattr(central_widget, &#34;title_bar&#34;):
+            central_widget.title_bar.mouseMoveEvent = moveWindow
+
+    # Show window
+    self.show()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.wrongChars"><code class="name flex">
+<span>def <span class="ident">wrongChars</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Show the hidden characters as wrong guessed chars</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrongChars(self) -&gt; None:
+    &#34;&#34;&#34;
+        Show the hidden characters as wrong guessed chars
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.wordBox.wrongChars()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.MainFrame.wrongGuess"><code class="name flex">
+<span>def <span class="ident">wrongGuess</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Process when user guess the character wrong. It changes the score</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrongGuess(self) -&gt; None:
+    &#34;&#34;&#34;
+        Process when user guess the character wrong. It changes the score
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.ui.scoreDisplay.addScore(Score.WRONG())</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="prj-04-hangmanai.Display.MainFrame.Ui"><code class="flex name class">
+<span>class <span class="ident">Ui</span></span>
+<span>(</span><span>assets_dir='../assets')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>QWidget(parent: QWidget = None, flags: Qt.WindowType = Qt.WindowFlags())</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Ui(QtWidgets.QWidget):
+    def __init__(self, assets_dir=&#34;../assets&#34;):
+        super(Ui, self).__init__()
+        uic.loadUi(assets_dir + &#39;/ui/main_v4.ui&#39;, self)
+        # self.form_widget.keyboardFirstRowView.layout().addWidget(KeyTop())
+        self.keyboard = Keyboard(assets_dir=assets_dir)
+        self.wordBox = WordBox(assets_dir=assets_dir)
+        self.lifeBox = LifeBox(assets_dir=assets_dir)
+        self.hangmanDisplay = HangmanView(assets_dir=assets_dir)
+        self.scoreDisplay = ScoreView(assets_dir=assets_dir)
+        self.keyboardView.setLayout(QtWidgets.QHBoxLayout())
+        self.keyboardView.layout().addWidget(self.keyboard)
+        self.wordInputView.setLayout(QtWidgets.QHBoxLayout())
+        self.wordInputView.layout().setContentsMargins(0, 0, 0, 0)
+        self.wordInputView.layout().addWidget(self.wordBox)
+        self.lifeView.setLayout(QtWidgets.QHBoxLayout())
+        self.lifeView.layout().setContentsMargins(0, 0, 0, 0)
+        self.lifeView.layout().addWidget(self.lifeBox)
+
+        self.hangmanView.setLayout(QtWidgets.QHBoxLayout())
+        self.hangmanView.layout().setContentsMargins(0, 0, 0, 0)
+        self.hangmanView.layout().addWidget(self.hangmanDisplay)
+
+        self.scoreView.setLayout(QtWidgets.QHBoxLayout())
+        self.scoreView.layout().setContentsMargins(0, 0, 0, 0)
+        self.scoreView.layout().addWidget(self.scoreDisplay)
+
+        self.hangmanDisplay.setScoreView(self.scoreDisplay)
+
+        # self.lifeBox.setMaxAttempts(7)
+
+    def reset(self):
+        self.keyboard.reset()
+        self.wordBox.reset()
+        self.lifeBox.reset()
+        self.scoreDisplay.confirmScore()
+        self.hangmanDisplay.reset()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt6.QtWidgets.QWidget</li>
+<li>PyQt6.QtCore.QObject</li>
+<li><a title="PyQt6.sip.wrapper" href="../../PyQt6/sip.html#PyQt6.sip.wrapper">wrapper</a></li>
+<li>PyQt6.QtGui.QPaintDevice</li>
+<li><a title="PyQt6.sip.simplewrapper" href="../../PyQt6/sip.html#PyQt6.sip.simplewrapper">simplewrapper</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.MainFrame.Ui.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset(self):
+    self.keyboard.reset()
+    self.wordBox.reset()
+    self.lifeBox.reset()
+    self.scoreDisplay.confirmScore()
+    self.hangmanDisplay.reset()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="prj-04-hangmanai.Display" href="index.html">prj-04-hangmanai.Display</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame" href="#prj-04-hangmanai.Display.MainFrame.MainFrame">MainFrame</a></code></h4>
+<ul class="">
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.assets_dir" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.assets_dir">assets_dir</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.correctGuess" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.correctGuess">correctGuess</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.hideCharAt" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.hideCharAt">hideCharAt</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.home" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.home">home</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.keyReleaseEvent" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.keyReleaseEvent">keyReleaseEvent</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.lose" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.lose">lose</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.mousePressEvent" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.mousePressEvent">mousePressEvent</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.reset" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.reset">reset</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.restore_or_maximize_window" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.restore_or_maximize_window">restore_or_maximize_window</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.setDifficultyHandler" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.setDifficultyHandler">setDifficultyHandler</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.setHomeHandler" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.setHomeHandler">setHomeHandler</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.setKeyboardListner" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.setKeyboardListner">setKeyboardListner</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.setLife" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.setLife">setLife</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.setMaxAttempts" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.setMaxAttempts">setMaxAttempts</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.setReplayHandler" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.setReplayHandler">setReplayHandler</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.setWord" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.setWord">setWord</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.showCharAt" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.showCharAt">showCharAt</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.transitHome" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.transitHome">transitHome</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.transitMainGame" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.transitMainGame">transitMainGame</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.ui" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.ui">ui</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.win" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.win">win</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.windowInit" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.windowInit">windowInit</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.worker" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.worker">worker</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.wrongChars" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.wrongChars">wrongChars</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.MainFrame.wrongGuess" href="#prj-04-hangmanai.Display.MainFrame.MainFrame.wrongGuess">wrongGuess</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="prj-04-hangmanai.Display.MainFrame.Ui" href="#prj-04-hangmanai.Display.MainFrame.Ui">Ui</a></code></h4>
+<ul class="">
+<li><code><a title="prj-04-hangmanai.Display.MainFrame.Ui.reset" href="#prj-04-hangmanai.Display.MainFrame.Ui.reset">reset</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

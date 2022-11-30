@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>prj-04-hangmanai.Display.CameraThread API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>prj-04-hangmanai.Display.CameraThread</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import sys
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+import cv2
+import pytesseract
+from numpy import array
+
+import threading
+
+
+class MainWindow(QWidget):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+
+        self.VBL = QVBoxLayout()
+
+        self.FeedLabel = QLabel()
+        self.VBL.addWidget(self.FeedLabel)
+
+        self.CancelBTN = QPushButton(&#34;Cancel&#34;)
+        self.CancelBTN.clicked.connect(self.CancelFeed)
+        self.VBL.addWidget(self.CancelBTN)
+
+        self.Worker1 = CameraThread(self.FeedLabel)
+
+        self.Worker1.start()
+
+        self.setLayout(self.VBL)
+
+    def CancelFeed(self):
+        self.Worker1.cameraNo = self.Worker1.cameraNo + 1
+        self.Worker1.changeCamera(self.Worker1.cameraNo)
+
+
+class CameraThread(QThread):
+    &#34;&#34;&#34;
+        CameraThread will keep update the camera feed in the MainFrame and gives the life camera feedback to the user.
+
+    &#34;&#34;&#34;
+    ImageUpdate = pyqtSignal(QImage)
+    &#34;&#34;&#34; Image update signal&#34;&#34;&#34;
+
+    def __init__(self, container: QLabel, recognition_callback=lambda x: print(x), parent=None):
+        super().__init__(parent)
+        self.container = container
+        &#34;&#34;&#34; Container QLabel of the camera image&#34;&#34;&#34;
+        self.width: int = 320
+        &#34;&#34;&#34; Width of the camera image&#34;&#34;&#34;
+        self.height: int = 240
+        &#34;&#34;&#34; Height of the camera image&#34;&#34;&#34;
+        self.cameraNo = 0
+        &#34;&#34;&#34; Camera number used for the image capture&#34;&#34;&#34;
+        self.recognition_callback = recognition_callback
+        &#34;&#34;&#34; Callback function for the successful image recognition&#34;&#34;&#34;
+        self.stack = []
+        &#34;&#34;&#34; Stack for stack analyzer&#34;&#34;&#34;
+
+        self.ImageUpdate.connect(self.ImageUpdateSlot)
+
+    def ImageUpdateSlot(self, image: QImage) -&gt; None:
+        &#34;&#34;&#34;
+            Callback function used to update the camera image in the container to the new image
+
+            Parameters:
+            image (QImage): New image to the camera view
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.container.setPixmap(QPixmap.fromImage(image))
+
+    def changeCamera(self, no: int) -&gt; None:
+        &#34;&#34;&#34;
+            Change the camera to the new camera with the specified camera number
+
+            Parameters:
+            no (int): New camera number
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.sleep(2)
+        self.cameraNo = no
+        self.Capture = cv2.VideoCapture(self.cameraNo)
+
+    def run(self):
+        self.ThreadActive = True
+        self.Capture = cv2.VideoCapture(self.cameraNo)
+        count = 0
+        pytesseract.pytesseract.tesseract_cmd = &#39;C:/Program Files/Tesseract-OCR/tesseract.exe&#39;
+        analyzing_thread1 = TesseractThread(lambda: print(&#34;analyzing thread ready&#34;))
+        analyzing_thread2 = TesseractThread(lambda: print(&#34;analyzing thread ready&#34;))
+        lock = threading.Lock()
+
+        while self.ThreadActive:
+            ret, frame = self.Capture.read()
+            ## Modify from here
+
+            if ret:
+
+                if not analyzing_thread1.isRunning():
+                    analyzing_thread1 = TesseractThread(lambda: self.analyze(frame, lock))
+                    analyzing_thread1.start()
+                elif not analyzing_thread2.isRunning():
+                    # a = 1
+                    analyzing_thread2 = TesseractThread(lambda: self.analyze(frame, lock))
+                    analyzing_thread2.start()
+
+                # Keep of bit modify
+                Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                # FlippedImage = cv2.flip(Image, 1)
+                # ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0], QImage.Format.Format_RGB888)
+
+                ConvertToQtFormat = QImage(Image.data, Image.shape[1], Image.shape[0], QImage.Format.Format_RGB888)
+                Pic = ConvertToQtFormat.scaled(self.width, self.height, Qt.AspectRatioMode.KeepAspectRatio)
+                self.ImageUpdate.emit(Pic)
+        print(&#34;Finished&#34;)
+
+    def analyze(self, frame, lock) -&gt; None:
+        &#34;&#34;&#34;
+            Analysing the image in the frame and extract the text from the image and append it to the stack.
+
+            If the stack is full, call the callback function to notify the text recognition to the game
+
+            Parameters:
+            frame : Frame of Open CV
+            lock : Lock used in multithreading
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255, 80]))
+        krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
+        dlt = cv2.dilate(msk, krn, iterations=1)
+        thr = 255 - cv2.bitwise_and(dlt, msk)
+
+        string = pytesseract.image_to_string(thr, lang=&#39;eng&#39;,
+                                             config=&#39; --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;)
+
+        # checks if the pytesseract passes a &#39;&#39;
+        lock.acquire()
+        if (len(string) &gt; 0):
+            # if string is not empty takes the first letter and adds to stack
+            self.stack.append(string[:1])
+
+        # if stack is length 10 checks most common letter
+        if (len(self.stack) &gt; 10):
+            counter = 0
+            cha = self.stack[0]
+
+            for i in self.stack:
+                curr_frequency = self.stack.count(i)
+                if (curr_frequency &gt; counter):
+                    counter = curr_frequency
+                    cha = i
+            # prints out the most common letter
+            print(&#34;the character &#34; + cha)
+            print(self.stack)
+            self.recognition_callback(cha)
+            self.stack.clear()
+        lock.release()
+
+
+class TesseractThread(QThread):
+    def __init__(self, handler: lambda: print(&#34;Handler&#34;), parent=None):
+        super().__init__(parent)
+        self.handler = handler
+        &#34;&#34;&#34; Function to execute when in run()&#34;&#34;&#34;
+
+    def run(self):
+        self.handler()
+
+
+if __name__ == &#34;__main__&#34;:
+    App = QApplication(sys.argv)
+    Root = MainWindow()
+    Root.show()
+    sys.exit(App.exec())</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread"><code class="flex name class">
+<span>class <span class="ident">CameraThread</span></span>
+<span>(</span><span>container: PyQt6.QtWidgets.QLabel, recognition_callback=&lt;function CameraThread.&lt;lambda&gt;&gt;, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>CameraThread will keep update the camera feed in the MainFrame and gives the life camera feedback to the user.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CameraThread(QThread):
+    &#34;&#34;&#34;
+        CameraThread will keep update the camera feed in the MainFrame and gives the life camera feedback to the user.
+
+    &#34;&#34;&#34;
+    ImageUpdate = pyqtSignal(QImage)
+    &#34;&#34;&#34; Image update signal&#34;&#34;&#34;
+
+    def __init__(self, container: QLabel, recognition_callback=lambda x: print(x), parent=None):
+        super().__init__(parent)
+        self.container = container
+        &#34;&#34;&#34; Container QLabel of the camera image&#34;&#34;&#34;
+        self.width: int = 320
+        &#34;&#34;&#34; Width of the camera image&#34;&#34;&#34;
+        self.height: int = 240
+        &#34;&#34;&#34; Height of the camera image&#34;&#34;&#34;
+        self.cameraNo = 0
+        &#34;&#34;&#34; Camera number used for the image capture&#34;&#34;&#34;
+        self.recognition_callback = recognition_callback
+        &#34;&#34;&#34; Callback function for the successful image recognition&#34;&#34;&#34;
+        self.stack = []
+        &#34;&#34;&#34; Stack for stack analyzer&#34;&#34;&#34;
+
+        self.ImageUpdate.connect(self.ImageUpdateSlot)
+
+    def ImageUpdateSlot(self, image: QImage) -&gt; None:
+        &#34;&#34;&#34;
+            Callback function used to update the camera image in the container to the new image
+
+            Parameters:
+            image (QImage): New image to the camera view
+
+            Returns:
+            float: Width of the word
+
+        &#34;&#34;&#34;
+        self.container.setPixmap(QPixmap.fromImage(image))
+
+    def changeCamera(self, no: int) -&gt; None:
+        &#34;&#34;&#34;
+            Change the camera to the new camera with the specified camera number
+
+            Parameters:
+            no (int): New camera number
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        self.sleep(2)
+        self.cameraNo = no
+        self.Capture = cv2.VideoCapture(self.cameraNo)
+
+    def run(self):
+        self.ThreadActive = True
+        self.Capture = cv2.VideoCapture(self.cameraNo)
+        count = 0
+        pytesseract.pytesseract.tesseract_cmd = &#39;C:/Program Files/Tesseract-OCR/tesseract.exe&#39;
+        analyzing_thread1 = TesseractThread(lambda: print(&#34;analyzing thread ready&#34;))
+        analyzing_thread2 = TesseractThread(lambda: print(&#34;analyzing thread ready&#34;))
+        lock = threading.Lock()
+
+        while self.ThreadActive:
+            ret, frame = self.Capture.read()
+            ## Modify from here
+
+            if ret:
+
+                if not analyzing_thread1.isRunning():
+                    analyzing_thread1 = TesseractThread(lambda: self.analyze(frame, lock))
+                    analyzing_thread1.start()
+                elif not analyzing_thread2.isRunning():
+                    # a = 1
+                    analyzing_thread2 = TesseractThread(lambda: self.analyze(frame, lock))
+                    analyzing_thread2.start()
+
+                # Keep of bit modify
+                Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                # FlippedImage = cv2.flip(Image, 1)
+                # ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0], QImage.Format.Format_RGB888)
+
+                ConvertToQtFormat = QImage(Image.data, Image.shape[1], Image.shape[0], QImage.Format.Format_RGB888)
+                Pic = ConvertToQtFormat.scaled(self.width, self.height, Qt.AspectRatioMode.KeepAspectRatio)
+                self.ImageUpdate.emit(Pic)
+        print(&#34;Finished&#34;)
+
+    def analyze(self, frame, lock) -&gt; None:
+        &#34;&#34;&#34;
+            Analysing the image in the frame and extract the text from the image and append it to the stack.
+
+            If the stack is full, call the callback function to notify the text recognition to the game
+
+            Parameters:
+            frame : Frame of Open CV
+            lock : Lock used in multithreading
+
+            Returns:
+            None
+
+        &#34;&#34;&#34;
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255, 80]))
+        krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
+        dlt = cv2.dilate(msk, krn, iterations=1)
+        thr = 255 - cv2.bitwise_and(dlt, msk)
+
+        string = pytesseract.image_to_string(thr, lang=&#39;eng&#39;,
+                                             config=&#39; --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;)
+
+        # checks if the pytesseract passes a &#39;&#39;
+        lock.acquire()
+        if (len(string) &gt; 0):
+            # if string is not empty takes the first letter and adds to stack
+            self.stack.append(string[:1])
+
+        # if stack is length 10 checks most common letter
+        if (len(self.stack) &gt; 10):
+            counter = 0
+            cha = self.stack[0]
+
+            for i in self.stack:
+                curr_frequency = self.stack.count(i)
+                if (curr_frequency &gt; counter):
+                    counter = curr_frequency
+                    cha = i
+            # prints out the most common letter
+            print(&#34;the character &#34; + cha)
+            print(self.stack)
+            self.recognition_callback(cha)
+            self.stack.clear()
+        lock.release()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt6.QtCore.QThread</li>
+<li>PyQt6.QtCore.QObject</li>
+<li><a title="PyQt6.sip.wrapper" href="../../PyQt6/sip.html#PyQt6.sip.wrapper">wrapper</a></li>
+<li><a title="PyQt6.sip.simplewrapper" href="../../PyQt6/sip.html#PyQt6.sip.simplewrapper">simplewrapper</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.cameraNo"><code class="name">var <span class="ident">cameraNo</span></code></dt>
+<dd>
+<div class="desc"><p>Camera number used for the image capture</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.container"><code class="name">var <span class="ident">container</span></code></dt>
+<dd>
+<div class="desc"><p>Container QLabel of the camera image</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.height"><code class="name">var <span class="ident">height</span></code></dt>
+<dd>
+<div class="desc"><p>Height of the camera image</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.recognition_callback"><code class="name">var <span class="ident">recognition_callback</span></code></dt>
+<dd>
+<div class="desc"><p>Callback function for the successful image recognition</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.stack"><code class="name">var <span class="ident">stack</span></code></dt>
+<dd>
+<div class="desc"><p>Stack for stack analyzer</p></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.width"><code class="name">var <span class="ident">width</span></code></dt>
+<dd>
+<div class="desc"><p>Width of the camera image</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.ImageUpdate"><code class="name flex">
+<span>def <span class="ident">ImageUpdate</span></span>(<span>...)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.ImageUpdateSlot"><code class="name flex">
+<span>def <span class="ident">ImageUpdateSlot</span></span>(<span>self, image: PyQt6.QtGui.QImage) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Callback function used to update the camera image in the container to the new image</p>
+<p>Parameters:
+image (QImage): New image to the camera view</p>
+<p>Returns:
+float: Width of the word</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ImageUpdateSlot(self, image: QImage) -&gt; None:
+    &#34;&#34;&#34;
+        Callback function used to update the camera image in the container to the new image
+
+        Parameters:
+        image (QImage): New image to the camera view
+
+        Returns:
+        float: Width of the word
+
+    &#34;&#34;&#34;
+    self.container.setPixmap(QPixmap.fromImage(image))</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.analyze"><code class="name flex">
+<span>def <span class="ident">analyze</span></span>(<span>self, frame, lock) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Analysing the image in the frame and extract the text from the image and append it to the stack.</p>
+<p>If the stack is full, call the callback function to notify the text recognition to the game</p>
+<p>Parameters:
+frame : Frame of Open CV
+lock : Lock used in multithreading</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze(self, frame, lock) -&gt; None:
+    &#34;&#34;&#34;
+        Analysing the image in the frame and extract the text from the image and append it to the stack.
+
+        If the stack is full, call the callback function to notify the text recognition to the game
+
+        Parameters:
+        frame : Frame of Open CV
+        lock : Lock used in multithreading
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255, 80]))
+    krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
+    dlt = cv2.dilate(msk, krn, iterations=1)
+    thr = 255 - cv2.bitwise_and(dlt, msk)
+
+    string = pytesseract.image_to_string(thr, lang=&#39;eng&#39;,
+                                         config=&#39; --psm 10 --oem 3 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;)
+
+    # checks if the pytesseract passes a &#39;&#39;
+    lock.acquire()
+    if (len(string) &gt; 0):
+        # if string is not empty takes the first letter and adds to stack
+        self.stack.append(string[:1])
+
+    # if stack is length 10 checks most common letter
+    if (len(self.stack) &gt; 10):
+        counter = 0
+        cha = self.stack[0]
+
+        for i in self.stack:
+            curr_frequency = self.stack.count(i)
+            if (curr_frequency &gt; counter):
+                counter = curr_frequency
+                cha = i
+        # prints out the most common letter
+        print(&#34;the character &#34; + cha)
+        print(self.stack)
+        self.recognition_callback(cha)
+        self.stack.clear()
+    lock.release()</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.changeCamera"><code class="name flex">
+<span>def <span class="ident">changeCamera</span></span>(<span>self, no: int) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Change the camera to the new camera with the specified camera number</p>
+<p>Parameters:
+no (int): New camera number</p>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def changeCamera(self, no: int) -&gt; None:
+    &#34;&#34;&#34;
+        Change the camera to the new camera with the specified camera number
+
+        Parameters:
+        no (int): New camera number
+
+        Returns:
+        None
+
+    &#34;&#34;&#34;
+    self.sleep(2)
+    self.cameraNo = no
+    self.Capture = cv2.VideoCapture(self.cameraNo)</code></pre>
+</details>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.CameraThread.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>run(self)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+    self.ThreadActive = True
+    self.Capture = cv2.VideoCapture(self.cameraNo)
+    count = 0
+    pytesseract.pytesseract.tesseract_cmd = &#39;C:/Program Files/Tesseract-OCR/tesseract.exe&#39;
+    analyzing_thread1 = TesseractThread(lambda: print(&#34;analyzing thread ready&#34;))
+    analyzing_thread2 = TesseractThread(lambda: print(&#34;analyzing thread ready&#34;))
+    lock = threading.Lock()
+
+    while self.ThreadActive:
+        ret, frame = self.Capture.read()
+        ## Modify from here
+
+        if ret:
+
+            if not analyzing_thread1.isRunning():
+                analyzing_thread1 = TesseractThread(lambda: self.analyze(frame, lock))
+                analyzing_thread1.start()
+            elif not analyzing_thread2.isRunning():
+                # a = 1
+                analyzing_thread2 = TesseractThread(lambda: self.analyze(frame, lock))
+                analyzing_thread2.start()
+
+            # Keep of bit modify
+            Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            # FlippedImage = cv2.flip(Image, 1)
+            # ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0], QImage.Format.Format_RGB888)
+
+            ConvertToQtFormat = QImage(Image.data, Image.shape[1], Image.shape[0], QImage.Format.Format_RGB888)
+            Pic = ConvertToQtFormat.scaled(self.width, self.height, Qt.AspectRatioMode.KeepAspectRatio)
+            self.ImageUpdate.emit(Pic)
+    print(&#34;Finished&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.MainWindow"><code class="flex name class">
+<span>class <span class="ident">MainWindow</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>QWidget(parent: QWidget = None, flags: Qt.WindowType = Qt.WindowFlags())</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MainWindow(QWidget):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+
+        self.VBL = QVBoxLayout()
+
+        self.FeedLabel = QLabel()
+        self.VBL.addWidget(self.FeedLabel)
+
+        self.CancelBTN = QPushButton(&#34;Cancel&#34;)
+        self.CancelBTN.clicked.connect(self.CancelFeed)
+        self.VBL.addWidget(self.CancelBTN)
+
+        self.Worker1 = CameraThread(self.FeedLabel)
+
+        self.Worker1.start()
+
+        self.setLayout(self.VBL)
+
+    def CancelFeed(self):
+        self.Worker1.cameraNo = self.Worker1.cameraNo + 1
+        self.Worker1.changeCamera(self.Worker1.cameraNo)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt6.QtWidgets.QWidget</li>
+<li>PyQt6.QtCore.QObject</li>
+<li><a title="PyQt6.sip.wrapper" href="../../PyQt6/sip.html#PyQt6.sip.wrapper">wrapper</a></li>
+<li>PyQt6.QtGui.QPaintDevice</li>
+<li><a title="PyQt6.sip.simplewrapper" href="../../PyQt6/sip.html#PyQt6.sip.simplewrapper">simplewrapper</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.CameraThread.MainWindow.CancelFeed"><code class="name flex">
+<span>def <span class="ident">CancelFeed</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def CancelFeed(self):
+    self.Worker1.cameraNo = self.Worker1.cameraNo + 1
+    self.Worker1.changeCamera(self.Worker1.cameraNo)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="prj-04-hangmanai.Display.CameraThread.TesseractThread"><code class="flex name class">
+<span>class <span class="ident">TesseractThread</span></span>
+<span>(</span><span>handler: <function <a title="prj-04-hangmanai.Display.CameraThread.TesseractThread" href="#prj-04-hangmanai.Display.CameraThread.TesseractThread">TesseractThread</a>.<lambda> at 0x0000020BB98BA0D0>, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>QThread(parent: QObject = None)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TesseractThread(QThread):
+    def __init__(self, handler: lambda: print(&#34;Handler&#34;), parent=None):
+        super().__init__(parent)
+        self.handler = handler
+        &#34;&#34;&#34; Function to execute when in run()&#34;&#34;&#34;
+
+    def run(self):
+        self.handler()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt6.QtCore.QThread</li>
+<li>PyQt6.QtCore.QObject</li>
+<li><a title="PyQt6.sip.wrapper" href="../../PyQt6/sip.html#PyQt6.sip.wrapper">wrapper</a></li>
+<li><a title="PyQt6.sip.simplewrapper" href="../../PyQt6/sip.html#PyQt6.sip.simplewrapper">simplewrapper</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.CameraThread.TesseractThread.handler"><code class="name">var <span class="ident">handler</span></code></dt>
+<dd>
+<div class="desc"><p>Function to execute when in run()</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.Display.CameraThread.TesseractThread.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>run(self)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+    self.handler()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="prj-04-hangmanai.Display" href="index.html">prj-04-hangmanai.Display</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread" href="#prj-04-hangmanai.Display.CameraThread.CameraThread">CameraThread</a></code></h4>
+<ul class="">
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.ImageUpdate" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.ImageUpdate">ImageUpdate</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.ImageUpdateSlot" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.ImageUpdateSlot">ImageUpdateSlot</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.analyze" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.analyze">analyze</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.cameraNo" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.cameraNo">cameraNo</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.changeCamera" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.changeCamera">changeCamera</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.container" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.container">container</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.height" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.height">height</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.recognition_callback" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.recognition_callback">recognition_callback</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.run" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.run">run</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.stack" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.stack">stack</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.CameraThread.width" href="#prj-04-hangmanai.Display.CameraThread.CameraThread.width">width</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="prj-04-hangmanai.Display.CameraThread.MainWindow" href="#prj-04-hangmanai.Display.CameraThread.MainWindow">MainWindow</a></code></h4>
+<ul class="">
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.MainWindow.CancelFeed" href="#prj-04-hangmanai.Display.CameraThread.MainWindow.CancelFeed">CancelFeed</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="prj-04-hangmanai.Display.CameraThread.TesseractThread" href="#prj-04-hangmanai.Display.CameraThread.TesseractThread">TesseractThread</a></code></h4>
+<ul class="">
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.TesseractThread.handler" href="#prj-04-hangmanai.Display.CameraThread.TesseractThread.handler">handler</a></code></li>
+<li><code><a title="prj-04-hangmanai.Display.CameraThread.TesseractThread.run" href="#prj-04-hangmanai.Display.CameraThread.TesseractThread.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

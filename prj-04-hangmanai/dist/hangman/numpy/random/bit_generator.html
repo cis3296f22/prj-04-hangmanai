@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>prj-04-hangmanai.dist.hangman.numpy.random.bit_generator API documentation</title>
+<meta name="description" content="BitGenerator base class and SeedSequence used to seed the BitGenerators …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>prj-04-hangmanai.dist.hangman.numpy.random.bit_generator</code></h1>
+</header>
+<section id="section-intro">
+<p>BitGenerator base class and SeedSequence used to seed the BitGenerators.</p>
+<p>SeedSequence is derived from Melissa E. O'Neill's C++11 <code>std::seed_seq</code>
+implementation, as it has a lot of nice properties that we want.</p>
+<p><a href="https://gist.github.com/imneme/540829265469e673d045">https://gist.github.com/imneme/540829265469e673d045</a>
+<a href="http://www.pcg-random.org/posts/developing-a-seed_seq-alternative.html">http://www.pcg-random.org/posts/developing-a-seed_seq-alternative.html</a></p>
+<p>The MIT License (MIT)</p>
+<p>Copyright (c) 2015 Melissa E. O'Neill
+Copyright (c) 2019 NumPy Developers</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator"><code class="flex name class">
+<span>class <span class="ident">BitGenerator</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>BitGenerator(seed=None)</p>
+<p>Base Class for generic BitGenerators, which provide a stream
+of random bits based on different algorithms. Must be overridden.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>seed</code></strong> :&ensp;<code>{None, int, array_like[ints], SeedSequence}</code>, optional</dt>
+<dd>A seed to initialize the <code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator">BitGenerator</a></code>. If None, then fresh,
+unpredictable entropy will be pulled from the OS. If an <code>int</code> or
+<code>array_like[ints]</code> is passed, then it will be passed to
+~<code>numpy.random.SeedSequence</code> to derive the initial <code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator">BitGenerator</a></code> state.
+One may also pass in a <code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence">SeedSequence</a></code> instance.</dd>
+</dl>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>lock</code></strong> :&ensp;<code>threading.Lock</code></dt>
+<dd>Lock instance that is shared so that the same BitGenerator can
+be used in multiple Generators without corrupting the state. Code that
+generates values from a bit generator should hold the bit generator's
+lock.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence">SeedSequence</a></code></p></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.capsule"><code class="name">var <span class="ident">capsule</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.cffi"><code class="name">var <span class="ident">cffi</span></code></dt>
+<dd>
+<div class="desc"><p>CFFI interface</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>interface</code></strong> :&ensp;<code>namedtuple</code></dt>
+<dd>
+<p>Named tuple containing CFFI wrapper</p>
+<ul>
+<li>state_address - Memory address of the state struct</li>
+<li>state - pointer to the state struct</li>
+<li>next_uint64 - function pointer to produce 64 bit integers</li>
+<li>next_uint32 - function pointer to produce 32 bit integers</li>
+<li>next_double - function pointer to produce doubles</li>
+<li>bitgen - pointer to the bit generator struct</li>
+</ul>
+</dd>
+</dl></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.ctypes"><code class="name">var <span class="ident">ctypes</span></code></dt>
+<dd>
+<div class="desc"><p>ctypes interface</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>interface</code></strong> :&ensp;<code>namedtuple</code></dt>
+<dd>
+<p>Named tuple containing ctypes wrapper</p>
+<ul>
+<li>state_address - Memory address of the state struct</li>
+<li>state - pointer to the state struct</li>
+<li>next_uint64 - function pointer to produce 64 bit integers</li>
+<li>next_uint32 - function pointer to produce 32 bit integers</li>
+<li>next_double - function pointer to produce doubles</li>
+<li>bitgen - pointer to the bit generator struct</li>
+</ul>
+</dd>
+</dl></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.lock"><code class="name">var <span class="ident">lock</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<div class="desc"><p>Get or set the PRNG state</p>
+<p>The base BitGenerator.state must be overridden by a subclass</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary containing the information required to describe the
+state of the PRNG</dd>
+</dl></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.random_raw"><code class="name flex">
+<span>def <span class="ident">random_raw</span></span>(<span>self, size=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return randoms as generated by the underlying BitGenerator</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code> or <code>tuple</code> of <code>ints</code>, optional</dt>
+<dd>Output shape.
+If the given shape is, e.g., <code>(m, n, k)</code>, then
+<code>m * n * k</code> samples are drawn.
+Default is None, in which case a
+single value is returned.</dd>
+<dt><strong><code>output</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Output values.
+Used for performance testing since the generated
+values are not returned.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>out</code></strong> :&ensp;<code>uint</code> or <code>ndarray</code></dt>
+<dd>Drawn samples.</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>This method directly exposes the raw underlying pseudo-random
+number generator. All values are returned as unsigned 64-bit
+values irrespective of the number of bits produced by the PRNG.</p>
+<p>See the class docstring for the number of bits returned.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence"><code class="flex name class">
+<span>class <span class="ident">SeedSequence</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>SeedSequence(entropy=None, *, spawn_key=(), pool_size=4)</p>
+<p>SeedSequence mixes sources of entropy in a reproducible way to set the
+initial state for independent and very probably non-overlapping
+BitGenerators.</p>
+<p>Once the SeedSequence is instantiated, you can call the <code>generate_state</code>
+method to get an appropriately sized seed. Calling <code>spawn(n) &lt;spawn&gt;</code> will
+create <code>n</code> SeedSequences that can be used to seed independent
+BitGenerators, i.e. for different threads.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>entropy</code></strong> :&ensp;<code>{None, int, sequence[int]}</code>, optional</dt>
+<dd>The entropy for creating a <code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence">SeedSequence</a></code>.</dd>
+<dt><strong><code>spawn_key</code></strong> :&ensp;<code>{(), sequence[int]}</code>, optional</dt>
+<dd>A third source of entropy, used internally when calling
+<code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn">SeedSequence.spawn()</a></code></dd>
+<dt><strong><code>pool_size</code></strong> :&ensp;<code>{int}</code>, optional</dt>
+<dd>Size of the pooled entropy to store. Default is 4 to give a 128-bit
+entropy pool. 8 (for 256 bits) is another reasonable choice if working
+with larger PRNGs, but there is very little to be gained by selecting
+another value.</dd>
+<dt><strong><code>n_children_spawned</code></strong> :&ensp;<code>{int}</code>, optional</dt>
+<dd>The number of children already spawned. Only pass this if
+reconstructing a <code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence">SeedSequence</a></code> from a serialized form.</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Best practice for achieving reproducible bit streams is to use
+the default <code>None</code> for the initial entropy, and then use
+<code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.entropy" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.entropy">SeedSequence.entropy</a></code> to log/pickle the <code>entropy</code> for reproducibility:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; sq1 = np.random.SeedSequence()
+&gt;&gt;&gt; sq1.entropy
+243799254704924441050048792905230269161  # random
+&gt;&gt;&gt; sq2 = np.random.SeedSequence(sq1.entropy)
+&gt;&gt;&gt; np.all(sq1.generate_state(10) == sq2.generate_state(10))
+True
+</code></pre></div>
+<h3>Instance variables</h3>
+<dl>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.entropy"><code class="name">var <span class="ident">entropy</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.n_children_spawned"><code class="name">var <span class="ident">n_children_spawned</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.pool"><code class="name">var <span class="ident">pool</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.pool_size"><code class="name">var <span class="ident">pool_size</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn_key"><code class="name">var <span class="ident">spawn_key</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<div class="desc"><p>Return an attribute of instance, which is of type owner.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.generate_state"><code class="name flex">
+<span>def <span class="ident">generate_state</span></span>(<span>n_words, dtype=numpy.uint32)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the requested number of words for PRNG seeding.</p>
+<p>A BitGenerator should call this method in its constructor with
+an appropriate <code>n_words</code> parameter to properly seed itself.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>n_words</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>dtype</code></strong> :&ensp;<code>np.uint32</code> or <code>np.uint64</code>, optional</dt>
+<dd>The size of each word. This should only be either <code>uint32</code> or
+<code>uint64</code>. Strings (<code>'uint32'</code>, <code>'uint64'</code>) are fine. Note that
+requesting <code>uint64</code> will draw twice as many bits as <code>uint32</code> for
+the same <code>n_words</code>. This is a convenience for <code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator">BitGenerator</a></code>s that
+express their states as <code>uint64</code> arrays.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>uint32</code> or <code>uint64 array, shape=(n_words,)</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+<dt id="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn"><code class="name flex">
+<span>def <span class="ident">spawn</span></span>(<span>n_children)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Spawn a number of child <code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence">SeedSequence</a></code> s by extending the
+<code>spawn_key</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>n_children</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>seqs</code></strong> :&ensp;<code>list</code> of <code><code>&lt;a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence"&gt;SeedSequence&lt;/a&gt;&lt;/code&gt; s</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random" href="index.html">prj-04-hangmanai.dist.hangman.numpy.random</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator">BitGenerator</a></code></h4>
+<ul class="two-column">
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.capsule" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.capsule">capsule</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.cffi" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.cffi">cffi</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.ctypes" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.ctypes">ctypes</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.lock" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.lock">lock</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.random_raw" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.random_raw">random_raw</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.state" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.BitGenerator.state">state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence">SeedSequence</a></code></h4>
+<ul class="two-column">
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.entropy" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.entropy">entropy</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.generate_state" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.generate_state">generate_state</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.n_children_spawned" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.n_children_spawned">n_children_spawned</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.pool" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.pool">pool</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.pool_size" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.pool_size">pool_size</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn">spawn</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn_key" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.spawn_key">spawn_key</a></code></li>
+<li><code><a title="prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.state" href="#prj-04-hangmanai.dist.hangman.numpy.random.bit_generator.SeedSequence.state">state</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
