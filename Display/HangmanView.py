@@ -19,7 +19,6 @@ SOUND_FILE = "sound/knife.wav"
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
-
         super(TestWindow, self).__init__(parent)
         self.form_widget = HangmanView(progress=1, debug_anim=True)
         self.setCentralWidget(self.form_widget)
@@ -35,6 +34,7 @@ class HangmanView(QtWidgets.QWidget):
         This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
 
     """
+
     def __init__(self,
                  max_attempts: int = 5,
                  progress: float = 0,
@@ -103,20 +103,64 @@ class HangmanView(QtWidgets.QWidget):
         self.overlayTimer.timeout.connect(lambda: self.overlayAnim())
 
     def setScoreView(self, scoreView: ScoreView) -> None:
+        """
+            Setter for the Score View
+
+            Parameters:
+            scoreView (ScoreView): New scoreView
+
+            Returns:
+            None
+
+        """
         self.scoreView = scoreView
 
     def showReplayButton(self, duration: int = 5) -> None:
+        """
+            Show reply button
+
+            Parameters:
+            duration (int): Duration of animation
+
+            Returns:
+            None
+
+        """
         self.overlayTimer.start(duration)
 
     def hideReplayButton(self) -> None:
+        """
+            Hide reply button
+
+            Returns:
+            None
+
+        """
         self.overlayTimer.stop()
         self.setOverlay(1)
 
-    def startDamageAnimation(self, duration: int = 5):
+    def startDamageAnimation(self, duration: int = 5) -> None:
+        """
+            Start damage animation
+
+            Parameters:
+            duration (int): Duration of animation
+
+            Returns:
+            None
+
+        """
         self.damageAnimValue = 1
         self.damageTimer.start(duration)
 
     def takeDamage(self) -> None:
+        """
+            Take damage by progressing the hangman stage with sound and animation feedback
+
+            Returns:
+            None
+
+        """
         filename = self.assets_dir + "/" + SOUND_FILE
         self.effect = QSoundEffect()
         self.effect.setSource(QUrl.fromLocalFile(filename))
@@ -133,14 +177,36 @@ class HangmanView(QtWidgets.QWidget):
         else:
             self.setStageProgress((self.max_attempts - self.attempts) / self.max_attempts)
 
-    def setReplayHandler(self, handler, append: bool = True):
+    def setReplayHandler(self, handler, append: bool = True) -> None:
+        """
+            Update replay button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        """
         func = self.reply_handler
         if self.reply_handler is not None and append:
             self.reply_handler = lambda: [func(), handler()]
         else:
             self.reply_handler = lambda: handler()
 
-    def setHomeHandler(self, handler, append: bool = True):
+    def setHomeHandler(self, handler, append: bool = True) -> None:
+        """
+            Update home button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        """
         func = self.home_handler
         if self.home_handler is not None and append:
             self.home_handler = lambda: [func(), handler()]
@@ -148,13 +214,40 @@ class HangmanView(QtWidgets.QWidget):
             self.home_handler = lambda: handler()
 
     def setStageProgress(self, progress_percentage: float) -> None:
+        """
+            set progress_percentage to the new value
+
+            Parameters:
+            progress_percentage (int): New progress_percentage value
+
+            Returns:
+            None
+
+        """
         self.progress_percentage = progress_percentage
 
     def setMaxAttempts(self, max_attempts: int) -> None:
+        """
+            Setter for the max_attempts
+
+            Parameters:
+            max_attempts (str): New max_attempts
+
+            Returns:
+            None
+
+        """
         self.max_attempts = max_attempts
         self.attempts = max_attempts
 
-    def reset(self):
+    def reset(self) -> None:
+        """
+            Resets the hangman view
+
+            Returns:
+            None
+
+        """
         self.attempts = self.max_attempts
         self.setOverlay(0)
         self.damageAnimValue = 0
@@ -164,7 +257,17 @@ class HangmanView(QtWidgets.QWidget):
         self.overlayTimer.stop()
         # self.showReplayButton(5)
 
-    def setOverlay(self, overlay: float):
+    def setOverlay(self, overlay: float) -> None:
+        """
+            Setter for the overlay
+
+            Parameters:
+            overlay (float): New overlay value
+
+            Returns:
+            None
+
+        """
         if 0 < overlay < 1:
             self.overlay = overlay
         elif overlay < 0:
@@ -174,6 +277,36 @@ class HangmanView(QtWidgets.QWidget):
 
         self.home_button.setOpacity(int(255 * ((1 - self.overlay) * 2)))
         self.reply_button.setOpacity(int(255 * ((1 - self.overlay) * 2)))
+
+    def overlayAnim(self) -> None:
+        """
+            Overlay animation callback
+
+            Returns:
+            None
+
+        """
+        if self.overlay < 0.5:
+            self.overlayTimer.stop()
+        else:
+            self.setOverlay(self.overlay - 0.01)
+            self.repaint()
+
+    def damageAnim(self) -> None:
+        """
+            Overlay animation callback
+
+            Returns:
+            None
+
+        """
+        if self.damageAnimValue <= 0:
+            self.damageAnimValue = 1
+        self.damageAnimValue -= 0.05
+        if self.damageAnimValue < 0:
+            self.damageTimer.stop()
+        else:
+            self.repaint()
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         regionRect: QRectF = self.getHangmanRect()
@@ -187,22 +320,6 @@ class HangmanView(QtWidgets.QWidget):
                                    bg_color=QColor(66, 205, 82))
         self.setOverlay(self.overlay)
 
-    def overlayAnim(self) -> None:
-        if self.overlay < 0.5:
-            self.overlayTimer.stop()
-        else:
-            self.setOverlay(self.overlay - 0.01)
-            self.repaint()
-
-    def damageAnim(self):
-        if self.damageAnimValue <= 0:
-            self.damageAnimValue = 1
-        self.damageAnimValue -= 0.05
-        if self.damageAnimValue < 0:
-            self.damageTimer.stop()
-        else:
-            self.repaint()
-
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         if self.debug_anim:
             self.takeDamage()
@@ -214,36 +331,6 @@ class HangmanView(QtWidgets.QWidget):
 
         # Home button
         self.home_button.eventHandle(event, self.home_handler)
-
-    def getHangmanRect(self) -> QRectF:
-        width = self.width()
-        height = self.height()
-        width_ratio = 2
-        height_ratio = 3
-        width32 = None
-        height32 = None
-        top = None
-        left = None
-        if width * height_ratio / width_ratio < height:
-            width32 = width
-            height32 = width * height_ratio / width_ratio
-            top = (height - height32) / 2
-            left = 0
-
-        else:
-            height32 = height
-            width32 = height32 * width_ratio / height_ratio
-            top = 0
-            left = (width - width32) / 2
-
-        rect = QRectF(left, top, width32, height32)
-        return rect
-
-    def getScoreFeedRect(self, hangmanRect: QRectF) -> QRectF:
-        width: int = self.width()
-        leftSpacingWidth = int((width - hangmanRect.width()) / 2)
-
-        return QRectF(self.width() // 2 + int(hangmanRect.width() / 2), 0, leftSpacingWidth, self.height())
 
     def paintEvent(self, e) -> None:
         qp = QtGui.QPainter()
@@ -271,26 +358,83 @@ class HangmanView(QtWidgets.QWidget):
                 break
 
             color = QColor(
-                    int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay),
-                    int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay),
-                    int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay)
+                int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay),
+                int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay),
+                int((100 + int((255 - 100) * self.damageAnimValue)) * self.overlay)
             ) if i < 5 else QColor(
-                                int(255 * self.overlay),
-                                int((255 - int(255 * self.damageAnimValue)) * self.overlay),
-                                int((255 - int(255 * self.damageAnimValue)) * self.overlay))
+                int(255 * self.overlay),
+                int((255 - int(255 * self.damageAnimValue)) * self.overlay),
+                int((255 - int(255 * self.damageAnimValue)) * self.overlay))
 
             self.drawings[i](qp, color, rect.left(), rect.top(), rect.width(), rect.height())
         # self.overlay = 0.5
 
         if self.reply_button.isActive():
-            self.drawReplayButton(qp, QColor(66, 205, 82), self.reply_button)
+            self.drawReplayButton(qp, self.reply_button)
         if self.home_button.isActive():
-            self.drawHomeButton(qp, QColor(66, 205, 82), self.home_button)
-
+            self.drawHomeButton(qp, self.home_button)
 
         qp.end()
 
+    def getHangmanRect(self) -> QRectF:
+        """
+            Getter for the hangman box rectangle.
+
+            Returns:
+            QRectF: Area of the hangman drawing will take
+
+        """
+        width = self.width()
+        height = self.height()
+        width_ratio = 2
+        height_ratio = 3
+        width32 = None
+        height32 = None
+        top = None
+        left = None
+        if width * height_ratio / width_ratio < height:
+            width32 = width
+            height32 = width * height_ratio / width_ratio
+            top = (height - height32) / 2
+            left = 0
+
+        else:
+            height32 = height
+            width32 = height32 * width_ratio / height_ratio
+            top = 0
+            left = (width - width32) / 2
+
+        rect = QRectF(left, top, width32, height32)
+        return rect
+
+    def getScoreFeedRect(self, hangmanRect: QRectF) -> QRectF:
+        """
+            Getter for the hangman box rectangle.
+
+            Parameters:
+            hangmanRect (QRectF): Area of hangman box rectangle.
+
+            Returns:
+            QRectF: Area of the score feed rectangle will take
+
+        """
+        width: int = self.width()
+        leftSpacingWidth = int((width - hangmanRect.width()) / 2)
+
+        return QRectF(self.width() // 2 + int(hangmanRect.width() / 2), 0, leftSpacingWidth, self.height())
+
     def drawScoreFeed(self, painter: QPainter, hangmanRect: QRectF) -> None:
+        """
+            Draw Score feed
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            hangmanRect (QRectF): Area of hangman box rectangle.
+
+            Returns:
+            None
+
+        """
         painter.setBrush(QColor(255, 27, 24))
         socreFeedRect = self.getScoreFeedRect(hangmanRect)
 
@@ -298,9 +442,9 @@ class HangmanView(QtWidgets.QWidget):
         for i in range(0, len(score_feed)):
             score = score_feed[i]
             button = Button(socreFeedRect.left(),
-                                      socreFeedRect.top() + (i + 1) * socreFeedRect.height() * 0.12,
-                                      socreFeedRect.width(),
-                                      socreFeedRect.height(), 0.5, 0.1,
+                            socreFeedRect.top() + (i + 1) * socreFeedRect.height() * 0.12,
+                            socreFeedRect.width(),
+                            socreFeedRect.height(), 0.5, 0.1,
                             text=str(score), fg_color=QColor(255, 255, 255, 255),
                             bg_color=score.getBGColor(255),
                             border_color=score.getPen(255).color()
@@ -308,11 +452,18 @@ class HangmanView(QtWidgets.QWidget):
             button.setOpacity(int(255 * (5 - i) / 5))
             button.drawButton(painter)
 
-    def drawHomeButton(self, painter: QPainter, color: QColor, button: Button) -> None:
-        # color.setAlpha()
-        # pen = QPen()
-        # pen.setStyle(Qt.PenStyle.NoPen)
-        # painter.setPen(pen)
+    def drawHomeButton(self, painter: QPainter, button: Button) -> None:
+        """
+            Draw home button
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            hangmanRect (QRectF): Area of hangman box rectangle.
+
+            Returns:
+            None
+
+        """
 
         center = button.rect.center()
 
@@ -345,7 +496,18 @@ class HangmanView(QtWidgets.QWidget):
         ).translated(0, (size_icon / 4).toPoint().y())
         painter.drawRect(rect)
 
-    def drawReplayButton(self, painter: QPainter, color: QColor, button: Button) -> None:
+    def drawReplayButton(self, painter: QPainter, button: Button) -> None:
+        """
+            Draw replay button
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            hangmanRect (QRectF): Area of hangman box rectangle.
+
+            Returns:
+            None
+
+        """
         pen = QPen()
         pen.setStyle(Qt.PenStyle.NoPen)
         # painter.setPen(pen)
@@ -383,6 +545,21 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawPolygon(triangle, Qt.FillRule.WindingFill)
 
     def drawBase(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw base of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         painter.setBrush(color)
         positionBottomBar = (
             left,
@@ -398,6 +575,21 @@ class HangmanView(QtWidgets.QWidget):
             positionBottomBar[3])
 
     def drawPoll(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw poll of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         painter.setBrush(color)
         positionPoll = (
             left + int(width * 0.2),
@@ -412,6 +604,21 @@ class HangmanView(QtWidgets.QWidget):
             positionPoll[3])
 
     def drawTop(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw top bar of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         painter.setBrush(color)
         positionTopBar = (
             left + int(width * 0.1),
@@ -426,6 +633,21 @@ class HangmanView(QtWidgets.QWidget):
             positionTopBar[3])
 
     def drawSupport(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw support bar of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         painter.setBrush(color)
         painter.drawPolygon(
             QtGui.QPolygon([
@@ -436,6 +658,21 @@ class HangmanView(QtWidgets.QWidget):
             ]))
 
     def drawHanger(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw hanger of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         pen = QPen(color)
         pen.setWidth(self.thickness // 2)
         painter.setPen(pen)
@@ -445,6 +682,21 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawLine(start, end)
 
     def drawHead(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw head of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         pen = QPen(color)
         painter.setPen(self.initPen(pen))
         painter.setBrush(color)
@@ -455,6 +707,21 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawEllipse(center, radius, radius)
 
     def drawBody(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw body of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         pen = QPen(color)
         painter.setPen(self.initPen(pen))
 
@@ -463,6 +730,21 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawLine(start, end)
 
     def drawLeftArm(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw left arm of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         pen = QPen(color)
         painter.setPen(self.initPen(pen))
 
@@ -471,6 +753,21 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawLine(start, end)
 
     def drawRightArm(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw right arm of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         pen = QPen(color)
         painter.setPen(self.initPen(pen))
 
@@ -479,6 +776,21 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawLine(start, end)
 
     def drawLeftLeg(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw left leg of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         pen = QPen(color)
         painter.setPen(self.initPen(pen))
 
@@ -487,6 +799,21 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawLine(start, end)
 
     def drawRightLeg(self, painter: QPainter, color: QColor, left: int, top: int, width: int, height: int) -> None:
+        """
+            Draw right leg of hangman
+
+            Parameters:
+            painter (QPainter): Painter of the paintEvent
+            color (QColor): Color of the drawing
+            left (int): left corner of the drawing box
+            top (int): top corner of the drawing box
+            width (int):width of the available space
+            height (int): height of the available space
+
+            Returns:
+            None
+
+        """
         pen = QPen(color)
         painter.setPen(self.initPen(pen))
 
@@ -495,9 +822,20 @@ class HangmanView(QtWidgets.QWidget):
         painter.drawLine(start, end)
 
     def initPen(self, pen: QPen) -> QPen:
+        """
+            Show character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to show
+
+            Returns:
+            None
+
+        """
         pen.setWidth(self.thickness // 2)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
         return pen
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
