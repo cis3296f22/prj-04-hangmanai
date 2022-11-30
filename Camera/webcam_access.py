@@ -53,7 +53,7 @@ class Webcam_Access():
         pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
 
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(1)
         count = 0
         stack = []
         while (True):
@@ -90,6 +90,8 @@ class Webcam_Access():
                 print("the character " + cha)
                 print(stack)
                 stack.clear()
+            if cv2.getWindowProperty("Hangman Webcam", cv2.WND_PROP_VISIBLE) < 1:
+                break
 
             cv2.imshow("Hangman Webcam", frame)
             cv2.waitKey(1)
