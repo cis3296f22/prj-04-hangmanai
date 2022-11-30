@@ -3,16 +3,18 @@ import pytest
 
 from Camera.webcam_access import Webcam_Access
 
-def test_determine_camera():
+def test_print_camera_list():
+    """Test to check if a list of devices is returned"""
     webcam = Webcam_Access()
-    cam_found = webcam.determine_camera()
-    if cam_found > -1:
+    cam_list = webcam.print_camera_list()
+    if len(cam_list) > 0:
         assert True
     else:
         assert False
 
 
 def test_take_pic():
+    """Test if it can capture a single frame from the webcam"""
     webcam = Webcam_Access()
     cam_id = webcam.determine_camera()
     print(cam_id)
@@ -27,6 +29,7 @@ def test_take_pic():
 
 
 def test_start_capture():
+    """Tests if the webcam starts to capture"""
     with pytest.raises(Exception) as ex:
         webcam = Webcam_Access()
         webcam.start_capture(0)
