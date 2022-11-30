@@ -16,13 +16,14 @@ class Webcam_Access():
 
     # takes a picture from the webcam with the id == 0
     def take_pic(frame):
+        """Takes a picture using a webcam that is currently running"""
         saved = cv2.imwrite('capture_frame.jpg', frame)
         return saved
 
     # finds the preferred camera the user wants
     # figure it out later
     def print_camera_list(self):
-
+        """Returns a list of devices that will be options for the webcam"""
 
         graph = FilterGraph()
 
