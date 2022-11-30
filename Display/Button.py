@@ -8,13 +8,7 @@ class Button:
 
         This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
 
-        Parameters:
-        arg1 (int): Description of arg1
-
-        Returns:
-        int: Description of return value
-
-        """
+    """
     def __init__(self, left: int, top: int, width: int, height: int,
                  width_ratio: float, height_ratio: float, text: str = "",
                  fg_color: QColor = QColor(0, 0, 0, 0), bg_color: QColor = QColor(0, 0, 0),
