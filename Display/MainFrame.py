@@ -13,7 +13,6 @@ from Display.LifeBox import LifeBox
 from Display.ScoreView import ScoreView
 from Display.WordBox import WordBox
 
-# Global value for the windows status
 from Score import Score
 from WordProvider import Difficulty
 
@@ -22,14 +21,13 @@ WINDOW_SIZE = 0
 
 class MainFrame(QtWidgets.QMainWindow):
     """
-        Simple Button Class for the Hangman game UI.
-
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        Main Frame of the main hangman game.
 
     """
+
     def __init__(self,
                  parent=None,
-                 keyboard_handler = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 keyboard_handler=lambda x, y: print("[" + x + "] -> " + str(y)),
                  difficulty_handler: callable(str) = lambda x: print(x),
                  assets_dir: str = "../assets"):
 
@@ -60,7 +58,19 @@ class MainFrame(QtWidgets.QMainWindow):
         self.windowInit()
 
         # self.ui.
+
     def windowInit(self):
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
         central_widget = self.centralWidget()
         if hasattr(central_widget, "minimizeButton"):
             central_widget.minimizeButton.clicked.connect(lambda: self.showMinimized())
@@ -90,28 +100,94 @@ class MainFrame(QtWidgets.QMainWindow):
         self.show()
 
     def keyReleaseEvent(self, e: QtGui.QKeyEvent) -> None:
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
         if not e.isAutoRepeat():
             self.ui.keyboard.trigger(e.text())
 
-    def setDifficultyHandler(self, handler: callable(str)):
+    def setDifficultyHandler(self, handler: callable(str)) -> None:
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
         self.difficultyHandler = handler
 
-    def transitMainGame(self, args=None):
+    def transitMainGame(self, args=None) -> None:
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
         self.difficultyHandler(args)
         self.home = self.takeCentralWidget()
         self.setCentralWidget(self.ui)
         self.windowInit()
 
-    def transitHome(self, args=None):
+    def transitHome(self, args=None) -> None:
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
         self.ui = self.takeCentralWidget()
         self.setCentralWidget(self.home)
         self.windowInit()
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(self, event) -> None:
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
         self.dragPos = event.globalPosition()
 
     # Restore or maximize your window
-    def restore_or_maximize_window(self):
+    def restore_or_maximize_window(self) -> None:
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
 
         # Global windows state
         global WINDOW_SIZE  # The default value is zero to show that the size is not maximized
@@ -130,56 +206,195 @@ class MainFrame(QtWidgets.QMainWindow):
             # Update button icon
             # self.ui.restoreButton.setIcon(QtGui.QIcon(u":/icons/icons/cil-window-restore.png"))  # Show minized icon
 
-    def setKeyboardListner(self, handler, append=False):
+    def setKeyboardListner(self, handler, append=False) -> None:
+        """
+            Calculate the width of the word given in the parameter with the specified font size
+
+            Parameters:
+            word (str): Word in string
+            fontSize (int): Font size of the word
+
+            Returns:
+            float: Width of the word
+
+        """
         self.ui.keyboard.setKeyboardListner(handler, append)
 
-    def reset(self):
+    def reset(self) -> None:
+        """
+            Resets the main frame
+
+            Returns:
+            None
+
+        """
         self.ui.reset()
 
-    def hideCharAt(self, index):
+    def hideCharAt(self, index) -> None:
+        """
+            Hide character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to hide
+
+            Returns:
+            None
+
+        """
         self.ui.wordBox.hideCharAt(index)
 
-    def showCharAt(self, index):
+    def showCharAt(self, index) -> None:
+        """
+            Show character at an index
+
+            Parameters:
+            index (int): Index of character in a word that you want to show
+
+            Returns:
+            None
+
+        """
         self.ui.wordBox.showCharAt(index)
 
-    def wrongChars(self):
+    def wrongChars(self) -> None:
+        """
+            Show the hidden characters as wrong guessed chars
+
+            Returns:
+            None
+
+        """
         self.ui.wordBox.wrongChars()
 
-    def setWord(self, word, hide=False):
+    def setWord(self, word, hide=False) -> None:
+        """
+            Setter for the word in the word box
+
+            Parameters:
+            text (str): New word in word box
+
+            Returns:
+            None
+
+        """
         self.ui.wordBox.setWord(word, hide)
 
-    def setMaxAttempts(self, max_attempts):
+    def setMaxAttempts(self, max_attempts) -> None:
+        """
+            Setter for the max_attempts
+
+            Parameters:
+            max_attempts (str): New max_attempts
+
+            Returns:
+            None
+
+        """
         self.ui.lifeBox.setMaxAttempts(max_attempts)
         self.ui.hangmanDisplay.setMaxAttempts(max_attempts)
 
-    def setLife(self, number):
+    def setLife(self, number) -> None:
+        """
+            Sets the life in the LifeBox
+
+            Parameters:
+            number (int): New life in int
+
+            Returns:
+            None
+
+        """
         life = self.ui.lifeBox.getLife()
         self.ui.lifeBox.setLife(number)
         if life > number:
             self.ui.hangmanDisplay.takeDamage()
 
     def setReplayHandler(self, handler, append: bool = True):
+        """
+            Update replay button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        """
         self.ui.hangmanDisplay.setReplayHandler(handler, append)
 
     def setHomeHandler(self, handler, append: bool = True):
+        """
+            Update home button handler
+
+            Parameters:
+            handler (callable): New handler
+            append (bool): True if appending the new handler to the existing handler
+
+            Returns:
+            None
+
+        """
         self.ui.hangmanDisplay.setHomeHandler(handler, append)
 
-    def win(self):
+    def win(self) -> None:
+        """
+            Process when the user wins the game
+
+            Returns:
+            None
+
+        """
         self.ui.hangmanDisplay.showReplayButton()
         self.ui.scoreDisplay.addScore(Score.WIN())
 
-    def lose(self):
+    def lose(self) -> None:
+        """
+            Process when the user loses the game
+
+            Returns:
+            None
+
+        """
         self.ui.hangmanDisplay.showReplayButton()
         self.ui.scoreDisplay.addScore(Score.LOSE())
 
-    def correctGuess(self, duplicate=1):
+    def correctGuess(self, duplicate=1) -> None:
+        """
+            Process when user guess the character correctly. It changes the score
+
+            Parameters:
+            duplicate (int): Number of duplicate correct guesses
+
+            Returns:
+            None
+
+        """
         self.ui.scoreDisplay.addScore(Score.CORRECT(duplicate))
 
-    def wrongGuess(self):
+    def wrongGuess(self) -> None:
+        """
+            Process when user guess the character wrong. It changes the score
+
+            Returns:
+            None
+
+        """
         self.ui.scoreDisplay.addScore(Score.WRONG())
 
     def setDifficultyHandler(self, handler: callable(Difficulty)):
-        self.difficultyHandler = lambda x:   [handler(x), self.ui.difficultyLabel.setText(x.name)]
+        """
+            Sets the callback function to the difficulty button in Home UI
+
+            Parameters:
+            handler (callable): Callback function attached to the difficulty button
+
+            Returns:
+            None
+
+        """
+        self.difficultyHandler = lambda x: [handler(x), self.ui.difficultyLabel.setText(x.name)]
+
 
 class Ui(QtWidgets.QWidget):
     def __init__(self, assets_dir="../assets"):
@@ -218,7 +433,6 @@ class Ui(QtWidgets.QWidget):
         self.lifeBox.reset()
         self.scoreDisplay.confirmScore()
         self.hangmanDisplay.reset()
-
 
 
 if __name__ == "__main__":

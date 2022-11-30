@@ -29,9 +29,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class HangmanView(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
-
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        Hangman Drawing View that is responsible for drawing hangman animation with its progress animation.
 
     """
 

@@ -128,7 +128,7 @@ class WordBox(QtWidgets.QWidget):
 
     def wrongChars(self) -> None:
         """
-            Show the hidden character as wrong guessed char
+            Show the hidden characters as wrong guessed chars
 
             Returns:
             None
