@@ -11,8 +11,6 @@ class TestWindow(QtWidgets.QMainWindow):
         self.form_widget = LifeCircle()
         self.setCentralWidget(self.form_widget)
         self.setLayout(QtWidgets.QHBoxLayout())
-        # self.setFixedHeight(500)
-        # self.setFixedWidth(500)
         self.show()
 
 
@@ -41,6 +39,13 @@ class LifeCircle(QtWidgets.QWidget):
         return self.circleFrame.isEnabled()
 
     def reset(self) -> None:
+        """
+            Resets the LifeCircle by showing the circle to user
+
+            Returns:
+            None
+
+        """
         self.setEnabled(True)
 
 
