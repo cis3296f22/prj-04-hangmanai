@@ -41,9 +41,6 @@ class WordBox(QtWidgets.QWidget):
         self.wordFrame.setLayout(QtWidgets.QHBoxLayout())
         self.setWord(word)
 
-    def getWord(self):
-        return "".join([x.text() for x in self.characterBoxList])
-
     def setWord(self, word: str, hide: bool = False) -> None:
         self.word = word.upper()
         for char_box in self.characterBoxList:

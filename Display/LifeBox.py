@@ -21,9 +21,7 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class LifeBox(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
-
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        View that shows the remaining life for the hangman game with circles
 
     """
 
@@ -43,6 +41,16 @@ class LifeBox(QtWidgets.QWidget):
         self.setLife(self.max_attempts)
 
     def setLife(self, number: int) -> None:
+        """
+            Sets the life in the LifeBox
+
+            Parameters:
+            number (int): New life in int
+
+            Returns:
+            None
+
+        """
         self.life = number
         if self.life > self.max_attempts:
             print("You cannot assign more life than max life specified -> " + str(self.life))
@@ -65,25 +73,66 @@ class LifeBox(QtWidgets.QWidget):
             self.lifeFrame.layout().addWidget(life_circle)
 
     def getLife(self) -> int:
+        """
+            Getter for the life in the LifeBox
+
+            Returns:
+            int: current life
+
+        """
         return self.life
 
     def isZero(self) -> bool:
+        """
+            Checks if the life is zero
+
+            Returns:
+            bool: True if life is zero
+
+        """
         if self.life <= 0:
             return True
         else:
             return False
 
     def setMaxAttempts(self, max_attempts: int) -> None:
+        """
+            Setter for the max_attempts
+
+            Parameters:
+            max_attempts (str): New max_attempts
+
+            Returns:
+            None
+
+        """
         self.max_attempts = max_attempts
         self.setLife(self.max_attempts)
 
     def takeLife(self, zeroHandler: callable(any)) -> None:
+        """
+            Decrement life by one and executes the zeroHandler when life is zero
+
+            Parameters:
+            zeroHandler (callable): Callback function that will be called when life is zero
+
+            Returns:
+            None
+
+        """
         self.life = self.life - 1
         self.setLife(self.life)
         if self.isZero():
             zeroHandler()
 
-    def reset(self):
+    def reset(self) -> None:
+        """
+            Resets the LifeBox by showing the all of life
+
+            Returns:
+            None
+
+        """
         self.setLife(self.max_attempts)
 
 
