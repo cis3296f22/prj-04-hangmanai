@@ -34,8 +34,12 @@ class MainWindow(QWidget):
 
 
 class CameraThread(QThread):
+    """
+        CameraThread will keep update the camera feed in the MainFrame and gives the life camera feedback to the user.
+
+    """
     ImageUpdate = pyqtSignal(QImage)
-    """ """
+    """ Image update signal"""
 
     def __init__(self, container: QLabel, recognition_callback=lambda x: print(x), parent=None):
         super().__init__(parent)
@@ -54,13 +58,30 @@ class CameraThread(QThread):
 
         self.ImageUpdate.connect(self.ImageUpdateSlot)
 
-    def updateContainer(self, container: QLabel):
-        self.container = container
+    def ImageUpdateSlot(self, image: QImage) -> None:
+        """
+            Callback function used to update the camera image in the container to the new image
 
-    def ImageUpdateSlot(self, Image):
-        self.container.setPixmap(QPixmap.fromImage(Image))
+            Parameters:
+            image (QImage): New image to the camera view
 
-    def changeCamera(self, no):
+            Returns:
+            float: Width of the word
+
+        """
+        self.container.setPixmap(QPixmap.fromImage(image))
+
+    def changeCamera(self, no: int) -> None:
+        """
+            Change the camera to the new camera with the specified camera number
+
+            Parameters:
+            no (int): New camera number
+
+            Returns:
+            None
+
+        """
         self.sleep(2)
         self.cameraNo = no
         self.Capture = cv2.VideoCapture(self.cameraNo)
@@ -98,7 +119,20 @@ class CameraThread(QThread):
                 self.ImageUpdate.emit(Pic)
         print("Finished")
 
-    def analyze(self, frame, lock):
+    def analyze(self, frame, lock) -> None:
+        """
+            Analysing the image in the frame and extract the text from the image and append it to the stack.
+
+            If the stack is full, call the callback function to notify the text recognition to the game
+
+            Parameters:
+            frame : Frame of Open CV
+            lock : Lock used in multithreading
+
+            Returns:
+            None
+
+        """
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         msk = cv2.inRange(hsv, array([0, 0, 0]), array([179, 255, 80]))
         krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
@@ -130,10 +164,6 @@ class CameraThread(QThread):
             self.recognition_callback(cha)
             self.stack.clear()
         lock.release()
-
-    def stop(self):
-        self.ThreadActive = False
-        self.quit()
 
 
 class TesseractThread(QThread):

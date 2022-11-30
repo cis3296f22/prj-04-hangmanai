@@ -19,21 +19,29 @@ class TestWindow(QtWidgets.QMainWindow):
 
     def keyPressEvent(self, e: QtGui.QKeyEvent) -> None:
         if not e.isAutoRepeat():
-            print(e.text().upper() )
+            print(e.text().upper())
 
     def keyReleaseEvent(self, e: QtGui.QKeyEvent) -> None:
         if not e.isAutoRepeat():
             self.form_widget.trigger(e.text())
 
+
 class Keyboard(QtWidgets.QWidget):
+
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
     def __init__(self,
-                 handler = lambda x, y: print("[" + x + "] -> " + str(y)),
+                 handler=lambda x, y: print("[" + x + "] -> " + str(y)),
                  assets_dir: str = "../assets"):
 
         super(Keyboard, self).__init__()
         uic.loadUi(assets_dir + '/ui/keyboard.ui', self)
 
-        self.assets_dir:str = assets_dir
+        self.assets_dir: str = assets_dir
         """ Path to asset directory"""
         self.keyMap: dict[str, KeyTop] = {}
         """ Map of string alphabet to the corresponding Keptop object"""
@@ -51,7 +59,7 @@ class Keyboard(QtWidgets.QWidget):
 
         self.setKeyboardListner(handler)
 
-    def getToggleKeys(self) :
+    def getToggleKeys(self):
         keys = []
         for key in self.keyMap:
             if self.keyMap[key].isDisabled():

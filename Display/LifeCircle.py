@@ -7,7 +7,6 @@ from PyQt6 import QtWidgets, uic
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
-
         super(TestWindow, self).__init__(parent)
         self.form_widget = LifeCircle()
         self.setCentralWidget(self.form_widget)
@@ -18,6 +17,12 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class LifeCircle(QtWidgets.QWidget):
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
     def __init__(self, assets_dir: str = "../assets"):
         super(LifeCircle, self).__init__()
         uic.loadUi(assets_dir + '/ui/lifeCircle_v2.ui', self)

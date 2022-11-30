@@ -8,7 +8,6 @@ from PyQt6.QtWidgets import QPushButton
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
-
         super(TestWindow, self).__init__(parent)
         self.form_widget = KeyTop(toggle=True)
         self.setCentralWidget(self.form_widget)
@@ -20,6 +19,12 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class KeyTop(QtWidgets.QWidget):
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
     def __init__(self,
                  text: str = "A",
                  toggle: bool = True,
@@ -66,6 +71,7 @@ class KeyTop(QtWidgets.QWidget):
             return
         # self.mouseReleaseEvent(None)
         self.button.click()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

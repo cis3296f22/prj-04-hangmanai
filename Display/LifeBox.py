@@ -8,7 +8,6 @@ from Display.LifeCircle import LifeCircle
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
-
         super(TestWindow, self).__init__(parent)
         self.form_widget = LifeBox()
         self.setCentralWidget(self.form_widget)
@@ -21,6 +20,13 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class LifeBox(QtWidgets.QWidget):
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
+
     def __init__(self, max_attempts: int = 5, assets_dir: str = "../assets"):
         super(LifeBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/lifeBox.ui', self)
@@ -42,7 +48,7 @@ class LifeBox(QtWidgets.QWidget):
             print("You cannot assign more life than max life specified -> " + str(self.life))
             return
 
-        if self.life < 0 :
+        if self.life < 0:
             print("You cannot assign less than 0. You are lost -> " + str(self.life))
             return
 
@@ -71,7 +77,7 @@ class LifeBox(QtWidgets.QWidget):
         self.max_attempts = max_attempts
         self.setLife(self.max_attempts)
 
-    def takeLife(self, zeroHandler: callable(any) ) -> None:
+    def takeLife(self, zeroHandler: callable(any)) -> None:
         self.life = self.life - 1
         self.setLife(self.life)
         if self.isZero():
@@ -79,6 +85,7 @@ class LifeBox(QtWidgets.QWidget):
 
     def reset(self):
         self.setLife(self.max_attempts)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

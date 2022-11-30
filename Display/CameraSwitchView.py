@@ -15,13 +15,10 @@ from Display.CameraThread import CameraThread
 from Display.ScoreView import ScoreView
 from Score import Score
 
-SOUND_FILE = "sound/knife.wav"
-
 
 class TestWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
-
         super(TestWindow, self).__init__(parent)
         self.form_widget = CameraSwitchView(None)
         self.setCentralWidget(self.form_widget)
@@ -31,9 +28,9 @@ class TestWindow(QtWidgets.QMainWindow):
 
 class CameraSwitchView(QtWidgets.QWidget):
     """
-        Simple Button Class for the Hangman game UI.
+        CameraSwitchView is used to switch camera used in the CameraThread
 
-        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+        This will show the users a list of cameras available and let user select the camera by clicking the Camera Buttons
 
     """
 
@@ -54,20 +51,32 @@ class CameraSwitchView(QtWidgets.QWidget):
 
         self.buttons.clear()
         for i in range(len(web_cams)):
-            self.buttons.append(Button(0, int(height / 1 / len(web_cams) * (1 / 2 + i)), width, height, 0.8, 1 / len(web_cams) / 1.5,
-                        text=web_cams[i], bg_color=QColor(66, 205, 82), fg_color=QColor(255, 255, 255)))
+            self.buttons.append(
+                Button(0, int(height / 1 / len(web_cams) * (1 / 2 + i)), width, height, 0.8, 1 / len(web_cams) / 1.5,
+                       text=web_cams[i], bg_color=QColor(66, 205, 82), fg_color=QColor(255, 255, 255)))
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         if self.camera_thread is not None:
             for i in range(len(self.buttons)):
                 self.buttons[i].eventHandle(event,
-                                            handler= lambda: [self.camera_thread.changeCamera(i), self.changeSelection(i)])
+                                            handler=lambda: [self.camera_thread.changeCamera(i),
+                                                             self.changeSelection(i)])
         else:
             for i in range(len(self.buttons)):
                 self.buttons[i].eventHandle(event, lambda: print("Non thread handler"))
         self.repaint()
 
     def changeSelection(self, index: int) -> None:
+        """
+            Change the selection of camera index, which affects the toggled button in the camera list to indicate the selection
+
+            Parameters:
+            index (int): New selected camera button index
+
+            Returns:
+            None
+
+        """
         self.selected_index = index
 
     def paintEvent(self, e) -> None:

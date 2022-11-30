@@ -21,6 +21,12 @@ WINDOW_SIZE = 0
 
 
 class MainFrame(QtWidgets.QMainWindow):
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
     def __init__(self,
                  parent=None,
                  keyboard_handler = lambda x, y: print("[" + x + "] -> " + str(y)),

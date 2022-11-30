@@ -21,6 +21,12 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class CharacterBox(QtWidgets.QWidget):
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
     def __init__(self, text: str = "A", assets_dir: str = "../assets"):
         super(CharacterBox, self).__init__()
         uic.loadUi(assets_dir + '/ui/characterBox_simple.ui', self)

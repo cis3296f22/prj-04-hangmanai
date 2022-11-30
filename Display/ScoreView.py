@@ -21,6 +21,12 @@ class TestWindow(QtWidgets.QMainWindow):
 
 
 class ScoreView(QtWidgets.QWidget):
+    """
+        Simple Button Class for the Hangman game UI.
+
+        This can add the flexible button to the hangman UI with text, button function, custom colors (background, foreground, border)
+
+    """
     def __init__(self, assets_dir: str = "../assets"):
         super(ScoreView, self).__init__()
         uic.loadUi(assets_dir + '/ui/scoreView.ui', self)
